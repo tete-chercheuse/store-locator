@@ -2,13 +2,17 @@
   "name": "store-locator",
   "version": "1.0.0",
   "description": "A front-end store locator module",
-  "source": "src/index.js",
-  "module": "dist/index.es.js",
-  "main": "dist/index.js",
-  "umd:main": "dist/index.umd.js",
+  "source": "src/store-locator.js",
+  "main": "dist/store-locator.js",
+  "module": "dist/store-locator.esm.js",
+  "unpkg": "dist/store-locator.umd.js",
+  "amdName": "StoreLocator",
+  "mangle": {
+    "regex": "^_"
+  },
   "scripts": {
-    "build": "microbundle build",
-    "watch": "microbundle watch --compress false"
+    "build": "microbundle build --compress false --sourcemap false",
+    "watch": "microbundle watch --compress false --sourcemap false"
   },
   "repository": {
     "type": "git",
