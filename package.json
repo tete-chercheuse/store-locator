@@ -1,0 +1,26 @@
+{
+  "name": "store-locator",
+  "version": "1.0.0",
+  "description": "A front-end store locator module",
+  "source": "src/index.js",
+  "module": "dist/index.es.js",
+  "main": "dist/index.js",
+  "umd:main": "dist/index.umd.js",
+  "scripts": {
+    "build": "microbundle build",
+    "watch": "microbundle watch --compress false"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tete-chercheuse/store-locator.git"
+  },
+  "author": "tete-chercheuse",
+  "license": "MIT",
+  "homepage": "https://github.com/tete-chercheuse/store-locator",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.4",
+    "microbundle": "^0.12.2"
+  }
+}
