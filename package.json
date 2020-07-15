@@ -7,9 +7,6 @@
   "module": "dist/store-locator.esm.js",
   "unpkg": "dist/store-locator.umd.js",
   "amdName": "StoreLocator",
-  "mangle": {
-    "regex": "^_"
-  },
   "scripts": {
     "build": "microbundle build --compress false --sourcemap false",
     "watch": "microbundle watch --compress false --sourcemap false"
@@ -21,10 +18,17 @@
   "author": "tete-chercheuse",
   "license": "MIT",
   "homepage": "https://github.com/tete-chercheuse/store-locator",
+  "dependencies": {
+    "leaflet": "^1.6.0",
+    "leaflet.markercluster": "^1.4.1",
+    "leaflet.locatecontrol": "^0.72.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@babel/register": "^7.10.4",
+    "browser-sync": "^2.26.7",
+    "gulp": "^3.9.1",
     "microbundle": "^0.12.2"
   }
 }

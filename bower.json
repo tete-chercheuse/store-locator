@@ -1,0 +1,18 @@
+{
+  "name": "store-locator",
+  "version": "1.0.0",
+  "description": "A front-end store locator module",
+  "main": "dist/store-locator.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tete-chercheuse/store-locator.git"
+  },
+  "author": "tete-chercheuse",
+  "license": "MIT",
+  "homepage": "https://github.com/tete-chercheuse/store-locator",
+  "dependencies": {
+    "leaflet": "^1.6.0",
+    "leaflet.markercluster": "^1.4.1",
+    "leaflet.locatecontrol": "^0.72.0"
+  }
+}

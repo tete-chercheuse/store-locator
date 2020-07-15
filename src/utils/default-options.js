@@ -1,71 +1,36 @@
 /**
- * storelocatorjs default options
- * @module storelocatorjs/defaultOptions
+ * store-locator default options
+ * @module store-locator/defaultOptions
  */
 export default {
-  functions: {
-    request: null,
-    ready: null,
-  },
-  cluster: {
-    options: {
-      averageCenter: true,
-      gridSize: 50,
-      imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-      maxZoom: 13,
-      minimumClusterSize: 2,
-      styles: [],
-      zoomOnClick: true
-    },
-    status: false
-  },
-  debug: false,
-  geolocation: {
-    startOnLoad: false,
-    status: true
-  },
+  stores: null,
   map: {
-    markers: {
-      width: 30,
-      height: 40,
-      styles: [{
-        category: 'userPosition',
-        colorBackground: '#4285f4',
-        colorText: '#fff'
-      }]
+    initialSettings: {
+      zoom: 2,
+      lat: 0,
+      lng: 0,
     },
     options: {
-      center: [46.227638, 2.213749],
-      disableDefaultUI: false,
-      fullscreenControl: true,
-      mapTypeControl: false,
-      mapTypeId: 'roadmap',
-      scaleControl: false,
-      scrollwheel: true,
-      streetViewControl: false,
-      styles: [],
-      zoom: 6
+      scrollWheelZoom: false
+    },
+    tiles: {
+      url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      options: {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20,
+        minZoom: 2
+      }
+    },
+    markers: {
+      iconProperty: 'icon',
+      popupProperty: 'popup'
     }
   },
-  requests: {
-    searchRadius: 50,
-    storesLimit: 20
-  },
   selectors: {
-    container: '.storelocator',
-    formSearch: '.storelocator-formSearch',
-    geolocButton: '.storelocator-geolocButton',
-    inputSearch: '.storelocator-inputSearch',
-    loader: '.storelocator-loader',
-    nav: '.storelocator-nav',
-    searchFilters: '[data-filter]',
-    sidebar: '.storelocator-sidebar',
-    sidebarResults: '.storelocator-sidebarResults'
-  },
-  markersUpdate: {
-    limitInViewport: 30,
-    maxRadius: 150,
-    status: true,
-    stepRadius: 50
-  },
+    wrapper: '.store-locator',
+    map: 'store-locator-map',
+    filters: '.store-locator-filters',
+  }
 };
+

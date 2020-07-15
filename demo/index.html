@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8"/>
+  <title>Store-locator</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.css"/>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #store-locator-map {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="store-locator">
+  <form class="store-locator-filters">
+    <label>
+      <input type="radio" name="category" value>
+      Tout
+    </label>
+    <label>
+      <input type="radio" name="category" value="Restaurants" checked>
+      Restaurants
+    </label>
+    <label>
+      <input type="radio" name="category" value="Wineshops" checked>
+      Wineshops
+    </label>
+  </form>
+  <div id="store-locator-map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js"></script>
+<script src="../dist/store-locator.umd.js"></script>
+<script src="stores.js"></script>
+<script>
+  new StoreLocator({
+    stores: stores,
+    map: {
+      markers: {
+        popupProperty: 'store'
+      }
+    }
+  });
+</script>
+
+</body>
+
+</html>

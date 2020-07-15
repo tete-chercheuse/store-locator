@@ -14,7 +14,7 @@ export const extend = (deep = false, ...objects) => {
       if(Object.prototype.hasOwnProperty.call(obj, prop)) {
         // If deep merge and property is an object, merge properties
         if(deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
-          extended[prop] = this.extend(true, extended[prop], obj[prop]);
+          extended[prop] = extend(true, extended[prop], obj[prop]);
         }
         else {
           extended[prop] = obj[prop];
@@ -29,4 +29,29 @@ export const extend = (deep = false, ...objects) => {
   });
 
   return extended;
+};
+
+/**
+ * Get values from a form
+ * @param {HTMLElement} form element
+ * @return {Object} json values
+ */
+export const formValues = (form) => {
+
+  const formData = new FormData(form);
+
+  let object = {};
+
+  formData.forEach((value, key) => {
+    if(!Reflect.has(object, key)){
+      object[key] = value;
+      return;
+    }
+    if(!Array.isArray(object[key])){
+      object[key] = [object[key]];
+    }
+    object[key].push(value);
+  });
+
+  return object;
 };
