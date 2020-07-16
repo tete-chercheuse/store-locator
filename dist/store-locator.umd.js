@@ -144,9 +144,10 @@
         }
       },
       markers: {
-        iconProperty: 'icon',
-        popupProperty: 'popup'
-      }
+        icon: null,
+        popup: null
+      },
+      refreshRecenter: true
     },
     selectors: {
       wrapper: '.store-locator',
@@ -184,11 +185,15 @@
 
     var _proto = StoreLocator.prototype;
 
-    _proto.refreshClusters = function refreshClusters(filters) {
+    _proto.refreshClusters = function refreshClusters(filters, recenter) {
       var _this = this;
 
       if (filters === void 0) {
         filters = null;
+      }
+
+      if (recenter === void 0) {
+        recenter = this.options.map.refreshRecenter;
       }
 
       this.clusters.clearLayers();
@@ -215,8 +220,20 @@
           pointToLayer: function pointToLayer(feature, latlng) {
             var marker = L.marker(latlng);
 
-            if (Reflect.has(feature.properties, _this.options.map.markers.popupProperty)) {
-              marker.bindPopup(feature.properties[_this.options.map.markers.popupProperty]);
+            if (typeof _this.options.map.markers.popup === 'function') {
+              var popup = _this.options.map.markers.popup(feature);
+
+              if (typeof _this.options.map.markers.popup === 'string' || popup instanceof L.Popup) {
+                marker.bindPopup(popup);
+              }
+            }
+
+            if (typeof _this.options.map.markers.icon === 'function') {
+              var icon = _this.options.map.markers.icon(feature);
+
+              if (icon instanceof L.Icon) {
+                marker.setIcon(icon);
+              }
             }
 
             marker.on('click', function () {
@@ -226,7 +243,10 @@
           }
         });
         this.clusters.addLayer(geoJson);
-        this.map.fitBounds(this.clusters.getBounds());
+
+        if (recenter) {
+          this.map.fitBounds(this.clusters.getBounds());
+        }
       }
     };
 
@@ -236,6 +256,7 @@
       L.control.locate().addTo(this.map);
       this.clusters = L.markerClusterGroup({
         showCoverageOnHover: false,
+        spiderfyOnMaxZoom: false,
         disableClusteringAtZoom: 12
       });
       this.map.addLayer(this.clusters);

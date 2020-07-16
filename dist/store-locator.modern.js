@@ -79,9 +79,10 @@ var defaultOptions = {
       }
     },
     markers: {
-      iconProperty: 'icon',
-      popupProperty: 'popup'
-    }
+      icon: null,
+      popup: null
+    },
+    refreshRecenter: true
   },
   selectors: {
     wrapper: '.store-locator',
@@ -117,7 +118,7 @@ class StoreLocator {
     this._initFilters();
   }
 
-  refreshClusters(filters = null) {
+  refreshClusters(filters = null, recenter = this.options.map.refreshRecenter) {
     this.clusters.clearLayers();
     let stores = { ...this.options.stores
     };
@@ -139,8 +140,20 @@ class StoreLocator {
         pointToLayer: (feature, latlng) => {
           let marker = L.marker(latlng);
 
-          if (Reflect.has(feature.properties, this.options.map.markers.popupProperty)) {
-            marker.bindPopup(feature.properties[this.options.map.markers.popupProperty]);
+          if (typeof this.options.map.markers.popup === 'function') {
+            const popup = this.options.map.markers.popup(feature);
+
+            if (typeof this.options.map.markers.popup === 'string' || popup instanceof L.Popup) {
+              marker.bindPopup(popup);
+            }
+          }
+
+          if (typeof this.options.map.markers.icon === 'function') {
+            const icon = this.options.map.markers.icon(feature);
+
+            if (icon instanceof L.Icon) {
+              marker.setIcon(icon);
+            }
           }
 
           marker.on('click', () => this.map.setView(marker.getLatLng()));
@@ -148,7 +161,10 @@ class StoreLocator {
         }
       });
       this.clusters.addLayer(geoJson);
-      this.map.fitBounds(this.clusters.getBounds());
+
+      if (recenter) {
+        this.map.fitBounds(this.clusters.getBounds());
+      }
     }
   }
 
@@ -158,6 +174,7 @@ class StoreLocator {
     L.control.locate().addTo(this.map);
     this.clusters = L.markerClusterGroup({
       showCoverageOnHover: false,
+      spiderfyOnMaxZoom: false,
       disableClusteringAtZoom: 12
     });
     this.map.addLayer(this.clusters);

@@ -23,9 +23,10 @@ export default {
       }
     },
     markers: {
-      iconProperty: 'icon',
-      popupProperty: 'popup'
-    }
+      icon: null,
+      popup: null
+    },
+    refreshRecenter: true,
   },
   selectors: {
     wrapper: '.store-locator',

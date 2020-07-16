@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8"/>
   <title>Store-locator</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.css"/>
+  <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.css" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
@@ -25,15 +25,15 @@
 <div class="store-locator">
   <form class="store-locator-filters">
     <label>
-      <input type="radio" name="category" value>
+      <input checked name="category" type="radio" value="">
       Tout
     </label>
     <label>
-      <input type="radio" name="category" value="Restaurants" checked>
+      <input name="category" type="radio" value="Restaurants">
       Restaurants
     </label>
     <label>
-      <input type="radio" name="category" value="Wineshops" checked>
+      <input name="category" type="radio" value="Wineshops">
       Wineshops
     </label>
   </form>
@@ -45,13 +45,28 @@
 <script src="https://unpkg.com/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js"></script>
 <script src="../dist/store-locator.umd.js"></script>
 <script src="stores.js"></script>
-<script>
+<script type="application/javascript">
   new StoreLocator({
     stores: stores,
     map: {
       markers: {
-        popupProperty: 'store'
-      }
+        popup: (feature) => L.popup().setContent(`
+          <div class="name"><b>${feature.properties.store}</b></div>
+          <div class="address">
+            <div>${feature.properties.address}</div>
+            <div>${feature.properties.area1}</div>
+            <div>${feature.properties.city}</div>
+            <div>${feature.properties.country}</div>
+          </div>
+        `),
+        icon: (feature) => L.icon({
+          iconUrl: feature.properties.icon,
+          iconSize: [40, 44],
+          iconAnchor: [20, 44],
+          popupAnchor: [0, -44],
+        })
+      },
+      refreshRecenter: false
     }
   });
 </script>
