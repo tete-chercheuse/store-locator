@@ -109,7 +109,7 @@ export default class StoreLocator {
 
     this.map.addLayer(this.clusters);
 
-    this.refreshClusters();
+    this.refreshClusters(null, true);
   }
 
   _initFilters() {

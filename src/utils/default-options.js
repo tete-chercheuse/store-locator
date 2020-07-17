@@ -5,6 +5,7 @@
 export default {
   stores: null,
   map: {
+    refreshRecenter: false,
     initialSettings: {
       zoom: 2,
       lat: 0,
@@ -26,7 +27,6 @@ export default {
       icon: null,
       popup: null
     },
-    refreshRecenter: true,
   },
   selectors: {
     wrapper: '.store-locator',
