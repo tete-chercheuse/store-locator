@@ -1,6 +1,6 @@
 {
   "name": "store-locator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A front-end store locator module",
   "main": "dist/store-locator.umd.js",
   "repository": {
@@ -14,5 +14,13 @@
     "leaflet": "^1.6.0",
     "leaflet.markercluster": "^1.4.1",
     "leaflet.locatecontrol": "^0.72.0"
+  },
+  "overrides": {
+    "leaflet": {
+      "main": [
+        "dist/leaflet.js",
+        "dist/leaflet.css"
+      ]
+    }
   }
 }
