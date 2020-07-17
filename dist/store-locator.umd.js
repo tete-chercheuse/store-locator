@@ -126,6 +126,7 @@
   var defaultOptions = {
     stores: null,
     map: {
+      refreshRecenter: false,
       initialSettings: {
         zoom: 2,
         lat: 0,
@@ -146,8 +147,7 @@
       markers: {
         icon: null,
         popup: null
-      },
-      refreshRecenter: true
+      }
     },
     selectors: {
       wrapper: '.store-locator',
@@ -260,7 +260,7 @@
         disableClusteringAtZoom: 12
       });
       this.map.addLayer(this.clusters);
-      this.refreshClusters();
+      this.refreshClusters(null, true);
     };
 
     _proto._initFilters = function _initFilters() {
