@@ -101,6 +101,9 @@ export default class StoreLocator {
 
     L.control.locate().addTo(this.map);
 
+    this.map.on('click', () => this.map.scrollWheelZoom.enable());
+    this.map.on('mouseout', () => this.map.scrollWheelZoom.disable());
+
     this.clusters = L.markerClusterGroup({
       showCoverageOnHover: false,
       spiderfyOnMaxZoom: false,

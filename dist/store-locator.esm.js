@@ -250,9 +250,17 @@ var StoreLocator = /*#__PURE__*/function () {
   };
 
   _proto._initMap = function _initMap() {
+    var _this2 = this;
+
     this.map = L.map(this.options.selectors.map, this.options.map.options).setView([this.options.map.initialSettings.lat, this.options.map.initialSettings.lng], this.options.map.initialSettings.zoom);
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     L.control.locate().addTo(this.map);
+    this.map.on('click', function () {
+      return _this2.map.scrollWheelZoom.enable();
+    });
+    this.map.on('mouseout', function () {
+      return _this2.map.scrollWheelZoom.disable();
+    });
     this.clusters = L.markerClusterGroup({
       showCoverageOnHover: false,
       spiderfyOnMaxZoom: false,
@@ -263,7 +271,7 @@ var StoreLocator = /*#__PURE__*/function () {
   };
 
   _proto._initFilters = function _initFilters() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.filters = document.querySelector(this.options.selectors.filters);
 
@@ -271,7 +279,7 @@ var StoreLocator = /*#__PURE__*/function () {
       for (var _iterator = _createForOfIteratorHelperLoose(this.filters.elements), _step; !(_step = _iterator()).done;) {
         var field = _step.value;
         field.addEventListener('change', function () {
-          return _this2.refreshClusters(formValues(_this2.filters));
+          return _this3.refreshClusters(formValues(_this3.filters));
         });
       }
     }

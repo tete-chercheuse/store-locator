@@ -172,6 +172,8 @@ class StoreLocator {
     this.map = L.map(this.options.selectors.map, this.options.map.options).setView([this.options.map.initialSettings.lat, this.options.map.initialSettings.lng], this.options.map.initialSettings.zoom);
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     L.control.locate().addTo(this.map);
+    this.map.on('click', () => this.map.scrollWheelZoom.enable());
+    this.map.on('mouseout', () => this.map.scrollWheelZoom.disable());
     this.clusters = L.markerClusterGroup({
       showCoverageOnHover: false,
       spiderfyOnMaxZoom: false,
