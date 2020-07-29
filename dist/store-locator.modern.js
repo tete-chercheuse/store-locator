@@ -62,21 +62,18 @@ var defaultOptions = {
   stores: null,
   map: {
     refreshRecenter: false,
-    initialSettings: {
-      zoom: 2,
-      lat: 0,
-      lng: 0
-    },
     options: {
-      scrollWheelZoom: false
+      scrollWheelZoom: false,
+      zoom: 2,
+      maxZoom: 20,
+      minZoom: 2,
+      center: [0, 0]
     },
     tiles: {
       url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
       options: {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 20,
-        minZoom: 2
+        subdomains: 'abcd'
       }
     },
     markers: {
@@ -169,7 +166,7 @@ class StoreLocator {
   }
 
   _initMap() {
-    this.map = L.map(this.options.selectors.map, this.options.map.options).setView([this.options.map.initialSettings.lat, this.options.map.initialSettings.lng], this.options.map.initialSettings.zoom);
+    this.map = L.map(this.options.selectors.map, this.options.map.options);
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     L.control.locate().addTo(this.map);
     this.map.on('click', () => this.map.scrollWheelZoom.enable());
@@ -177,7 +174,7 @@ class StoreLocator {
     this.clusters = L.markerClusterGroup({
       showCoverageOnHover: false,
       spiderfyOnMaxZoom: false,
-      disableClusteringAtZoom: 12
+      disableClusteringAtZoom: 15
     });
     this.map.addLayer(this.clusters);
     this.refreshClusters(null, true);
@@ -186,7 +183,7 @@ class StoreLocator {
   _initFilters() {
     this.filters = document.querySelector(this.options.selectors.filters);
 
-    if (this.filters.elements.length) {
+    if (this.filters && this.filters.elements.length) {
       for (let field of this.filters.elements) {
         field.addEventListener('change', () => this.refreshClusters(formValues(this.filters)));
       }

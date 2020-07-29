@@ -95,7 +95,7 @@ export default class StoreLocator {
 
   _initMap() {
 
-    this.map = L.map(this.options.selectors.map, this.options.map.options).setView([this.options.map.initialSettings.lat, this.options.map.initialSettings.lng], this.options.map.initialSettings.zoom);
+    this.map = L.map(this.options.selectors.map, this.options.map.options);
 
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
 
@@ -107,7 +107,7 @@ export default class StoreLocator {
     this.clusters = L.markerClusterGroup({
       showCoverageOnHover: false,
       spiderfyOnMaxZoom: false,
-      disableClusteringAtZoom: 12,
+      disableClusteringAtZoom: 15,
     });
 
     this.map.addLayer(this.clusters);
@@ -119,7 +119,7 @@ export default class StoreLocator {
 
     this.filters = document.querySelector(this.options.selectors.filters);
 
-    if(this.filters.elements.length) {
+    if(this.filters && this.filters.elements.length) {
 
       for(let field of this.filters.elements) {
         field.addEventListener('change', () => this.refreshClusters(formValues(this.filters)));
