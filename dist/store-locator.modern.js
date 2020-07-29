@@ -1,4 +1,4 @@
-import 'leaflet';
+import 'leaflet/dist/leaflet';
 import 'leaflet.markercluster';
 import 'leaflet.locatecontrol';
 
@@ -65,7 +65,7 @@ var defaultOptions = {
     options: {
       scrollWheelZoom: false,
       zoom: 2,
-      maxZoom: 20,
+      maxZoom: 18,
       minZoom: 2,
       center: [0, 0]
     },
@@ -181,11 +181,15 @@ class StoreLocator {
   }
 
   _initFilters() {
-    this.filters = document.querySelector(this.options.selectors.filters);
+    const wrapper = document.querySelector(this.options.selectors.wrapper);
 
-    if (this.filters && this.filters.elements.length) {
-      for (let field of this.filters.elements) {
-        field.addEventListener('change', () => this.refreshClusters(formValues(this.filters)));
+    if (wrapper) {
+      this.filters = wrapper.querySelector(this.options.selectors.filters);
+
+      if (this.filters && this.filters.elements.length) {
+        for (let field of this.filters.elements) {
+          field.addEventListener('change', () => this.refreshClusters(formValues(this.filters)));
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('leaflet'), require('leaflet.markercluster'), require('leaflet.locatecontrol')) :
-  typeof define === 'function' && define.amd ? define(['leaflet', 'leaflet.markercluster', 'leaflet.locatecontrol'], factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('leaflet/dist/leaflet'), require('leaflet.markercluster'), require('leaflet.locatecontrol')) :
+  typeof define === 'function' && define.amd ? define(['leaflet/dist/leaflet', 'leaflet.markercluster', 'leaflet.locatecontrol'], factory) :
   (global = global || self, global.StoreLocator = factory());
 }(this, (function () {
   function _extends() {
@@ -130,7 +130,7 @@
       options: {
         scrollWheelZoom: false,
         zoom: 2,
-        maxZoom: 20,
+        maxZoom: 18,
         minZoom: 2,
         center: [0, 0]
       },
@@ -271,14 +271,18 @@
     _proto._initFilters = function _initFilters() {
       var _this3 = this;
 
-      this.filters = document.querySelector(this.options.selectors.filters);
+      var wrapper = document.querySelector(this.options.selectors.wrapper);
 
-      if (this.filters && this.filters.elements.length) {
-        for (var _iterator = _createForOfIteratorHelperLoose(this.filters.elements), _step; !(_step = _iterator()).done;) {
-          var field = _step.value;
-          field.addEventListener('change', function () {
-            return _this3.refreshClusters(formValues(_this3.filters));
-          });
+      if (wrapper) {
+        this.filters = wrapper.querySelector(this.options.selectors.filters);
+
+        if (this.filters && this.filters.elements.length) {
+          for (var _iterator = _createForOfIteratorHelperLoose(this.filters.elements), _step; !(_step = _iterator()).done;) {
+            var field = _step.value;
+            field.addEventListener('change', function () {
+              return _this3.refreshClusters(formValues(_this3.filters));
+            });
+          }
         }
       }
     };

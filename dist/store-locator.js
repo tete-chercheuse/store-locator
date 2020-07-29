@@ -1,4 +1,4 @@
-require('leaflet');
+require('leaflet/dist/leaflet');
 require('leaflet.markercluster');
 require('leaflet.locatecontrol');
 
@@ -129,7 +129,7 @@ var defaultOptions = {
     options: {
       scrollWheelZoom: false,
       zoom: 2,
-      maxZoom: 20,
+      maxZoom: 18,
       minZoom: 2,
       center: [0, 0]
     },
@@ -270,14 +270,18 @@ var StoreLocator = /*#__PURE__*/function () {
   _proto._initFilters = function _initFilters() {
     var _this3 = this;
 
-    this.filters = document.querySelector(this.options.selectors.filters);
+    var wrapper = document.querySelector(this.options.selectors.wrapper);
 
-    if (this.filters && this.filters.elements.length) {
-      for (var _iterator = _createForOfIteratorHelperLoose(this.filters.elements), _step; !(_step = _iterator()).done;) {
-        var field = _step.value;
-        field.addEventListener('change', function () {
-          return _this3.refreshClusters(formValues(_this3.filters));
-        });
+    if (wrapper) {
+      this.filters = wrapper.querySelector(this.options.selectors.filters);
+
+      if (this.filters && this.filters.elements.length) {
+        for (var _iterator = _createForOfIteratorHelperLoose(this.filters.elements), _step; !(_step = _iterator()).done;) {
+          var field = _step.value;
+          field.addEventListener('change', function () {
+            return _this3.refreshClusters(formValues(_this3.filters));
+          });
+        }
       }
     }
   };

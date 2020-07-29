@@ -117,12 +117,17 @@ export default class StoreLocator {
 
   _initFilters() {
 
-    this.filters = document.querySelector(this.options.selectors.filters);
+    const wrapper = document.querySelector(this.options.selectors.wrapper);
 
-    if(this.filters && this.filters.elements.length) {
+    if(wrapper) {
 
-      for(let field of this.filters.elements) {
-        field.addEventListener('change', () => this.refreshClusters(formValues(this.filters)));
+      this.filters = wrapper.querySelector(this.options.selectors.filters);
+
+      if(this.filters && this.filters.elements.length) {
+
+        for(let field of this.filters.elements) {
+          field.addEventListener('change', () => this.refreshClusters(formValues(this.filters)));
+        }
       }
     }
   }
