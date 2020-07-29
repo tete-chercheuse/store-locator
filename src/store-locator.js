@@ -1,4 +1,4 @@
-import 'leaflet';
+import 'leaflet/dist/leaflet';
 import 'leaflet.markercluster';
 import 'leaflet.locatecontrol';
 
