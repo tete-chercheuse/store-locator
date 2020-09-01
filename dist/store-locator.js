@@ -1,6 +1,6 @@
 require('leaflet/dist/leaflet');
-require('leaflet.markercluster');
-require('leaflet.locatecontrol');
+require('leaflet.markercluster/dist/leaflet.markercluster');
+require('leaflet.locatecontrol/dist/L.Control.Locate.min');
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -152,6 +152,7 @@ var defaultOptions = {
   }
 };
 
+var L = window['L'];
 /**
  * Store Locator
  * @module StoreLocator

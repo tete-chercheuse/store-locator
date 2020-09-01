@@ -1,9 +1,11 @@
 import 'leaflet/dist/leaflet';
-import 'leaflet.markercluster';
-import 'leaflet.locatecontrol';
+import 'leaflet.markercluster/dist/leaflet.markercluster';
+import 'leaflet.locatecontrol/dist/L.Control.Locate.min';
 
 import { extend, formValues } from './utils/utils';
 import defaultOptions from './utils/default-options';
+
+const L = window['L'];
 
 /**
  * Store Locator

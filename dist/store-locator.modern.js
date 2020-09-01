@@ -1,6 +1,6 @@
 import 'leaflet/dist/leaflet';
-import 'leaflet.markercluster';
-import 'leaflet.locatecontrol';
+import 'leaflet.markercluster/dist/leaflet.markercluster';
+import 'leaflet.locatecontrol/dist/L.Control.Locate.min';
 
 /**
  * Extends multiple object into one
@@ -88,6 +88,7 @@ var defaultOptions = {
   }
 };
 
+const L = window['L'];
 /**
  * Store Locator
  * @module StoreLocator
