@@ -1,6 +1,10 @@
 require('leaflet');
 require('leaflet.markercluster');
 require('leaflet.locatecontrol');
+require('leaflet/dist/leaflet.css');
+require('leaflet.markercluster/dist/MarkerCluster.css');
+require('leaflet.markercluster/dist/MarkerCluster.Default.css');
+require('leaflet.locatecontrol/dist/L.Control.Locate.css');
 
 function _extends() {
   _extends = Object.assign || function (target) {

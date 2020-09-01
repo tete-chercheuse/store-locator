@@ -1,6 +1,6 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('leaflet'), require('leaflet.markercluster'), require('leaflet.locatecontrol')) :
-  typeof define === 'function' && define.amd ? define(['leaflet', 'leaflet.markercluster', 'leaflet.locatecontrol'], factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('leaflet'), require('leaflet.markercluster'), require('leaflet.locatecontrol'), require('leaflet/dist/leaflet.css'), require('leaflet.markercluster/dist/MarkerCluster.css'), require('leaflet.markercluster/dist/MarkerCluster.Default.css'), require('leaflet.locatecontrol/dist/L.Control.Locate.css')) :
+  typeof define === 'function' && define.amd ? define(['leaflet', 'leaflet.markercluster', 'leaflet.locatecontrol', 'leaflet/dist/leaflet.css', 'leaflet.markercluster/dist/MarkerCluster.css', 'leaflet.markercluster/dist/MarkerCluster.Default.css', 'leaflet.locatecontrol/dist/L.Control.Locate.css'], factory) :
   (global = global || self, global.StoreLocator = factory());
 }(this, (function () {
   function _extends() {
