@@ -1,6 +1,6 @@
-require('leaflet/dist/leaflet');
-require('leaflet.markercluster/dist/leaflet.markercluster');
-require('leaflet.locatecontrol/dist/L.Control.Locate.min');
+require('leaflet');
+require('leaflet.markercluster');
+require('leaflet.locatecontrol');
 
 function _extends() {
   _extends = Object.assign || function (target) {

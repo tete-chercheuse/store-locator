@@ -1,6 +1,6 @@
-import 'leaflet/dist/leaflet';
-import 'leaflet.markercluster/dist/leaflet.markercluster';
-import 'leaflet.locatecontrol/dist/L.Control.Locate.min';
+import 'leaflet';
+import 'leaflet.markercluster';
+import 'leaflet.locatecontrol';
 
 import { extend, formValues } from './utils/utils';
 import defaultOptions from './utils/default-options';

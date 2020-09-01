@@ -1,6 +1,6 @@
-import 'leaflet/dist/leaflet';
-import 'leaflet.markercluster/dist/leaflet.markercluster';
-import 'leaflet.locatecontrol/dist/L.Control.Locate.min';
+import 'leaflet';
+import 'leaflet.markercluster';
+import 'leaflet.locatecontrol';
 
 function _extends() {
   _extends = Object.assign || function (target) {
