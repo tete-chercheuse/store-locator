@@ -40,7 +40,7 @@ export default class StoreLocator {
     this._initFilters();
   }
 
-  refreshClusters(filters = null, recenter = this.options.map.refreshRecenter) {
+  refreshClusters(filters = null, recenter = this.options.map.refreshRecenter, maxZoom = null) {
 
     this.clusters.clearLayers();
 
@@ -95,7 +95,7 @@ export default class StoreLocator {
       this.clusters.addLayer(geoJson);
 
       if(recenter) {
-        this.map.fitBounds(this.clusters.getBounds());
+        this.map.fitBounds(this.clusters.getBounds(), { maxZoom });
       }
     }
   }
@@ -111,15 +111,11 @@ export default class StoreLocator {
     this.map.on('click', () => this.map.scrollWheelZoom.enable());
     this.map.on('mouseout', () => this.map.scrollWheelZoom.disable());
 
-    this.clusters = L.markerClusterGroup({
-      showCoverageOnHover: false,
-      spiderfyOnMaxZoom: false,
-      disableClusteringAtZoom: 15,
-    });
+    this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
 
     this.map.addLayer(this.clusters);
 
-    this.refreshClusters(null, true);
+    this.refreshClusters(null, true, ((this.options.map.initialRecenter) ? null : this.options.map.options.zoom));
   }
 
   _initFilters() {

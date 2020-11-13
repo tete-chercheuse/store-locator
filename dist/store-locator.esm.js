@@ -130,6 +130,7 @@ var defaultOptions = {
   stores: null,
   map: {
     refreshRecenter: false,
+    initialRecenter: true,
     options: {
       scrollWheelZoom: false,
       zoom: 2,
@@ -138,15 +139,20 @@ var defaultOptions = {
       center: [0, 0]
     },
     tiles: {
-      url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
       options: {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd'
       }
     },
     markers: {
       icon: null,
-      popup: null
+      popup: null,
+      clustersOptions: {
+        showCoverageOnHover: false,
+        spiderfyOnMaxZoom: false,
+        disableClusteringAtZoom: 15
+      }
     }
   },
   selectors: {
@@ -186,7 +192,7 @@ var StoreLocator = /*#__PURE__*/function () {
 
   var _proto = StoreLocator.prototype;
 
-  _proto.refreshClusters = function refreshClusters(filters, recenter) {
+  _proto.refreshClusters = function refreshClusters(filters, recenter, maxZoom) {
     var _this = this;
 
     if (filters === void 0) {
@@ -195,6 +201,10 @@ var StoreLocator = /*#__PURE__*/function () {
 
     if (recenter === void 0) {
       recenter = this.options.map.refreshRecenter;
+    }
+
+    if (maxZoom === void 0) {
+      maxZoom = null;
     }
 
     this.clusters.clearLayers();
@@ -246,7 +256,9 @@ var StoreLocator = /*#__PURE__*/function () {
       this.clusters.addLayer(geoJson);
 
       if (recenter) {
-        this.map.fitBounds(this.clusters.getBounds());
+        this.map.fitBounds(this.clusters.getBounds(), {
+          maxZoom: maxZoom
+        });
       }
     }
   };
@@ -263,13 +275,9 @@ var StoreLocator = /*#__PURE__*/function () {
     this.map.on('mouseout', function () {
       return _this2.map.scrollWheelZoom.disable();
     });
-    this.clusters = L.markerClusterGroup({
-      showCoverageOnHover: false,
-      spiderfyOnMaxZoom: false,
-      disableClusteringAtZoom: 15
-    });
+    this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
     this.map.addLayer(this.clusters);
-    this.refreshClusters(null, true);
+    this.refreshClusters(null, true, this.options.map.initialRecenter ? null : this.options.map.options.zoom);
   };
 
   _proto._initFilters = function _initFilters() {

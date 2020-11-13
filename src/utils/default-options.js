@@ -6,6 +6,7 @@ export default {
   stores: null,
   map: {
     refreshRecenter: false,
+    initialRecenter: true,
     options: {
       scrollWheelZoom: false,
       zoom: 2,
@@ -23,6 +24,11 @@ export default {
     markers: {
       icon: null,
       popup: null,
+      clustersOptions: {
+        showCoverageOnHover: false,
+        spiderfyOnMaxZoom: false,
+        disableClusteringAtZoom: 15,
+      },
     },
   },
   selectors: {
