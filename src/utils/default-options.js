@@ -7,6 +7,7 @@ export default {
   map: {
     refreshRecenter: false,
     initialRecenter: true,
+    locate: true,
     options: {
       scrollWheelZoom: false,
       zoom: 2,
