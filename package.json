@@ -8,8 +8,11 @@
   "unpkg": "dist/store-locator.umd.js",
   "amdName": "StoreLocator",
   "scripts": {
+    "clean": "rm -r node_modules; rm -r bower_components",
+    "init": "npm install && bower install",
     "build": "microbundle build --compress false --sourcemap false",
-    "watch": "microbundle watch --compress false --sourcemap false"
+    "watch": "microbundle watch --compress false --sourcemap false",
+    "refresh": "npm run clean; npm run init"
   },
   "repository": {
     "type": "git",
@@ -28,7 +31,7 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/register": "^7.10.4",
     "browser-sync": "^2.26.7",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "microbundle": "^0.12.2"
   }
 }

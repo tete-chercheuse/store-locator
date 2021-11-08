@@ -128,6 +128,7 @@
     map: {
       refreshRecenter: false,
       initialRecenter: true,
+      locate: true,
       options: {
         scrollWheelZoom: false,
         zoom: 2,
@@ -265,7 +266,11 @@
 
       this.map = L.map(this.options.selectors.map, this.options.map.options);
       L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
-      L.control.locate().addTo(this.map);
+
+      if (this.options.locate) {
+        L.control.locate().addTo(this.map);
+      }
+
       this.map.on('click', function () {
         return _this2.map.scrollWheelZoom.enable();
       });

@@ -6,7 +6,13 @@ const gulp = require('gulp'),
 
 // ----- Browser-Sync watch files and inject changes -----
 
-gulp.task('browsersync', ['build'], () => {
+gulp.task('build', cb => exec('npm run build', (err, stdout, stderr) => {
+  console.log(stdout);
+  console.error(stderr);
+  cb(err);
+}));
+
+gulp.task('browsersync', gulp.parallel('build', () => {
 
   browserSync.init({
     server: {
@@ -20,16 +26,10 @@ gulp.task('browsersync', ['build'], () => {
 
   gulp.watch('./demo/**/*').on('change', reload);
   gulp.watch('./dist/**/*').on('change', reload);
-  gulp.watch('./src/**/*', ['build']);
+  gulp.watch('./src/**/*', gulp.series('build'));
 
-});
-
-gulp.task('build', cb => exec('npm run build', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.error(stderr);
-    cb(err);
 }));
 
 // ----- Default Task -----
 
-gulp.task('default', () => gulp.start('browsersync'));
+gulp.task('default', gulp.series('browsersync'));

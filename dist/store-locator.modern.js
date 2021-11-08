@@ -67,6 +67,7 @@ var defaultOptions = {
   map: {
     refreshRecenter: false,
     initialRecenter: true,
+    locate: true,
     options: {
       scrollWheelZoom: false,
       zoom: 2,
@@ -181,7 +182,11 @@ class StoreLocator {
   _initMap() {
     this.map = L.map(this.options.selectors.map, this.options.map.options);
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
-    L.control.locate().addTo(this.map);
+
+    if (this.options.locate) {
+      L.control.locate().addTo(this.map);
+    }
+
     this.map.on('click', () => this.map.scrollWheelZoom.enable());
     this.map.on('mouseout', () => this.map.scrollWheelZoom.disable());
     this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
