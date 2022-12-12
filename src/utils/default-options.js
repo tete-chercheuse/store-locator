@@ -3,38 +3,38 @@
  * @module store-locator/defaultOptions
  */
 export default {
-  stores: null,
-  map: {
+  stores:    null,
+  map:       {
     refreshRecenter: false,
     initialRecenter: true,
-    locate: true,
-    options: {
+    locate:          false,
+    options:         {
       scrollWheelZoom: false,
-      zoom: 2,
-      maxZoom: 18,
-      minZoom: 2,
-      center: [0, 0],
+      zoom:            2,
+      maxZoom:         18,
+      minZoom:         2,
+      center:          [0, 0],
     },
-    tiles: {
-      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
+    tiles:           {
+      url:     'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
       options: {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd'
+        subdomains:  'abcd'
       }
     },
-    markers: {
-      icon: null,
-      popup: null,
+    markers:         {
+      icon:            null,
+      popup:           null,
       clustersOptions: {
-        showCoverageOnHover: false,
-        spiderfyOnMaxZoom: false,
+        showCoverageOnHover:     false,
+        spiderfyOnMaxZoom:       false,
         disableClusteringAtZoom: 15,
       },
     },
   },
   selectors: {
     wrapper: '.store-locator',
-    map: 'store-locator-map',
+    map:     'store-locator-map',
     filters: '.store-locator-filters',
   }
 };

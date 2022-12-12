@@ -1,10 +1,10 @@
-require('leaflet');
-require('leaflet.markercluster');
-require('leaflet.locatecontrol');
-require('leaflet/dist/leaflet.css');
-require('leaflet.markercluster/dist/MarkerCluster.css');
-require('leaflet.markercluster/dist/MarkerCluster.Default.css');
-require('leaflet.locatecontrol/dist/L.Control.Locate.css');
+import 'leaflet';
+import 'leaflet.markercluster';
+import 'leaflet.locatecontrol';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
 
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function (target) {
@@ -20,37 +20,6 @@ function _extends() {
   };
   return _extends.apply(this, arguments);
 }
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
-function _createForOfIteratorHelperLoose(o, allowArrayLike) {
-  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-  if (it) return (it = it.call(o)).next.bind(it);
-  if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-    if (it) o = it;
-    var i = 0;
-    return function () {
-      if (i >= o.length) return {
-        done: true
-      };
-      return {
-        done: false,
-        value: o[i++]
-      };
-    };
-  }
-  throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
 
 /**
  * Extends multiple object into one
@@ -58,15 +27,12 @@ function _createForOfIteratorHelperLoose(o, allowArrayLike) {
  * @param {Array} objects List of objects to merged
  * @return {Object} Objects merged into one
  */
-var extend = function extend(deep) {
-  if (deep === void 0) {
-    deep = false;
-  }
-  var extended = {};
+const extend = (deep = false, ...objects) => {
+  let extended = {};
 
   // Merge the object into the extended object
-  var merge = function merge(obj) {
-    for (var prop in obj) {
+  let merge = obj => {
+    for (let prop in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, prop)) {
         // If deep merge and property is an object, merge properties
         if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
@@ -79,7 +45,7 @@ var extend = function extend(deep) {
   };
 
   // Loop through each object and conduct a merge
-  [].slice.call(arguments, 1).forEach(function (object) {
+  objects.forEach(object => {
     merge(object);
   });
   return extended;
@@ -90,10 +56,10 @@ var extend = function extend(deep) {
  * @param {HTMLElement} form element
  * @return {Object} json values
  */
-var formValues = function formValues(form) {
-  var formData = new FormData(form);
-  var object = {};
-  formData.forEach(function (value, key) {
+const formValues = form => {
+  const formData = new FormData(form);
+  let object = {};
+  formData.forEach((value, key) => {
     if (!Reflect.has(object, key)) {
       object[key] = value;
       return;
@@ -147,19 +113,19 @@ var defaultOptions = {
   }
 };
 
-var L = window['L'];
+const L = window['L'];
 
 /**
  * Store Locator
  * @module StoreLocator
  */
-var StoreLocator = /*#__PURE__*/function () {
+class StoreLocator {
   /**
    * Instanciate the constructor
    * @constructor
    * @param {Object} options Store Locator options
    */
-  function StoreLocator(options) {
+  constructor(options) {
     this.options = defaultOptions;
     this.map = null;
     this.clusters = null;
@@ -171,26 +137,13 @@ var StoreLocator = /*#__PURE__*/function () {
     this._initMap();
     this._initFilters();
   }
-  var _proto = StoreLocator.prototype;
-  _proto.refreshClusters = function refreshClusters(filters, recenter, maxZoom) {
-    var _this = this;
-    if (filters === void 0) {
-      filters = null;
-    }
-    if (recenter === void 0) {
-      recenter = this.options.map.refreshRecenter;
-    }
-    if (maxZoom === void 0) {
-      maxZoom = null;
-    }
+  refreshClusters(filters = null, recenter = this.options.map.refreshRecenter, maxZoom = null) {
     this.clusters.clearLayers();
-    var stores = _extends({}, this.options.stores);
+    let stores = _extends({}, this.options.stores);
     if (filters) {
-      stores.features = stores.features.filter(function (store) {
-        var keep = false;
-        Object.entries(filters).forEach(function (_ref) {
-          var filter = _ref[0],
-            value = _ref[1];
+      stores.features = stores.features.filter(store => {
+        let keep = false;
+        Object.entries(filters).forEach(([filter, value]) => {
           if (!value.length || Array.isArray(value) && value.includes(store.properties[filter]) || store.properties[filter].includes(value)) {
             keep = true;
           }
@@ -199,68 +152,56 @@ var StoreLocator = /*#__PURE__*/function () {
       });
     }
     if (stores.features.length) {
-      var geoJson = L.geoJSON(stores, {
-        pointToLayer: function pointToLayer(feature, latlng) {
-          var marker = L.marker(latlng);
-          if (typeof _this.options.map.markers.popup === 'function') {
-            var popup = _this.options.map.markers.popup(feature);
-            if (typeof _this.options.map.markers.popup === 'string' || popup instanceof L.Popup) {
+      const geoJson = L.geoJSON(stores, {
+        pointToLayer: (feature, latlng) => {
+          let marker = L.marker(latlng);
+          if (typeof this.options.map.markers.popup === 'function') {
+            const popup = this.options.map.markers.popup(feature);
+            if (typeof this.options.map.markers.popup === 'string' || popup instanceof L.Popup) {
               marker.bindPopup(popup);
             }
           }
-          if (typeof _this.options.map.markers.icon === 'function') {
-            var icon = _this.options.map.markers.icon(feature);
+          if (typeof this.options.map.markers.icon === 'function') {
+            const icon = this.options.map.markers.icon(feature);
             if (icon instanceof L.Icon) {
               marker.setIcon(icon);
             }
           }
-          marker.on('click', function () {
-            return _this.map.setView(marker.getLatLng());
-          });
+          marker.on('click', () => this.map.setView(marker.getLatLng()));
           return marker;
         }
       });
       this.clusters.addLayer(geoJson);
       if (recenter) {
         this.map.fitBounds(this.clusters.getBounds(), {
-          maxZoom: maxZoom
+          maxZoom
         });
       }
     }
-  };
-  _proto._initMap = function _initMap() {
-    var _this2 = this;
+  }
+  _initMap() {
     this.map = L.map(this.options.selectors.map, this.options.map.options);
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     if (this.options.locate) {
       L.control.locate().addTo(this.map);
     }
-    this.map.on('click', function () {
-      return _this2.map.scrollWheelZoom.enable();
-    });
-    this.map.on('mouseout', function () {
-      return _this2.map.scrollWheelZoom.disable();
-    });
+    this.map.on('click', () => this.map.scrollWheelZoom.enable());
+    this.map.on('mouseout', () => this.map.scrollWheelZoom.disable());
     this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
     this.map.addLayer(this.clusters);
     this.refreshClusters(null, true, this.options.map.initialRecenter ? null : this.options.map.options.zoom);
-  };
-  _proto._initFilters = function _initFilters() {
-    var _this3 = this;
-    var wrapper = document.querySelector(this.options.selectors.wrapper);
+  }
+  _initFilters() {
+    const wrapper = document.querySelector(this.options.selectors.wrapper);
     if (wrapper) {
       this.filters = wrapper.querySelector(this.options.selectors.filters);
       if (this.filters && this.filters.elements.length) {
-        for (var _iterator = _createForOfIteratorHelperLoose(this.filters.elements), _step; !(_step = _iterator()).done;) {
-          var field = _step.value;
-          field.addEventListener('change', function () {
-            return _this3.refreshClusters(formValues(_this3.filters));
-          });
+        for (let field of this.filters.elements) {
+          field.addEventListener('change', () => this.refreshClusters(formValues(this.filters)));
         }
       }
     }
-  };
-  return StoreLocator;
-}();
+  }
+}
 
-module.exports = StoreLocator;
+export { StoreLocator as default };
