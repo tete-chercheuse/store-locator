@@ -1,24 +1,21 @@
 import 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet.locatecontrol';
+import '@raruto/leaflet-gesture-handling';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
+import '@raruto/leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 
 function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends.apply(this, arguments);
+    return n;
+  }, _extends.apply(null, arguments);
 }
 
 /**
@@ -83,11 +80,11 @@ var defaultOptions = {
     initialRecenter: true,
     locate: false,
     options: {
-      scrollWheelZoom: false,
       zoom: 2,
       maxZoom: 18,
       minZoom: 2,
-      center: [0, 0]
+      center: [0, 0],
+      gestureHandling: true
     },
     tiles: {
       url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',

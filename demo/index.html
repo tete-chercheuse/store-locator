@@ -4,17 +4,23 @@
 <head>
   <meta charset="utf-8"/>
   <title>Store-locator</title>
-  <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/@raruto/leaflet-gesture-handling@1.4.4/dist/leaflet-gesture-handling.min.css" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
     }
 
+    .store-locator-filters {
+        height: 5vh;
+        width: 100%;
+    }
+
     #store-locator-map {
-      height: 100vh;
+      height: 95vh;
       width: 100%;
     }
   </style>
@@ -40,9 +46,10 @@
   <div id="store-locator-map"></div>
 </div>
 
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-<script src="https://unpkg.com/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.js"></script>
+<script src="https://unpkg.com/@raruto/leaflet-gesture-handling@1.4.4/dist/leaflet-gesture-handling.min.js"></script>
 <script src="../dist/store-locator.umd.js"></script>
 <script src="stores.js"></script>
 <script type="application/javascript">

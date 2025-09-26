@@ -9,11 +9,11 @@ export default {
     initialRecenter: true,
     locate:          false,
     options:         {
-      scrollWheelZoom: false,
       zoom:            2,
       maxZoom:         18,
       minZoom:         2,
       center:          [0, 0],
+      gestureHandling: true,
     },
     tiles:           {
       url:     'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',

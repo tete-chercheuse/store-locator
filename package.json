@@ -1,6 +1,6 @@
 {
   "name": "store-locator",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "A front-end store locator module",
   "source": "src/store-locator.js",
   "main": "dist/store-locator.js",
@@ -22,9 +22,10 @@
   "license": "MIT",
   "homepage": "https://github.com/tete-chercheuse/store-locator",
   "dependencies": {
-    "leaflet": "^1.9.3",
+    "@raruto/leaflet-gesture-handling": "^1.4.4",
+    "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
-    "leaflet.locatecontrol": "^0.79.0"
+    "leaflet.locatecontrol": "^0.85.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
