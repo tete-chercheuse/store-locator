@@ -8,8 +8,8 @@
   "unpkg": "dist/store-locator.umd.js",
   "amdName": "StoreLocator",
   "scripts": {
-    "clean": "rm -r node_modules; rm -r bower_components",
-    "init": "npm install && bower install",
+    "clean": "rm -r node_modules",
+    "init": "npm install",
     "build": "microbundle build --compress false --sourcemap false",
     "watch": "microbundle watch --compress false --sourcemap false",
     "refresh": "npm run clean; npm run init"
