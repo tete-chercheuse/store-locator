@@ -1,12 +1,12 @@
 import 'leaflet';
+import 'leaflet-gesture-handling';
 import 'leaflet.markercluster';
 import 'leaflet.locatecontrol';
-import '@raruto/leaflet-gesture-handling';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
-import '@raruto/leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 
 function _arrayLikeToArray(r, a) {
   (null == a || a > r.length) && (a = r.length);

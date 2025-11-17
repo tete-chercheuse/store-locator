@@ -22,8 +22,8 @@
   "license": "MIT",
   "homepage": "https://github.com/tete-chercheuse/store-locator",
   "dependencies": {
-    "@raruto/leaflet-gesture-handling": "^1.4.4",
     "leaflet": "^1.9.4",
+    "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
     "leaflet.locatecontrol": "^0.85.1"
   },

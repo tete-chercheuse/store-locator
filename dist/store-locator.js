@@ -1,12 +1,12 @@
 require('leaflet');
+require('leaflet-gesture-handling');
 require('leaflet.markercluster');
 require('leaflet.locatecontrol');
-require('@raruto/leaflet-gesture-handling');
 require('leaflet/dist/leaflet.css');
 require('leaflet.markercluster/dist/MarkerCluster.css');
 require('leaflet.markercluster/dist/MarkerCluster.Default.css');
 require('leaflet.locatecontrol/dist/L.Control.Locate.css');
-require('@raruto/leaflet-gesture-handling/dist/leaflet-gesture-handling.css');
+require('leaflet-gesture-handling/dist/leaflet-gesture-handling.css');
 
 function _arrayLikeToArray(r, a) {
   (null == a || a > r.length) && (a = r.length);
