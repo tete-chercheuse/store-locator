@@ -195,6 +195,17 @@ import { StoreLocatorMap, useStoreLocator } from 'store-locator/react';
 
 Exemple complet: [examples/react/StoreLocatorMapExample.tsx](./examples/react/StoreLocatorMapExample.tsx)
 
+> ⚠️ **Important — mémoïsation de `stores`** : si tu passes `stores` en littéral inline (`stores={[{ lat, lng }]}`), une nouvelle référence est créée à chaque render du composant parent. Le hook interne appelle alors `setStores()` à chaque render, ce qui vide et recrée tous les marqueurs/clusters — coûteux et potentiellement source d'état incohérent pendant une interaction utilisateur (drag, zoom).
+>
+> Mémoïse toujours `stores` avec `useMemo` dès qu'il provient de props ou d'un état amont :
+>
+> ```tsx
+> const stores = useMemo(
+>   () => rawData.map((item) => ({ lat: item.lat, lng: item.lng, ...item })),
+>   [rawData]
+> );
+> ```
+
 ```tsx
 import * as L from 'leaflet';
 import { StoreLocatorMap } from 'store-locator/react';
@@ -222,6 +233,17 @@ export function StoresMap({ stores }) {
 ### Hook `useStoreLocator`
 
 Exemple complet: [examples/react/useStoreLocatorExample.tsx](./examples/react/useStoreLocatorExample.tsx)
+
+> ⚠️ **Important — mémoïsation de `stores`** : avec `useStoreLocator`, une référence instable de `stores` provoque aussi un appel à `setStores()` à chaque render. Le résultat est le même: les clusters sont vidés puis recréés inutilement, avec un risque accru pendant un drag, un zoom ou une animation.
+>
+> Si `stores` vient d’un calcul, d’une prop ou d’un état amont, stabilise toujours sa référence avec `useMemo` :
+>
+> ```tsx
+> const stores = useMemo(
+>   () => rawData.map((item) => ({ lat: item.lat, lng: item.lng, ...item })),
+>   [rawData]
+> );
+> ```
 
 ```tsx
 import { useRef } from 'react';

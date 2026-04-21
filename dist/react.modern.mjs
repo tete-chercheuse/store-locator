@@ -224,6 +224,7 @@ class StoreLocator {
     this.filters = null;
     this.filterFields = [];
     this.filterChangeHandler = null;
+    this.resizeObserver = null;
     this.options = this.createOptions(options);
     if (this.options.stores === null) {
       throw new Error('[store-locator] - No stores available');
@@ -317,7 +318,10 @@ class StoreLocator {
     (_this$map3 = this.map) == null || _this$map3.invalidateSize(options);
   }
   destroy() {
+    var _this$resizeObserver;
     this.detachFilters();
+    (_this$resizeObserver = this.resizeObserver) == null || _this$resizeObserver.disconnect();
+    this.resizeObserver = null;
     if (this.map) {
       this.map.off();
       this.map.remove();
@@ -337,6 +341,9 @@ class StoreLocator {
     if (!mapContainer) {
       throw new Error('[store-locator] - Map container not found');
     }
+    if (mapContainer._leaflet_id) {
+      throw new Error('[store-locator] - Map container is already initialized. ' + 'Call destroy() on the previous instance before creating a new one on the same element.');
+    }
     this.map = L.map(mapContainer, this.options.map.options);
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     if (this.options.map.locate) {
@@ -352,6 +359,13 @@ class StoreLocator {
     });
     this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
     this.map.addLayer(this.clusters);
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => {
+        var _this$map6;
+        (_this$map6 = this.map) == null || _this$map6.invalidateSize();
+      });
+      this.resizeObserver.observe(mapContainer);
+    }
     this.refreshClusters(null, true, this.options.map.initialRecenter ? null : this.options.map.options.zoom);
   }
   resolveMapElement() {
@@ -405,19 +419,18 @@ const useStoreLocator = ({
   const currentWrapper = (_wrapperRef$current = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current : null;
   const currentFilters = (_filtersRef$current = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current : null;
   useEffect(() => {
-    let active = true;
-    let locator = null;
     if (_disabled || !mapRef.current) {
       setInstance(null);
       setError(null);
       return;
     }
-    const initialize = async () => {
+    let locator = null;
+    const timer = setTimeout(() => {
+      if (!mapRef.current) {
+        return;
+      }
       try {
         var _optionsRef$current, _wrapperRef$current2, _filtersRef$current2;
-        if (!active || !mapRef.current) {
-          return;
-        }
         locator = new StoreLocator(_extends({}, (_optionsRef$current = optionsRef.current) != null ? _optionsRef$current : {}, {
           stores: storesRef.current,
           elements: {
@@ -426,27 +439,20 @@ const useStoreLocator = ({
             filters: (_filtersRef$current2 = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current2 : null
           }
         }));
-        if (!active) {
-          locator.destroy();
-          return;
-        }
         setInstance(locator);
         setError(null);
         onReadyRef.current == null || onReadyRef.current(locator);
       } catch (nextError) {
-        if (active) {
-          setError(toError(nextError));
-          setInstance(null);
-        }
+        setError(toError(nextError));
+        setInstance(null);
       }
-    };
-    void initialize();
+    }, 0);
     return () => {
-      active = false;
+      clearTimeout(timer);
       if (locator) {
         locator.destroy();
+        setInstance(currentInstance => currentInstance === locator ? null : currentInstance);
       }
-      setInstance(currentInstance => currentInstance === locator ? null : currentInstance);
     };
   }, [_disabled, filtersRef, mapRef, wrapperRef]);
   useEffect(() => {

@@ -276,6 +276,7 @@ var StoreLocator = /*#__PURE__*/function () {
     this.filters = null;
     this.filterFields = [];
     this.filterChangeHandler = null;
+    this.resizeObserver = null;
     this.options = this.createOptions(options);
     if (this.options.stores === null) {
       throw new Error('[store-locator] - No stores available');
@@ -403,7 +404,10 @@ var StoreLocator = /*#__PURE__*/function () {
     (_this$map2 = this.map) == null || _this$map2.invalidateSize(options);
   };
   _proto.destroy = function destroy() {
+    var _this$resizeObserver;
     this.detachFilters();
+    (_this$resizeObserver = this.resizeObserver) == null || _this$resizeObserver.disconnect();
+    this.resizeObserver = null;
     if (this.map) {
       this.map.off();
       this.map.remove();
@@ -424,6 +428,9 @@ var StoreLocator = /*#__PURE__*/function () {
     if (!mapContainer) {
       throw new Error('[store-locator] - Map container not found');
     }
+    if (mapContainer._leaflet_id) {
+      throw new Error('[store-locator] - Map container is already initialized. ' + 'Call destroy() on the previous instance before creating a new one on the same element.');
+    }
     this.map = L__default["default"].map(mapContainer, this.options.map.options);
     L__default["default"].tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     if (this.options.map.locate) {
@@ -439,6 +446,13 @@ var StoreLocator = /*#__PURE__*/function () {
     });
     this.clusters = L__default["default"].markerClusterGroup(this.options.map.markers.clustersOptions);
     this.map.addLayer(this.clusters);
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(function () {
+        var _this3$map3;
+        (_this3$map3 = _this3.map) == null || _this3$map3.invalidateSize();
+      });
+      this.resizeObserver.observe(mapContainer);
+    }
     this.refreshClusters(null, true, this.options.map.initialRecenter ? null : this.options.map.options.zoom);
   };
   _proto.resolveMapElement = function resolveMapElement() {

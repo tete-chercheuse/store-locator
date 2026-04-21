@@ -277,6 +277,7 @@ var StoreLocator = /*#__PURE__*/function () {
     this.filters = null;
     this.filterFields = [];
     this.filterChangeHandler = null;
+    this.resizeObserver = null;
     this.options = this.createOptions(options);
     if (this.options.stores === null) {
       throw new Error('[store-locator] - No stores available');
@@ -404,7 +405,10 @@ var StoreLocator = /*#__PURE__*/function () {
     (_this$map2 = this.map) == null || _this$map2.invalidateSize(options);
   };
   _proto.destroy = function destroy() {
+    var _this$resizeObserver;
     this.detachFilters();
+    (_this$resizeObserver = this.resizeObserver) == null || _this$resizeObserver.disconnect();
+    this.resizeObserver = null;
     if (this.map) {
       this.map.off();
       this.map.remove();
@@ -425,6 +429,9 @@ var StoreLocator = /*#__PURE__*/function () {
     if (!mapContainer) {
       throw new Error('[store-locator] - Map container not found');
     }
+    if (mapContainer._leaflet_id) {
+      throw new Error('[store-locator] - Map container is already initialized. ' + 'Call destroy() on the previous instance before creating a new one on the same element.');
+    }
     this.map = L__default["default"].map(mapContainer, this.options.map.options);
     L__default["default"].tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     if (this.options.map.locate) {
@@ -440,6 +447,13 @@ var StoreLocator = /*#__PURE__*/function () {
     });
     this.clusters = L__default["default"].markerClusterGroup(this.options.map.markers.clustersOptions);
     this.map.addLayer(this.clusters);
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(function () {
+        var _this3$map3;
+        (_this3$map3 = _this3.map) == null || _this3$map3.invalidateSize();
+      });
+      this.resizeObserver.observe(mapContainer);
+    }
     this.refreshClusters(null, true, this.options.map.initialRecenter ? null : this.options.map.options.zoom);
   };
   _proto.resolveMapElement = function resolveMapElement() {
@@ -499,55 +513,42 @@ var useStoreLocator = function useStoreLocator(_ref) {
   var currentWrapper = (_wrapperRef$current = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current : null;
   var currentFilters = (_filtersRef$current = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current : null;
   react.useEffect(function () {
-    var active = true;
-    var locator = null;
     if (disabled || !mapRef.current) {
       setInstance(null);
       setError(null);
       return;
     }
-    var initialize = function initialize() {
-      try {
-        try {
-          var _optionsRef$current, _wrapperRef$current2, _filtersRef$current2;
-          if (!active || !mapRef.current) {
-            return Promise.resolve();
-          }
-          locator = new StoreLocator(_extends({}, (_optionsRef$current = optionsRef.current) != null ? _optionsRef$current : {}, {
-            stores: storesRef.current,
-            elements: {
-              map: mapRef.current,
-              wrapper: (_wrapperRef$current2 = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current2 : null,
-              filters: (_filtersRef$current2 = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current2 : null
-            }
-          }));
-          if (!active) {
-            locator.destroy();
-            return Promise.resolve();
-          }
-          setInstance(locator);
-          setError(null);
-          onReadyRef.current == null || onReadyRef.current(locator);
-        } catch (nextError) {
-          if (active) {
-            setError(toError(nextError));
-            setInstance(null);
-          }
-        }
-        return Promise.resolve();
-      } catch (e) {
-        return Promise.reject(e);
+    var locator = null;
+    var timer = setTimeout(function () {
+      if (!mapRef.current) {
+        return;
       }
-    };
-    void initialize();
+      try {
+        var _optionsRef$current, _wrapperRef$current2, _filtersRef$current2;
+        locator = new StoreLocator(_extends({}, (_optionsRef$current = optionsRef.current) != null ? _optionsRef$current : {}, {
+          stores: storesRef.current,
+          elements: {
+            map: mapRef.current,
+            wrapper: (_wrapperRef$current2 = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current2 : null,
+            filters: (_filtersRef$current2 = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current2 : null
+          }
+        }));
+        setInstance(locator);
+        setError(null);
+        onReadyRef.current == null || onReadyRef.current(locator);
+      } catch (nextError) {
+        setError(toError(nextError));
+        setInstance(null);
+      }
+    }, 0);
     return function () {
-      active = false;
+      clearTimeout(timer);
       if (locator) {
         locator.destroy();
+        setInstance(function (currentInstance) {
+          return currentInstance === locator ? null : currentInstance;
+        });
       }
-      setInstance(function (currentInstance) {
-        return currentInstance === locator ? null : currentInstance;
-      });
     };
   }, [disabled, filtersRef, mapRef, wrapperRef]);
   react.useEffect(function () {

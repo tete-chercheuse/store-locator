@@ -59,6 +59,7 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
 
   private filterFields: Element[] = [];
   private filterChangeHandler: (() => void) | null = null;
+  private resizeObserver: ResizeObserver | null = null;
 
   /**
    * Instantiate StoreLocator
@@ -191,6 +192,8 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
 
   destroy(): void {
     this.detachFilters();
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
 
     if(this.map) {
       this.map.off();
@@ -222,6 +225,13 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
       throw new Error('[store-locator] - Map container not found');
     }
 
+    if((mapContainer as HTMLElement & { _leaflet_id?: number; })._leaflet_id) {
+      throw new Error(
+        '[store-locator] - Map container is already initialized. ' +
+        'Call destroy() on the previous instance before creating a new one on the same element.',
+      );
+    }
+
     this.map = L.map(mapContainer, this.options.map.options);
 
     L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
@@ -235,6 +245,13 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
 
     this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
     this.map.addLayer(this.clusters);
+
+    if(typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.map?.invalidateSize();
+      });
+      this.resizeObserver.observe(mapContainer);
+    }
 
     this.refreshClusters(
       null,

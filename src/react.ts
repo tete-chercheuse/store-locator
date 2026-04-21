@@ -69,21 +69,20 @@ export const useStoreLocator = <P extends StoreLocatorProperties = StoreLocatorP
   const currentFilters = filtersRef?.current ?? null;
 
   useEffect(() => {
-    let active = true;
-    let locator: StoreLocator<P> | null = null;
-
     if(disabled || !mapRef.current) {
       setInstance(null);
       setError(null);
       return;
     }
 
-    const initialize = async (): Promise<void> => {
-      try {
-        if(!active || !mapRef.current) {
-          return;
-        }
+    let locator: StoreLocator<P> | null = null;
 
+    const timer = setTimeout(() => {
+      if(!mapRef.current) {
+        return;
+      }
+
+      try {
         locator = new StoreLocator<P>({
           ...(optionsRef.current ?? {}),
           stores: storesRef.current,
@@ -94,33 +93,23 @@ export const useStoreLocator = <P extends StoreLocatorProperties = StoreLocatorP
           },
         });
 
-        if(!active) {
-          locator.destroy();
-          return;
-        }
-
         setInstance(locator);
         setError(null);
         onReadyRef.current?.(locator);
       }
       catch (nextError) {
-        if(active) {
-          setError(toError(nextError));
-          setInstance(null);
-        }
+        setError(toError(nextError));
+        setInstance(null);
       }
-    };
-
-    void initialize();
+    }, 0);
 
     return () => {
-      active = false;
+      clearTimeout(timer);
 
       if(locator) {
         locator.destroy();
+        setInstance((currentInstance) => currentInstance === locator ? null : currentInstance);
       }
-
-      setInstance((currentInstance) => currentInstance === locator ? null : currentInstance);
     };
   }, [disabled, filtersRef, mapRef, wrapperRef]);
 

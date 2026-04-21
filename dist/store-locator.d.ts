@@ -19,6 +19,7 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
     filters: HTMLFormElement | null;
     private filterFields;
     private filterChangeHandler;
+    private resizeObserver;
     /**
      * Instantiate StoreLocator
      * @param options Store locator options
