@@ -3,9 +3,11 @@ import { vi } from 'vitest';
 type EventHandler = (...args: unknown[]) => void;
 
 export class Popup {
-  content = '';
+  content: string | HTMLElement = '';
 
-  setContent(content: string) {
+  constructor(public readonly options?: Record<string, unknown>) {}
+
+  setContent(content: string | HTMLElement) {
     this.content = content;
     return this;
   }
@@ -19,7 +21,7 @@ export class DivIcon extends Icon {}
 
 export interface MockMarker {
   latlng: { lat: number; lng: number; };
-  popup: string | Popup | null;
+  popup: string | HTMLElement | Popup | null;
   icon: Icon | DivIcon | null;
   bindPopup: ReturnType<typeof vi.fn>;
   setIcon: ReturnType<typeof vi.fn>;
@@ -114,7 +116,7 @@ const createMarker = (latlng: { lat: number; lng: number; }): MockMarker => {
     latlng,
     popup: null,
     icon: null,
-    bindPopup: vi.fn((popup: string | Popup) => {
+    bindPopup: vi.fn((popup: string | HTMLElement | Popup) => {
       marker.popup = popup;
       return marker;
     }),
@@ -206,7 +208,7 @@ const geoJSON = vi.fn((stores: { features?: Array<Record<string, unknown>>; }, o
   return layer;
 });
 
-const popup = vi.fn(() => new Popup());
+const popup = vi.fn((options?: Record<string, unknown>) => new Popup(options));
 const icon = vi.fn((options?: Record<string, unknown>) => new Icon(options));
 const divIcon = vi.fn((options?: Record<string, unknown>) => new DivIcon(options));
 

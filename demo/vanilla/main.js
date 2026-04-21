@@ -1,11 +1,11 @@
-/* global L, StoreLocator, demoStores */
+/* global StoreLocator, demoStores */
 
 new StoreLocator({
   stores: demoStores,
   map: {
     locate: true,
     markers: {
-      popup: (feature) => L.popup().setContent(`
+      popup: (feature) => `
         <div class="name"><b>${feature.properties.store}</b></div>
         <div class="address">
           <div>${feature.properties.address}</div>
@@ -13,8 +13,8 @@ new StoreLocator({
           <div>${feature.properties.city}</div>
           <div>${feature.properties.country}</div>
         </div>
-      `),
-      icon: (feature) => L.icon({
+      `,
+      icon: (feature) => ({
         iconUrl: feature.properties.icon,
         iconSize: [40, 44],
         iconAnchor: [20, 44],

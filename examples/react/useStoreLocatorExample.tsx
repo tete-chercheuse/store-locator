@@ -1,4 +1,3 @@
-import * as L from 'leaflet';
 import { useRef } from 'react';
 import { useStoreLocator } from 'store-locator/react';
 
@@ -47,7 +46,7 @@ export function UseStoreLocatorExample() {
       map: {
         locate: true,
         markers: {
-          popup: (feature) => L.popup().setContent(feature.properties.name),
+          popup: (feature) => feature.properties.name,
         },
       },
     },

@@ -103,4 +103,65 @@ describe('StoreLocator', () => {
     expect(locator.clusters).toBeNull();
     expect(locator.filters).toBeNull();
   });
+
+  it('creates marker icons from shorthand icon values', () => {
+    const mapElement = document.createElement('div');
+    document.body.appendChild(mapElement);
+
+    const locator = new StoreLocator({
+      stores: [
+        { id: 'store-1', icon: '/pin.svg', lat: 16.2411, lng: -61.5336 },
+      ],
+      elements: {
+        map: mapElement,
+      },
+      map: {
+        markers: {
+          icon: (feature) => ({
+            iconUrl: feature.properties.icon as string,
+            iconSize: [40, 44],
+            iconAnchor: [20, 44],
+          }),
+        },
+      },
+    });
+
+    expect(leafletMockState.markers[0].setIcon).toHaveBeenCalledTimes(1);
+    expect(leafletMockState.markers[0].icon).toBeInstanceOf(L.Icon);
+    expect((leafletMockState.markers[0].icon as L.Icon | null)?.options).toMatchObject({
+      iconUrl: '/pin.svg',
+      iconSize: [40, 44],
+      iconAnchor: [20, 44],
+    });
+
+    locator.destroy();
+  });
+
+  it('creates marker popups from shorthand popup values', () => {
+    const mapElement = document.createElement('div');
+    document.body.appendChild(mapElement);
+
+    const locator = new StoreLocator({
+      stores: [
+        { id: 'store-1', name: 'Cafe du Port', lat: 16.2411, lng: -61.5336 },
+      ],
+      elements: {
+        map: mapElement,
+      },
+      map: {
+        markers: {
+          popup: (feature) => ({
+            content: `<strong>${feature.properties.name as string}</strong>`,
+            maxWidth: 280,
+          }),
+        },
+      },
+    });
+
+    expect(leafletMockState.markers[0].bindPopup).toHaveBeenCalledTimes(1);
+    expect(leafletMockState.markers[0].popup).toBeInstanceOf(L.Popup);
+    expect((leafletMockState.markers[0].popup as L.Popup | null)?.content).toBe('<strong>Cafe du Port</strong>');
+
+    locator.destroy();
+  });
 });

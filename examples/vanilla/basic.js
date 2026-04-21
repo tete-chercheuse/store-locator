@@ -1,4 +1,3 @@
-import L from 'leaflet';
 import StoreLocator from 'store-locator';
 
 const stores = [
@@ -32,11 +31,11 @@ new StoreLocator({
   map: {
     locate: true,
     markers: {
-      popup: (feature) => L.popup().setContent(`
+      popup: (feature) => `
         <strong>${feature.properties.store}</strong><br />
         ${feature.properties.address}<br />
         ${feature.properties.city} - ${feature.properties.country}
-      `),
+      `,
     },
   },
 });

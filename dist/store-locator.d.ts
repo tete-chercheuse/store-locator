@@ -38,4 +38,4 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
     private resolveIcon;
     private detachFilters;
 }
-export type { StoreLocatorCoordinateStore, StoreLocatorCoordinateValue, StoreLocatorElements, StoreLocatorFeature, StoreLocatorFeatureCollection, StoreLocatorFilterValue, StoreLocatorFilters, StoreLocatorIconFactory, StoreLocatorMapConfig, StoreLocatorMarkerOptions, StoreLocatorOptions, StoreLocatorPopupFactory, StoreLocatorProperties, StoreLocatorResolvedOptions, StoreLocatorSelectors, StoreLocatorStoresInput, StoreLocatorTilesOptions, } from './types';
+export type { StoreLocatorCoordinateStore, StoreLocatorCoordinateValue, StoreLocatorElements, StoreLocatorFeature, StoreLocatorFeatureCollection, StoreLocatorFilterValue, StoreLocatorFilters, StoreLocatorIconFactory, StoreLocatorIconOptions, StoreLocatorIconValue, StoreLocatorMapConfig, StoreLocatorMarkerOptions, StoreLocatorOptions, StoreLocatorPopupFactory, StoreLocatorPopupContent, StoreLocatorPopupOptions, StoreLocatorPopupValue, StoreLocatorProperties, StoreLocatorResolvedOptions, StoreLocatorSelectors, StoreLocatorStoresInput, StoreLocatorTilesOptions, } from './types';

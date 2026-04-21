@@ -25,16 +25,33 @@ export type StoreLocatorStoresInput<P extends StoreLocatorProperties = StoreLoca
   | StoreLocatorCoordinateStore<P>[];
 
 export type StoreLocatorPopupFactory<P extends StoreLocatorProperties = StoreLocatorProperties> =
-  | string
-  | L.Popup
-  | null
-  | ((feature: StoreLocatorFeature<P>) => string | L.Popup | null | undefined);
+  | StoreLocatorPopupValue
+  | ((feature: StoreLocatorFeature<P>) => StoreLocatorPopupValue | undefined);
 
-export type StoreLocatorIconFactory<P extends StoreLocatorProperties = StoreLocatorProperties> =
+export type StoreLocatorPopupContent = string | HTMLElement;
+
+export type StoreLocatorPopupOptions = L.PopupOptions & {
+  content?: StoreLocatorPopupContent | null;
+};
+
+export type StoreLocatorPopupValue =
+  | StoreLocatorPopupContent
+  | StoreLocatorPopupOptions
+  | L.Popup
+  | null;
+
+export type StoreLocatorIconOptions = L.IconOptions;
+
+export type StoreLocatorIconValue =
+  | string
+  | StoreLocatorIconOptions
   | L.Icon
   | L.DivIcon
-  | null
-  | ((feature: StoreLocatorFeature<P>) => L.Icon | L.DivIcon | null | undefined);
+  | null;
+
+export type StoreLocatorIconFactory<P extends StoreLocatorProperties = StoreLocatorProperties> =
+  | StoreLocatorIconValue
+  | ((feature: StoreLocatorFeature<P>) => StoreLocatorIconValue | undefined);
 
 export interface StoreLocatorMapOptions extends L.MapOptions {
   zoom: number;

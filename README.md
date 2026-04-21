@@ -123,7 +123,6 @@ Markup HTML:
 Initialisation:
 
 ```js
-import L from 'leaflet';
 import StoreLocator from 'store-locator';
 
 new StoreLocator({
@@ -136,7 +135,7 @@ new StoreLocator({
   map: {
     locate: true,
     markers: {
-      popup: (feature) => L.popup().setContent(feature.properties.store),
+      popup: (feature) => feature.properties.store,
     },
   },
 });
@@ -149,7 +148,6 @@ Exemple complet: [examples/typescript/basic.ts](./examples/typescript/basic.ts)
 Le cœur de la librairie est écrit en TypeScript et peut être utilisé dans un projet strictement typé:
 
 ```ts
-import * as L from 'leaflet';
 import StoreLocator from 'store-locator';
 
 type DemoStore = {
@@ -174,13 +172,59 @@ const storeLocator = new StoreLocator<DemoStore>({
   map: {
     locate: true,
     markers: {
-      popup: (feature) => L.popup().setContent(feature.properties.store),
-      icon: (feature) => L.icon({ iconUrl: feature.properties.icon }),
+      popup: (feature) => feature.properties.store,
+      icon: (feature) => ({
+        iconUrl: feature.properties.icon,
+        iconSize: [40, 44],
+        iconAnchor: [20, 44],
+        popupAnchor: [0, -44],
+      }),
     },
   },
 });
 
 storeLocator.invalidateSize();
+```
+
+Pour les intégrations React, Next.js ou les projets où tu veux éviter d’importer directement `leaflet`, `markers.icon` accepte aussi directement:
+
+- une URL `string`
+- un objet compatible `L.IconOptions`
+- une factory qui retourne l’un des deux
+
+Le même principe s’applique à `markers.popup`, qui accepte:
+
+- une `string`
+- un `HTMLElement`
+- un objet compatible `L.PopupOptions` avec une clé `content`
+- une factory qui retourne l’une de ces formes
+
+Exemple Next.js avec un asset statique:
+
+```tsx
+import markerPin from '@/public/marker-store.svg';
+
+const stores = useMemo(() => rawStores, [rawStores]);
+
+<StoreLocatorMap
+  stores={stores}
+  options={{
+    map: {
+      markers: {
+        icon: {
+          iconUrl: markerPin.src,
+          iconSize: [40, 44],
+          iconAnchor: [20, 44],
+          popupAnchor: [0, -44],
+        },
+        popup: {
+          content: '<strong>Ma boutique</strong>',
+          maxWidth: 280,
+        },
+      },
+    },
+  }}
+/>
 ```
 
 ## Exemples React
@@ -207,7 +251,6 @@ Exemple complet: [examples/react/StoreLocatorMapExample.tsx](./examples/react/St
 > ```
 
 ```tsx
-import * as L from 'leaflet';
 import { StoreLocatorMap } from 'store-locator/react';
 
 export function StoresMap({ stores }) {
@@ -219,7 +262,7 @@ export function StoresMap({ stores }) {
         map: {
           locate: true,
           markers: {
-            popup: (feature) => L.popup().setContent(feature.properties.name),
+            popup: (feature) => feature.properties.name,
           },
         },
       }}

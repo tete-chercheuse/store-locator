@@ -17,6 +17,15 @@ function _extends() {
     return n;
   }, _extends.apply(null, arguments);
 }
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r[n];
+  }
+  return t;
+}
 
 const defaultMapOptions = {
   refreshRecenter: false,
@@ -190,6 +199,7 @@ const normalizeStores = stores => {
   };
 };
 
+const _excluded = ["content"];
 const normalizeFilterValues = value => {
   return (Array.isArray(value) ? value : [value]).filter(item => item !== '' && item !== null && item !== undefined).map(item => `${item}`);
 };
@@ -206,6 +216,52 @@ const matchesStoreProperty = (property, filter) => {
   }
   const properties = (Array.isArray(property) ? property : [property]).map(item => `${item}`);
   return values.some(value => properties.includes(value));
+};
+const isIconOptions = value => {
+  return typeof value === 'object' && value !== null && 'iconUrl' in value && typeof value.iconUrl === 'string';
+};
+const normalizeIconValue = value => {
+  if (value === null || value === undefined) {
+    return value;
+  }
+  if (value instanceof L.Icon) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    return L.icon({
+      iconUrl: value
+    });
+  }
+  if (isIconOptions(value)) {
+    return L.icon(value);
+  }
+  return undefined;
+};
+const isHtmlElement = value => {
+  return typeof HTMLElement !== 'undefined' && value instanceof HTMLElement;
+};
+const isPopupOptions = value => {
+  return typeof value === 'object' && value !== null && !isHtmlElement(value);
+};
+const normalizePopupValue = value => {
+  if (value === null || value === undefined) {
+    return value;
+  }
+  if (typeof value === 'string' || isHtmlElement(value) || value instanceof L.Popup) {
+    return value;
+  }
+  if (isPopupOptions(value)) {
+    const {
+        content
+      } = value,
+      options = _objectWithoutPropertiesLoose(value, _excluded);
+    const popup = L.popup(options);
+    if (content !== null && content !== undefined) {
+      popup.setContent(content);
+    }
+    return popup;
+  }
+  return undefined;
 };
 /**
  * Store Locator
@@ -291,10 +347,10 @@ class StoreLocator {
         const marker = L.marker(latlng);
         const popup = this.resolvePopup(feature);
         const icon = this.resolveIcon(feature);
-        if (typeof popup === 'string' || popup instanceof L.Popup) {
+        if (popup !== null && popup !== undefined) {
           marker.bindPopup(popup);
         }
-        if (icon instanceof L.Icon) {
+        if (icon) {
           marker.setIcon(icon);
         }
         marker.on('click', () => {
@@ -377,11 +433,11 @@ class StoreLocator {
   }
   resolvePopup(feature) {
     const popup = this.options.map.markers.popup;
-    return typeof popup === 'function' ? popup(feature) : popup;
+    return normalizePopupValue(typeof popup === 'function' ? popup(feature) : popup);
   }
   resolveIcon(feature) {
     const icon = this.options.map.markers.icon;
-    return typeof icon === 'function' ? icon(feature) : icon;
+    return normalizeIconValue(typeof icon === 'function' ? icon(feature) : icon);
   }
   detachFilters() {
     if (this.filterFields.length && this.filterChangeHandler) {

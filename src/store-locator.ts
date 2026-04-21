@@ -13,7 +13,11 @@ import type {
   StoreLocatorFeature,
   StoreLocatorFilterValue,
   StoreLocatorFilters,
+  StoreLocatorIconOptions,
+  StoreLocatorIconValue,
   StoreLocatorOptions,
+  StoreLocatorPopupOptions,
+  StoreLocatorPopupValue,
   StoreLocatorProperties,
   StoreLocatorResolvedOptions,
   StoreLocatorStoresInput,
@@ -45,6 +49,68 @@ const matchesStoreProperty = (property: unknown, filter: StoreLocatorFilterValue
   const properties = (Array.isArray(property) ? property : [property]).map((item) => `${item}`);
 
   return values.some((value) => properties.includes(value));
+};
+
+const isIconOptions = (value: unknown): value is StoreLocatorIconOptions => {
+  return typeof value === 'object'
+    && value !== null
+    && 'iconUrl' in value
+    && typeof (value as { iconUrl?: unknown; }).iconUrl === 'string';
+};
+
+const normalizeIconValue = (value: StoreLocatorIconValue | undefined): L.Icon | L.DivIcon | null | undefined => {
+  if(value === null || value === undefined) {
+    return value;
+  }
+
+  if(value instanceof L.Icon) {
+    return value;
+  }
+
+  if(typeof value === 'string') {
+    return L.icon({ iconUrl: value });
+  }
+
+  if(isIconOptions(value)) {
+    return L.icon(value);
+  }
+
+  return undefined;
+};
+
+const isHtmlElement = (value: unknown): value is HTMLElement => {
+  return typeof HTMLElement !== 'undefined' && value instanceof HTMLElement;
+};
+
+const isPopupOptions = (value: unknown): value is StoreLocatorPopupOptions => {
+  return typeof value === 'object'
+    && value !== null
+    && !isHtmlElement(value);
+};
+
+const normalizePopupValue = (
+  value: StoreLocatorPopupValue | undefined,
+): string | HTMLElement | L.Popup | null | undefined => {
+  if(value === null || value === undefined) {
+    return value;
+  }
+
+  if(typeof value === 'string' || isHtmlElement(value) || value instanceof L.Popup) {
+    return value;
+  }
+
+  if(isPopupOptions(value)) {
+    const { content, ...options } = value;
+    const popup = L.popup(options);
+
+    if(content !== null && content !== undefined) {
+      popup.setContent(content);
+    }
+
+    return popup;
+  }
+
+  return undefined;
 };
 
 /**
@@ -165,11 +231,11 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
         const popup = this.resolvePopup(feature);
         const icon = this.resolveIcon(feature);
 
-        if(typeof popup === 'string' || popup instanceof L.Popup) {
+        if(popup !== null && popup !== undefined) {
           marker.bindPopup(popup);
         }
 
-        if(icon instanceof L.Icon) {
+        if(icon) {
           marker.setIcon(icon);
         }
 
@@ -268,20 +334,24 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
     return this.options.elements.wrapper ?? resolveElement<HTMLElement>(this.options.selectors.wrapper);
   }
 
-  private resolvePopup(feature: StoreLocatorFeature<P>): string | L.Popup | null | undefined {
+  private resolvePopup(feature: StoreLocatorFeature<P>): string | HTMLElement | L.Popup | null | undefined {
     const popup = this.options.map.markers.popup;
 
-    return typeof popup === 'function'
-      ? popup(feature)
-      : popup;
+    return normalizePopupValue(
+      typeof popup === 'function'
+        ? popup(feature)
+        : popup,
+    );
   }
 
   private resolveIcon(feature: StoreLocatorFeature<P>): L.Icon | L.DivIcon | null | undefined {
     const icon = this.options.map.markers.icon;
 
-    return typeof icon === 'function'
-      ? icon(feature)
-      : icon;
+    return normalizeIconValue(
+      typeof icon === 'function'
+        ? icon(feature)
+        : icon,
+    );
   }
 
   private detachFilters(): void {
@@ -305,10 +375,15 @@ export type {
   StoreLocatorFilterValue,
   StoreLocatorFilters,
   StoreLocatorIconFactory,
+  StoreLocatorIconOptions,
+  StoreLocatorIconValue,
   StoreLocatorMapConfig,
   StoreLocatorMarkerOptions,
   StoreLocatorOptions,
   StoreLocatorPopupFactory,
+  StoreLocatorPopupContent,
+  StoreLocatorPopupOptions,
+  StoreLocatorPopupValue,
   StoreLocatorProperties,
   StoreLocatorResolvedOptions,
   StoreLocatorSelectors,

@@ -1,4 +1,3 @@
-import * as L from 'leaflet';
 import { StoreLocatorMap } from 'store-locator/react';
 
 type ExampleStore = {
@@ -51,11 +50,11 @@ export function StoreLocatorMapExample() {
         map: {
           refreshRecenter: true,
           markers: {
-            popup: (feature) => L.popup().setContent(`
+            popup: (feature) => `
               <strong>${feature.properties.name}</strong><br />
               ${feature.properties.address}<br />
               ${feature.properties.city}
-            `),
+            `,
           },
         },
       }}

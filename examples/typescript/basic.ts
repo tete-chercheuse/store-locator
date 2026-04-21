@@ -1,4 +1,3 @@
-import * as L from 'leaflet';
 import StoreLocator from 'store-locator';
 
 type DemoStore = {
@@ -52,8 +51,13 @@ const storeLocator = new StoreLocator<DemoStore>({
   map: {
     locate: true,
     markers: {
-      popup: (feature) => L.popup().setContent(feature.properties.store),
-      icon: (feature) => L.icon({ iconUrl: feature.properties.icon }),
+      popup: (feature) => feature.properties.store,
+      icon: (feature) => ({
+        iconUrl: feature.properties.icon,
+        iconSize: [40, 44],
+        iconAnchor: [20, 44],
+        popupAnchor: [0, -44],
+      }),
     },
   },
 });

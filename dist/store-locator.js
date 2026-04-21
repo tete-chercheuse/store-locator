@@ -43,6 +43,15 @@ function _extends() {
     return n;
   }, _extends.apply(null, arguments);
 }
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r[n];
+  }
+  return t;
+}
 function _unsupportedIterableToArray(r, a) {
   if (r) {
     if ("string" == typeof r) return _arrayLikeToArray(r, a);
@@ -235,6 +244,7 @@ var normalizeStores = function normalizeStores(stores) {
   };
 };
 
+var _excluded = ["content"];
 var normalizeFilterValues = function normalizeFilterValues(value) {
   return (Array.isArray(value) ? value : [value]).filter(function (item) {
     return item !== '' && item !== null && item !== undefined;
@@ -259,6 +269,50 @@ var matchesStoreProperty = function matchesStoreProperty(property, filter) {
   return values.some(function (value) {
     return properties.includes(value);
   });
+};
+var isIconOptions = function isIconOptions(value) {
+  return typeof value === 'object' && value !== null && 'iconUrl' in value && typeof value.iconUrl === 'string';
+};
+var normalizeIconValue = function normalizeIconValue(value) {
+  if (value === null || value === undefined) {
+    return value;
+  }
+  if (value instanceof L__default["default"].Icon) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    return L__default["default"].icon({
+      iconUrl: value
+    });
+  }
+  if (isIconOptions(value)) {
+    return L__default["default"].icon(value);
+  }
+  return undefined;
+};
+var isHtmlElement = function isHtmlElement(value) {
+  return typeof HTMLElement !== 'undefined' && value instanceof HTMLElement;
+};
+var isPopupOptions = function isPopupOptions(value) {
+  return typeof value === 'object' && value !== null && !isHtmlElement(value);
+};
+var normalizePopupValue = function normalizePopupValue(value) {
+  if (value === null || value === undefined) {
+    return value;
+  }
+  if (typeof value === 'string' || isHtmlElement(value) || value instanceof L__default["default"].Popup) {
+    return value;
+  }
+  if (isPopupOptions(value)) {
+    var content = value.content,
+      options = _objectWithoutPropertiesLoose(value, _excluded);
+    var popup = L__default["default"].popup(options);
+    if (content !== null && content !== undefined) {
+      popup.setContent(content);
+    }
+    return popup;
+  }
+  return undefined;
 };
 /**
  * Store Locator
@@ -378,10 +432,10 @@ var StoreLocator = /*#__PURE__*/function () {
         var marker = L__default["default"].marker(latlng);
         var popup = _this2.resolvePopup(feature);
         var icon = _this2.resolveIcon(feature);
-        if (typeof popup === 'string' || popup instanceof L__default["default"].Popup) {
+        if (popup !== null && popup !== undefined) {
           marker.bindPopup(popup);
         }
-        if (icon instanceof L__default["default"].Icon) {
+        if (icon) {
           marker.setIcon(icon);
         }
         marker.on('click', function () {
@@ -465,11 +519,11 @@ var StoreLocator = /*#__PURE__*/function () {
   };
   _proto.resolvePopup = function resolvePopup(feature) {
     var popup = this.options.map.markers.popup;
-    return typeof popup === 'function' ? popup(feature) : popup;
+    return normalizePopupValue(typeof popup === 'function' ? popup(feature) : popup);
   };
   _proto.resolveIcon = function resolveIcon(feature) {
     var icon = this.options.map.markers.icon;
-    return typeof icon === 'function' ? icon(feature) : icon;
+    return normalizeIconValue(typeof icon === 'function' ? icon(feature) : icon);
   };
   _proto.detachFilters = function detachFilters() {
     if (this.filterFields.length && this.filterChangeHandler) {
