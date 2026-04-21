@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect, createElement } from 'react';
 import L from 'leaflet';
 import 'leaflet-gesture-handling';
 import 'leaflet.markercluster';
@@ -466,4 +467,136 @@ var StoreLocator = /*#__PURE__*/function () {
   return StoreLocator;
 }();
 
-export { StoreLocator as default };
+var toError = function toError(error) {
+  return error instanceof Error ? error : new Error('[store-locator/react] - Failed to initialize StoreLocator');
+};
+var useStoreLocator = function useStoreLocator(_ref) {
+  var _wrapperRef$current, _filtersRef$current;
+  var stores = _ref.stores,
+    options = _ref.options,
+    mapRef = _ref.mapRef,
+    wrapperRef = _ref.wrapperRef,
+    filtersRef = _ref.filtersRef,
+    _ref$disabled = _ref.disabled,
+    disabled = _ref$disabled === void 0 ? false : _ref$disabled,
+    onReady = _ref.onReady;
+  var _useState = useState(null),
+    instance = _useState[0],
+    setInstance = _useState[1];
+  var _useState2 = useState(null),
+    error = _useState2[0],
+    setError = _useState2[1];
+  var storesRef = useRef(stores);
+  var optionsRef = useRef(options);
+  var onReadyRef = useRef(onReady);
+  storesRef.current = stores;
+  optionsRef.current = options;
+  onReadyRef.current = onReady;
+  var currentWrapper = (_wrapperRef$current = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current : null;
+  var currentFilters = (_filtersRef$current = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current : null;
+  useEffect(function () {
+    var active = true;
+    var locator = null;
+    if (disabled || !mapRef.current) {
+      setInstance(null);
+      setError(null);
+      return;
+    }
+    var initialize = function initialize() {
+      try {
+        try {
+          var _optionsRef$current, _wrapperRef$current2, _filtersRef$current2;
+          if (!active || !mapRef.current) {
+            return Promise.resolve();
+          }
+          locator = new StoreLocator(_extends({}, (_optionsRef$current = optionsRef.current) != null ? _optionsRef$current : {}, {
+            stores: storesRef.current,
+            elements: {
+              map: mapRef.current,
+              wrapper: (_wrapperRef$current2 = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current2 : null,
+              filters: (_filtersRef$current2 = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current2 : null
+            }
+          }));
+          if (!active) {
+            locator.destroy();
+            return Promise.resolve();
+          }
+          setInstance(locator);
+          setError(null);
+          onReadyRef.current == null || onReadyRef.current(locator);
+        } catch (nextError) {
+          if (active) {
+            setError(toError(nextError));
+            setInstance(null);
+          }
+        }
+        return Promise.resolve();
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    };
+    void initialize();
+    return function () {
+      active = false;
+      if (locator) {
+        locator.destroy();
+      }
+      setInstance(function (currentInstance) {
+        return currentInstance === locator ? null : currentInstance;
+      });
+    };
+  }, [disabled, filtersRef, mapRef, wrapperRef]);
+  useEffect(function () {
+    if (!instance) {
+      return;
+    }
+    instance.setStores(stores);
+  }, [instance, stores]);
+  useEffect(function () {
+    if (!instance) {
+      return;
+    }
+    instance.setFilters(currentFilters, currentWrapper);
+  }, [currentFilters, currentWrapper, instance]);
+  return {
+    instance: instance,
+    error: error,
+    ready: Boolean(instance) && !error
+  };
+};
+var StoreLocatorMap = function StoreLocatorMap(_ref2) {
+  var stores = _ref2.stores,
+    options = _ref2.options,
+    filtersRef = _ref2.filtersRef,
+    disabled = _ref2.disabled,
+    onReady = _ref2.onReady,
+    className = _ref2.className,
+    style = _ref2.style,
+    mapClassName = _ref2.mapClassName,
+    mapStyle = _ref2.mapStyle,
+    children = _ref2.children;
+  var wrapperRef = useRef(null);
+  var mapRef = useRef(null);
+  useStoreLocator({
+    stores: stores,
+    options: options,
+    filtersRef: filtersRef,
+    mapRef: mapRef,
+    wrapperRef: wrapperRef,
+    disabled: disabled,
+    onReady: onReady
+  });
+  return createElement('div', {
+    ref: wrapperRef,
+    className: className,
+    style: style
+  }, children, createElement('div', {
+    ref: mapRef,
+    className: mapClassName,
+    style: mapStyle != null ? mapStyle : {
+      minHeight: 400
+    }
+  }));
+};
+
+export { StoreLocatorMap, useStoreLocator };

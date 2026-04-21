@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect, createElement } from 'react';
 import L from 'leaflet';
 import 'leaflet-gesture-handling';
 import 'leaflet.markercluster';
@@ -380,4 +381,126 @@ class StoreLocator {
   }
 }
 
-export { StoreLocator as default };
+const toError = error => {
+  return error instanceof Error ? error : new Error('[store-locator/react] - Failed to initialize StoreLocator');
+};
+const useStoreLocator = ({
+  stores,
+  options,
+  mapRef,
+  wrapperRef,
+  filtersRef,
+  disabled: _disabled = false,
+  onReady
+}) => {
+  var _wrapperRef$current, _filtersRef$current;
+  const [instance, setInstance] = useState(null);
+  const [error, setError] = useState(null);
+  const storesRef = useRef(stores);
+  const optionsRef = useRef(options);
+  const onReadyRef = useRef(onReady);
+  storesRef.current = stores;
+  optionsRef.current = options;
+  onReadyRef.current = onReady;
+  const currentWrapper = (_wrapperRef$current = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current : null;
+  const currentFilters = (_filtersRef$current = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current : null;
+  useEffect(() => {
+    let active = true;
+    let locator = null;
+    if (_disabled || !mapRef.current) {
+      setInstance(null);
+      setError(null);
+      return;
+    }
+    const initialize = async () => {
+      try {
+        var _optionsRef$current, _wrapperRef$current2, _filtersRef$current2;
+        if (!active || !mapRef.current) {
+          return;
+        }
+        locator = new StoreLocator(_extends({}, (_optionsRef$current = optionsRef.current) != null ? _optionsRef$current : {}, {
+          stores: storesRef.current,
+          elements: {
+            map: mapRef.current,
+            wrapper: (_wrapperRef$current2 = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current2 : null,
+            filters: (_filtersRef$current2 = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current2 : null
+          }
+        }));
+        if (!active) {
+          locator.destroy();
+          return;
+        }
+        setInstance(locator);
+        setError(null);
+        onReadyRef.current == null || onReadyRef.current(locator);
+      } catch (nextError) {
+        if (active) {
+          setError(toError(nextError));
+          setInstance(null);
+        }
+      }
+    };
+    void initialize();
+    return () => {
+      active = false;
+      if (locator) {
+        locator.destroy();
+      }
+      setInstance(currentInstance => currentInstance === locator ? null : currentInstance);
+    };
+  }, [_disabled, filtersRef, mapRef, wrapperRef]);
+  useEffect(() => {
+    if (!instance) {
+      return;
+    }
+    instance.setStores(stores);
+  }, [instance, stores]);
+  useEffect(() => {
+    if (!instance) {
+      return;
+    }
+    instance.setFilters(currentFilters, currentWrapper);
+  }, [currentFilters, currentWrapper, instance]);
+  return {
+    instance,
+    error,
+    ready: Boolean(instance) && !error
+  };
+};
+const StoreLocatorMap = ({
+  stores,
+  options,
+  filtersRef,
+  disabled,
+  onReady,
+  className,
+  style,
+  mapClassName,
+  mapStyle,
+  children
+}) => {
+  const wrapperRef = useRef(null);
+  const mapRef = useRef(null);
+  useStoreLocator({
+    stores,
+    options,
+    filtersRef,
+    mapRef,
+    wrapperRef,
+    disabled,
+    onReady
+  });
+  return createElement('div', {
+    ref: wrapperRef,
+    className,
+    style
+  }, children, createElement('div', {
+    ref: mapRef,
+    className: mapClassName,
+    style: mapStyle != null ? mapStyle : {
+      minHeight: 400
+    }
+  }));
+};
+
+export { StoreLocatorMap, useStoreLocator };

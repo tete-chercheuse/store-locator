@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Store Locator - Démo vanilla</title>
+  <link href="../../node_modules/leaflet/dist/leaflet.css" rel="stylesheet"/>
+  <link href="../../node_modules/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet"/>
+  <link href="../../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css" rel="stylesheet"/>
+  <link href="../../node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css" rel="stylesheet"/>
+  <link href="../../node_modules/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" rel="stylesheet"/>
+  <link href="../assets/demo.css" rel="stylesheet"/>
+</head>
+
+<body>
+  <main class="demo-shell">
+    <div class="demo-container">
+      <header class="demo-header">
+        <div>
+          <p class="demo-kicker">Démo vanilla</p>
+          <h1>Intégration JavaScript classique</h1>
+          <p>
+            Cette version charge le bundle UMD principal et instancie directement la classe
+            <code>StoreLocator</code>.
+          </p>
+        </div>
+        <nav class="demo-nav">
+          <a href="../">Retour aux démos</a>
+          <a href="../react/">Ouvrir la démo React</a>
+        </nav>
+      </header>
+
+      <section class="demo-panel">
+        <div class="demo-panel-header">
+          <div>
+            <h2>Carte interactive vanilla</h2>
+            <p>
+              Les filtres sont gérés via le DOM et la classe principale. Les données sont partagées
+              avec la démo React.
+            </p>
+          </div>
+        </div>
+
+        <div class="store-locator">
+          <form class="store-locator-filters">
+            <label>
+              <input checked name="category" type="radio" value=""/>
+              Tout
+            </label>
+            <label>
+              <input name="category" type="radio" value="Restaurants"/>
+              Restaurants
+            </label>
+            <label>
+              <input name="category" type="radio" value="Wineshops"/>
+              Cavistes
+            </label>
+          </form>
+          <div class="store-locator-map" id="store-locator-map"></div>
+        </div>
+
+        <p class="demo-note">
+          Source d’entrée: <code>dist/store-locator.umd.js</code>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <script src="../../node_modules/leaflet/dist/leaflet.js"></script>
+  <script src="../../node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script src="../../node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+  <script src="../../node_modules/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.js"></script>
+  <script src="../../dist/store-locator.umd.js"></script>
+  <script src="../shared/stores.js"></script>
+  <script src="./main.js"></script>
+</body>
+
+</html>

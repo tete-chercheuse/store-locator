@@ -1,82 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
   <meta charset="utf-8"/>
-  <title>Store-locator</title>
-  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.css" rel="stylesheet"/>
-  <style>
-    body {
-      margin: 0;
-    }
-
-    .store-locator-filters {
-        height: 5vh;
-        width: 100%;
-    }
-
-    #store-locator-map {
-      height: 95vh;
-      width: 100%;
-    }
-  </style>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Store Locator - Démos</title>
+  <link href="./assets/demo.css" rel="stylesheet"/>
 </head>
 
 <body>
+  <main class="demo-shell">
+    <div class="demo-container">
+      <header class="demo-header">
+        <div>
+          <p class="demo-kicker">Store Locator</p>
+          <h1>Démos séparées vanilla et React</h1>
+          <p>
+            Cette page centralise les deux variantes de démonstration du package. Chaque démo dispose
+            de sa propre entrée HTML, de ses scripts et de sa navigation.
+          </p>
+        </div>
+      </header>
 
-<div class="store-locator">
-  <form class="store-locator-filters">
-    <label>
-      <input checked name="category" type="radio" value="">
-      Tout
-    </label>
-    <label>
-      <input name="category" type="radio" value="Restaurants">
-      Restaurants
-    </label>
-    <label>
-      <input name="category" type="radio" value="Wineshops">
-      Wineshops
-    </label>
-  </form>
-  <div id="store-locator-map"></div>
-</div>
+      <section class="demo-grid">
+        <article class="demo-card">
+          <h2>Démo vanilla</h2>
+          <p>
+            Intégration directe du bundle UMD principal avec le DOM classique et des filtres HTML
+            natifs.
+          </p>
+          <a class="demo-card-link" href="./vanilla/">Ouvrir la démo vanilla</a>
+        </article>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-<script src="https://unpkg.com/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.js"></script>
-<script src="https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.js"></script>
-<script src="../dist/store-locator.umd.js"></script>
-<script src="stores.js"></script>
-<script type="application/javascript">
-  new StoreLocator({
-    stores: stores,
-    map: {
-      markers: {
-        popup: (feature) => L.popup().setContent(`
-          <div class="name"><b>${feature.properties.store}</b></div>
-          <div class="address">
-            <div>${feature.properties.address}</div>
-            <div>${feature.properties.area1}</div>
-            <div>${feature.properties.city}</div>
-            <div>${feature.properties.country}</div>
-          </div>
-        `),
-        icon: (feature) => L.icon({
-          iconUrl: feature.properties.icon,
-          iconSize: [40, 44],
-          iconAnchor: [20, 44],
-          popupAnchor: [0, -44],
-        })
-      }
-    }
-  });
-</script>
-
+        <article class="demo-card">
+          <h2>Démo React</h2>
+          <p>
+            Intégration du wrapper React avec un composant <code>StoreLocatorMap</code> et les mêmes
+            données partagées.
+          </p>
+          <a class="demo-card-link" href="./react/">Ouvrir la démo React</a>
+        </article>
+      </section>
+    </div>
+  </main>
 </body>
 
 </html>

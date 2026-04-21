@@ -1,38 +1,88 @@
 {
   "name": "store-locator",
-  "version": "1.0.13",
+  "version": "2.0.0",
   "description": "A front-end store locator module",
-  "source": "src/store-locator.js",
-  "main": "dist/store-locator.js",
-  "module": "dist/store-locator.esm.js",
-  "unpkg": "dist/store-locator.umd.js",
-  "amdName": "StoreLocator",
-  "scripts": {
-    "clean": "rm -r node_modules",
-    "init": "npm install",
-    "build": "microbundle build --compress false --sourcemap false",
-    "watch": "microbundle watch --compress false --sourcemap false",
-    "refresh": "npm run clean; npm run init"
-  },
+  "author": "tete-chercheuse",
+  "license": "MIT",
+  "homepage": "https://github.com/tete-chercheuse/store-locator",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/tete-chercheuse/store-locator.git"
   },
-  "author": "tete-chercheuse",
-  "license": "MIT",
-  "homepage": "https://github.com/tete-chercheuse/store-locator",
+  "source": "src/store-locator.ts",
+  "main": "dist/store-locator.js",
+  "module": "dist/store-locator.esm.js",
+  "types": "types/store-locator.d.ts",
+  "unpkg": "dist/store-locator.umd.js",
+  "amdName": "StoreLocator",
+  "exports": {
+    ".": {
+      "types": "./types/store-locator.d.ts",
+      "import": "./dist/store-locator.modern.mjs",
+      "require": "./dist/store-locator.js",
+      "default": "./dist/store-locator.modern.mjs"
+    },
+    "./react": {
+      "types": "./types/react.d.ts",
+      "import": "./dist/react.modern.mjs",
+      "require": "./dist/react.js",
+      "default": "./dist/react.modern.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "types",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "clean:dist": "rm -rf dist",
+    "demo:serve": "node scripts/demo-server.mjs",
+    "demo": "npm run build && npm run demo:serve",
+    "init": "npm install",
+    "build:core": "microbundle build --entry src/store-locator.ts --format modern,esm,cjs,umd --compress false --sourcemap false --no-generateTypes",
+    "build:react:cjs": "microbundle build --entry src/react.ts --output dist/react.js --format cjs --compress false --sourcemap false --no-generateTypes --pkg-main false",
+    "build:react:esm": "microbundle build --entry src/react.ts --output dist/react.esm.js --format esm --compress false --sourcemap false --no-generateTypes --pkg-main false",
+    "build:react:modern": "microbundle build --entry src/react.ts --output dist/react.modern.mjs --format modern --compress false --sourcemap false --no-generateTypes --pkg-main false",
+    "build:react:umd": "microbundle build --entry src/react.ts --output dist/react.umd.js --format umd --name StoreLocatorReact --globals react=React,leaflet=L --compress false --sourcemap false --no-generateTypes --pkg-main false",
+    "build:react": "npm run build:react:cjs && npm run build:react:esm && npm run build:react:modern && npm run build:react:umd",
+    "build:types": "tsc --project tsconfig.json --emitDeclarationOnly --declaration --declarationDir dist",
+    "build": "npm run clean:dist && npm run build:core && npm run build:react && npm run build:types",
+    "watch": "microbundle watch --entry src/store-locator.ts --format modern,esm,cjs,umd --compress false --sourcemap false --no-generateTypes",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:e2e": "npm run build && playwright test",
+    "test:watch": "vitest",
+    "refresh": "npm run clean; npm run init"
+  },
   "dependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/leaflet": "^1.9.21",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
-    "leaflet.markercluster": "^1.5.3",
-    "leaflet.locatecontrol": "^0.85.1"
+    "leaflet.locatecontrol": "^0.89.0",
+    "leaflet.markercluster": "^1.5.3"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@babel/core": "^7.20.5",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/register": "^7.18.9",
-    "browser-sync": "^2.27.10",
-    "gulp": "^4.0.2",
-    "microbundle": "^0.15.1"
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "@babel/register": "^7.28.6",
+    "@playwright/test": "^1.59.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.14",
+    "jsdom": "^27.0.1",
+    "microbundle": "^0.15.1",
+    "react": "^19.2.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   }
 }

@@ -13,7 +13,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Vue de Monde",
         "address": "525 Collins Street",
         "city": "Melbourne",
@@ -35,7 +35,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Charmes-Chambertin",
         "address": "Crawhez 56",
         "city": "Aubel",
@@ -57,7 +57,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Lobster House",
         "address": "39 Rue des Bouchers ",
         "city": "Brusels",
@@ -79,7 +79,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Chutney Restaurant",
         "address": "5 Rue Duquesnoy",
         "city": "Brussels",
@@ -101,7 +101,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Restaurant Michel",
         "address": "Alfons Gossetlaan 31",
         "city": "Brussels",
@@ -123,7 +123,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Mani",
         "address": "Rue Joaquim Antunes 10",
         "city": "Sao Paulo",
@@ -145,7 +145,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Fairview",
         "address": "111 Lake Louise Drive",
         "city": "Lake Louise",
@@ -167,7 +167,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Escabeche at the Prince of Wales Hotel",
         "address": "6 Picton Street",
         "city": "Niagara Falls",
@@ -189,7 +189,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "le select",
         "address": "432 Wellington Street West",
         "city": "Toronto",
@@ -211,7 +211,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Michael's On Simcoe",
         "address": "100 Simcoe St",
         "city": "Toronto",
@@ -233,7 +233,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Sorrel Rosedale",
         "address": "1158 Yonge St",
         "city": "Toronto",
@@ -255,7 +255,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Tramonto at River Rock Cafe",
         "address": "8811 River Road",
         "city": "Toronto",
@@ -277,7 +277,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Brix",
         "address": "1138 Homer Street",
         "city": "Vancouver",
@@ -299,7 +299,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Brix",
         "address": "1138 Homer Street",
         "city": "Vancouver",
@@ -321,7 +321,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "L'abattoir",
         "address": "217 Carrall Street",
         "city": "Vancouver",
@@ -343,7 +343,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Araxi",
         "address": "4222 Village square",
         "city": "Whistler",
@@ -365,7 +365,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Hy's Steakhouse - Whistler",
         "address": "4308 Main Street",
         "city": "Whistler",
@@ -387,7 +387,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Rim Rock Cafe",
         "address": "2117 Whistler Road",
         "city": "Whistler",
@@ -409,7 +409,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Scarlett Cafe & Wine Bar",
         "address": "2 Austin Ave",
         "city": "Hong Kong",
@@ -431,7 +431,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Grand Buffet",
         "address": "183 Queen's Road East",
         "city": "Hong Kong",
@@ -453,7 +453,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Puli Hotel Shanghai - PHENIX",
         "address": "1 Changde Road",
         "city": "Shanghai",
@@ -475,7 +475,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "L'Avenue Carnot",
         "address": "2, Avenue Carnot",
         "city": "Bordeaux",
@@ -497,7 +497,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "La Belle Saison",
         "address": "75 Quai des Queyries",
         "city": "Bordeaux",
@@ -519,7 +519,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Nama",
         "address": "24 Rue Lafaurie mobadon",
         "city": "Bordeaux",
@@ -541,7 +541,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Auberge du Ch\u00e2teau Table des Blot",
         "address": "1 Grande Rue",
         "city": "Dampierre-en-Yvelines",
@@ -563,7 +563,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Relais des Moines",
         "address": "77 Chemin des valises",
         "city": "Les Arcs",
@@ -585,7 +585,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Panier",
         "address": "5 Rue Barillerie",
         "city": "Nice",
@@ -607,7 +607,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Tribeca Wine Bar",
         "address": "1 bis rue Dalpozzo",
         "city": "Nice",
@@ -629,7 +629,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Allard",
         "address": "41 Rue Saint Andre des Arts",
         "city": "Paris",
@@ -651,7 +651,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Auberge Nicolas Flamel",
         "address": "51 rue de Montmorency",
         "city": "Paris",
@@ -673,7 +673,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Beefbar Paris",
         "address": "5 rue Marboeuf",
         "city": "Paris",
@@ -695,7 +695,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Grands Boulevards Hotel",
         "address": "17 Boulevard Pioissonniere",
         "city": "Paris",
@@ -717,7 +717,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "La Fontaine de Mars",
         "address": "129 Rue Saint-Dominique",
         "city": "Paris",
@@ -739,7 +739,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le 39 V",
         "address": "39 Avenue Georges V",
         "city": "Paris",
@@ -761,7 +761,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Mesturet",
         "address": "77 rue de Richelieu",
         "city": "Paris",
@@ -783,7 +783,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Roca - Paris",
         "address": "31 Rue Guillaume Tell",
         "city": "Paris",
@@ -805,7 +805,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Vagenende",
         "address": "142 Boulevard Saint Germain",
         "city": "Paris",
@@ -827,7 +827,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Historisches Gasthaus Sanct Peter Restaurant",
         "address": "Wahlporzheimer str.134",
         "city": "Bad-Neuenahr-Ahrweiler",
@@ -849,7 +849,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Florian",
         "address": "Grolmanstrase 52",
         "city": "Berlin",
@@ -871,7 +871,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Park Restaurant Bremen",
         "address": "Im Buergerpark",
         "city": "Bremen",
@@ -893,7 +893,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Canard Nouveau",
         "address": "Elbchaussee 139",
         "city": "Hamburg",
@@ -915,7 +915,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Kronen Restaurant",
         "address": "Hauptstrasse 62-64",
         "city": "Herxheim am Berg",
@@ -937,7 +937,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Salon im Kesselhaus",
         "address": "Griesbachstr.\u00a010c",
         "city": "Karlsruhe",
@@ -959,7 +959,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Eisenbahn",
         "address": "Karl-Kurz-strasse 2",
         "city": "M\u00fcnchen",
@@ -981,7 +981,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Cork and Screw",
         "address": "GF Unit 51C Lot. 3-5 SCBD, JL.Jend Sud",
         "city": "Jakarta",
@@ -1003,7 +1003,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Lyon",
         "address": "Jalan M.H Thamrin, PO BOX 3392",
         "city": "Jakarta",
@@ -1025,7 +1025,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Metis",
         "address": "JL Petitenget n6, Kerobokan Kelod",
         "city": "Kuta",
@@ -1047,7 +1047,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Amour",
         "address": "4-10-3 Nishiazabu Minatoku",
         "city": "Tokyo",
@@ -1069,7 +1069,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Aux Amis des Vins",
         "address": "Ginza 2-5-6",
         "city": "Tokyo",
@@ -1091,7 +1091,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Aux Amis-Tokyo",
         "address": "2-4-1 Marunouchi, Chiyoda",
         "city": "Tokyo",
@@ -1113,7 +1113,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Beige (Alain Ducasse)",
         "address": "3-5-3 Ginza",
         "city": "Tokyo",
@@ -1135,7 +1135,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Brasserie Aux Amis",
         "address": "3-3-1 Marunouchi",
         "city": "Tokyo",
@@ -1157,7 +1157,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Sakura - New Otani",
         "address": "4-1 Kioicho",
         "city": "Tokyo",
@@ -1179,7 +1179,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Wine Bar Mayu",
         "address": "40-3 Kamiyama",
         "city": "Tokyo",
@@ -1201,7 +1201,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Amour",
         "address": "4-10-3 Nishiazabu Minatoku",
         "city": "Tokyo ",
@@ -1223,7 +1223,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Beach Club",
         "address": "Jalan Teluk Datai",
         "city": "Kuah",
@@ -1245,7 +1245,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Dining Room",
         "address": "Jalan Teluk Datai",
         "city": "Kuah",
@@ -1267,7 +1267,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Gulai House",
         "address": "Jalan Teluk Datai",
         "city": "Kuah",
@@ -1289,7 +1289,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Cilantro Restaurant and Wine Bar",
         "address": "368-B, Jalan Tun Razak",
         "city": "Kuala Lumpur",
@@ -1311,7 +1311,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Planteur",
         "address": "80 University Avenue,",
         "city": "Rangoon",
@@ -1333,7 +1333,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Seeds Restaurant and Lounge",
         "address": "No 63A, U Tun Nyein Street, Ward 10",
         "city": "Rangoon",
@@ -1355,7 +1355,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "13 Gastro Wine - Aliwal",
         "address": "14 Aliwal Street",
         "city": "Singapore",
@@ -1377,7 +1377,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Crystal Wines",
         "address": "491 River Valley Road",
         "city": "Singapore",
@@ -1399,7 +1399,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Enoteca - SG",
         "address": "391 Orchard Road",
         "city": "Singapore",
@@ -1421,7 +1421,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Bar \u00e0 vin - SG",
         "address": "9 Raffles Place",
         "city": "Singapore",
@@ -1443,7 +1443,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "French Wine - SG",
         "address": "11 Changi South Lane",
         "city": "Singapore",
@@ -1465,7 +1465,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "L'Angelus",
         "address": "85 Club Street",
         "city": "Singapore",
@@ -1487,7 +1487,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Carillon de l'Angelus",
         "address": "24 Ann Siang Rd",
         "city": "Singapore",
@@ -1509,7 +1509,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "OCF",
         "address": "1 Old Parliament Lane",
         "city": "Singapore",
@@ -1531,7 +1531,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Spago by Wolgang Puck",
         "address": "10 Bayfront Ave",
         "city": "Singapore",
@@ -1553,7 +1553,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Stellar at 1-Altitude",
         "address": "1 Raffles Place",
         "city": "Singapore",
@@ -1575,7 +1575,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Haberbuni",
         "address": "Konizstrasse 175",
         "city": "Bern",
@@ -1597,7 +1597,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "La Cene",
         "address": "Rue du Criblet 6",
         "city": "Fribourg",
@@ -1619,7 +1619,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Loti at Hotel La Reserve",
         "address": "301 route de Lausanne",
         "city": "Gen\u00e8ve",
@@ -1641,7 +1641,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "ParkWeggis Hotel (Park Grill - Sparks)",
         "address": "Hertensteinstrasse 34",
         "city": "Weggis",
@@ -1663,7 +1663,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Omnia",
         "address": "Auf dem Fels",
         "city": "Zermatt",
@@ -1685,7 +1685,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Kronenhalle",
         "address": "R\u00e4mistrasse 4",
         "city": "Z\u00fcrich",
@@ -1707,7 +1707,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Wunderbrunnen",
         "address": "Dorfstrasse 36",
         "city": "Z\u00fcrich",
@@ -1729,7 +1729,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Issaya Siamese Club",
         "address": "4 Chuea Phloeng Road",
         "city": "Bangkok",
@@ -1751,7 +1751,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Saawan",
         "address": "South Sathon Road,Thung Maha",
         "city": "Bangkok",
@@ -1773,7 +1773,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Scarlett Wine Bar and Restaurant",
         "address": "188 Silom Road, Quriyawongse Bang Rak",
         "city": "Bangkok",
@@ -1795,7 +1795,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Acqua",
         "address": "324\/15 Prabaramee Road, Kalim Bay",
         "city": "Phuket",
@@ -1817,7 +1817,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Terrace (at Montagu Arms)",
         "address": "Lymington",
         "city": "Brockenhurst",
@@ -1839,7 +1839,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Pass",
         "address": "Brighton Road, Nr. Horsham",
         "city": "Horsham",
@@ -1861,7 +1861,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Aviary",
         "address": "22-25 Finsbury Square",
         "city": "London",
@@ -1883,7 +1883,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "M Victoria Street",
         "address": "70 Victoria Street",
         "city": "London",
@@ -1905,7 +1905,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Plum + Spilt Milk",
         "address": "Pancras Road",
         "city": "London",
@@ -1927,7 +1927,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Roux at the Landau",
         "address": "1c Portland Place",
         "city": "London",
@@ -1949,7 +1949,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Bingham",
         "address": "61-63 Petersham Road",
         "city": "London",
@@ -1971,7 +1971,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Chiswell Street Dining Rooms",
         "address": "56 chiswell street",
         "city": "London",
@@ -1993,7 +1993,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Grazing Goat",
         "address": "6 New Quebec Street",
         "city": "London",
@@ -2015,7 +2015,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Orange",
         "address": "37 Pimlico Road",
         "city": "London",
@@ -2037,7 +2037,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "New York Prime",
         "address": "2350 Executive Center Drive",
         "city": "Boca Raton",
@@ -2059,7 +2059,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Jill's Restaurant",
         "address": "900 Walnut Street",
         "city": "Boulder ",
@@ -2081,7 +2081,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Briar Rose Chophouse & Saloon",
         "address": "109 Lincoln Avenue",
         "city": "Breckenridge",
@@ -2103,7 +2103,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Total Wines & More",
         "address": "471 South Associated Road",
         "city": "Brea",
@@ -2125,7 +2125,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Total Wines & More",
         "address": "1505 Hawthorne Boulevard",
         "city": "Redondo",
@@ -2147,7 +2147,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Total Wines & More",
         "address": "9350 N. Central, Expressway",
         "city": "Dallas",
@@ -2169,7 +2169,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Total Wines & More",
         "address": "5200 S.Hulen St.",
         "city": "Fort Worth",
@@ -2191,7 +2191,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Total Wines & More",
         "address": "10001 Research Blvd",
         "city": "Austin",
@@ -2213,7 +2213,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "K&L Wines",
         "address": "1400 Vine Street",
         "city": "Los Angeles",
@@ -2235,7 +2235,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Goody Goody Liquor",
         "address": "3316 Oak Lawn Avenue",
         "city": "Dallas",
@@ -2257,7 +2257,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Goody Goody Liquor",
         "address": "6393 Camp Bowie",
         "city": "Fort Worth",
@@ -2279,7 +2279,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Goody Goody Liquor",
         "address": "7124 Greenvil Ave",
         "city": "Dallas",
@@ -2301,7 +2301,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Cork",
         "address": "3636 McKinney Ave",
         "city": "Dallas",
@@ -2323,7 +2323,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Goody Goody Liquor",
         "address": "10301 Harry Hines Blvd",
         "city": "Dallas",
@@ -2345,7 +2345,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Sigel's Fine Wines",
         "address": "5757 Greenville ave",
         "city": "Dallas",
@@ -2367,7 +2367,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Sigel's Fine Wines",
         "address": "3209 N.Fitzhugh",
         "city": "Dallas",
@@ -2389,7 +2389,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Five Sixty Wolfgang Puck",
         "address": "300 Reunion Blvd East",
         "city": "Dallas",
@@ -2411,7 +2411,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Party Pantry Fine Wines",
         "address": "8277 Windfern Road",
         "city": "Houston",
@@ -2433,7 +2433,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Houston Wine Merchant",
         "address": "2646 South Shepherd Drive",
         "city": "Houston",
@@ -2455,7 +2455,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Kroger - The Heights ",
         "address": "1035 N Shepherd Dr",
         "city": "Houston",
@@ -2477,7 +2477,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "La Cave Warehou",
         "address": "2263 Valdina Street",
         "city": "Dallas",
@@ -2499,7 +2499,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Lavendou Bistrot Proven\u00e7al",
         "address": "19009 Preston Road",
         "city": "Dallas",
@@ -2521,7 +2521,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Remedy Liquor",
         "address": "1700 W Glenoaks Blvd",
         "city": "Glendale",
@@ -2543,7 +2543,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Brenner's Steakhouse",
         "address": "10911 Katy Freeway",
         "city": "Houston",
@@ -2565,7 +2565,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Doris Metropolitan",
         "address": "2815 South Sheperd Drive",
         "city": "Houston",
@@ -2587,7 +2587,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Oak & Barrel - NY",
         "address": "235 E 57th St",
         "city": "New York City",
@@ -2609,7 +2609,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Philippe Liquors",
         "address": "312 West 23 rd Street",
         "city": "New York City",
@@ -2631,7 +2631,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Pappas Bros - Houston",
         "address": "5839 Westheimer Road",
         "city": "Houston",
@@ -2653,7 +2653,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Tony's",
         "address": "3755 Richmond Avenue",
         "city": "Houston",
@@ -2675,7 +2675,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Du's Wines",
         "address": "600 Washington Street",
         "city": "New York City",
@@ -2697,7 +2697,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Restaurant Orsay",
         "address": "3630 Park St",
         "city": "Jacksonville",
@@ -2719,7 +2719,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Entyse Wine Bar & Lounge",
         "address": "1700 Tysons Boulevard ",
         "city": "Mc Lean",
@@ -2741,7 +2741,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Baoli",
         "address": "1906 Collins Avenue",
         "city": "Miami",
@@ -2763,7 +2763,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Gotham Wines & Liquor",
         "address": "2517 Broadway",
         "city": "New York City",
@@ -2785,7 +2785,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Schumers Wines",
         "address": "59 E 54th St",
         "city": "New York City",
@@ -2807,7 +2807,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Ehrlich's Wines",
         "address": "222 Amsterdam Avenue",
         "city": "New York City",
@@ -2829,7 +2829,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Millesima",
         "address": "1355, 2nd Avenue",
         "city": "New York City",
@@ -2851,7 +2851,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Lea & Sandeman",
         "address": "106 Kensington Church Street",
         "city": "London",
@@ -2873,7 +2873,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "67 Wines & Spirits ",
         "address": "179 Columbus Avenue",
         "city": "New York City",
@@ -2895,7 +2895,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Financial District Wine & Liquor",
         "address": "120 Nassau Street",
         "city": "New York City",
@@ -2917,7 +2917,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Marion - Miami",
         "address": "1111 SW 1st Ave",
         "city": "Miami",
@@ -2939,7 +2939,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "STK Miami",
         "address": "2377 Collins Avenue",
         "city": "Miami Beach",
@@ -2961,7 +2961,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Bagatelle",
         "address": "1 Little West 12th Street",
         "city": "New York City",
@@ -2983,7 +2983,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Gramercy Tavern",
         "address": "42 E 20th St",
         "city": "New York City",
@@ -3005,7 +3005,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Terroir Tribeca",
         "address": "24 Harrison Street",
         "city": "New York City",
@@ -3027,7 +3027,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Vito's Chop House",
         "address": "8633 International Drive",
         "city": "Orlando",
@@ -3049,7 +3049,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Bohanans Prime Steaks and Seafood",
         "address": "219 E. Houston Street",
         "city": "San Antonio",
@@ -3071,7 +3071,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "The Keystone Ranch Restaurant ",
         "address": "1239 Ranch Road",
         "city": "Silverthorne",
@@ -3093,7 +3093,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Charleys Steakhouse",
         "address": "4444 West Cypress Street",
         "city": "Tampa",
@@ -3115,7 +3115,7 @@ const stores = {
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
-        "icon": "icon-pin-restaurants.svg",
+        "icon": "../assets/icon-pin-restaurants.svg",
         "store": "BLT Prime By David Burke - DC",
         "address": "1100 Pennsylvania Avenue NW",
         "city": "Washington",
@@ -3137,7 +3137,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Le Tire Bouchon - Bel",
         "address": "Rue Defacqz 85",
         "city": "Brussels",
@@ -3159,7 +3159,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Piko Wines",
         "address": "476 Chaussee de Waterloo",
         "city": "Brussels",
@@ -3181,7 +3181,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Bordeautheque - Pekin",
         "address": "No.110 Xidan North Street",
         "city": "Beijing",
@@ -3203,7 +3203,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Cave d'Ulysse",
         "address": "2 Rue de la Tr\u00e9moille",
         "city": "Margaux",
@@ -3225,7 +3225,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Badie",
         "address": "60 - 62 Allee de Tourny",
         "city": "Bordeaux",
@@ -3247,7 +3247,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "L'Intendant",
         "address": "2 Allee de Tourny",
         "city": "Bordeaux",
@@ -3269,7 +3269,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Vinotheque de Bordeaux",
         "address": "8 cours du 30 Juillet",
         "city": "Bordeaux",
@@ -3291,7 +3291,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Cave des Tuileries",
         "address": "232 rue de rivoli",
         "city": "Paris",
@@ -3313,7 +3313,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Cave du Senat",
         "address": "16 Rue de Vaugirard",
         "city": "Paris",
@@ -3335,7 +3335,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "52 Avenue de Mozart",
         "city": "Paris",
@@ -3357,7 +3357,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Cave du Lafayette",
         "address": "97 Rue de Provence",
         "city": "Paris",
@@ -3379,7 +3379,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Ryst Dupeyron",
         "address": "79 Rue du Bac",
         "city": "Paris",
@@ -3401,7 +3401,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "74 rue de Grenelle",
         "city": "Paris",
@@ -3423,7 +3423,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "87 Rue Lecourbe",
         "city": "Paris",
@@ -3445,7 +3445,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "11 Rue des Martyrs",
         "city": "Paris",
@@ -3467,7 +3467,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "58 Rue d'Auteuil",
         "city": "Paris",
@@ -3489,7 +3489,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "112 Rue Mouffetard",
         "city": "Paris",
@@ -3511,7 +3511,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "47 Ter Boulevard Saint-Germain",
         "city": "Paris",
@@ -3533,7 +3533,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "215 Bis rue de Tolbiac",
         "city": "Paris",
@@ -3555,7 +3555,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "64 Boulevard Haussmann",
         "city": "Paris",
@@ -3577,7 +3577,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Cave du Cherche-Midi",
         "address": "29 rue Saint Placide",
         "city": "Paris",
@@ -3599,7 +3599,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "88 rue de Montorgueil",
         "city": "Paris",
@@ -3621,7 +3621,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Repaire de Bacchus",
         "address": "40 Rue de Bretagne",
         "city": "Paris",
@@ -3643,7 +3643,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Lavinia",
         "address": "3 Boulevard de la Madeleine",
         "city": "Paris",
@@ -3665,7 +3665,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Cave du Senat",
         "address": "16 Rue de Vaugirard",
         "city": "Paris",
@@ -3687,7 +3687,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Cash Vin - Artigues",
         "address": "60 Avenue de l'ile de France",
         "city": "Artigues-pr\u00e8s-Bordeaux",
@@ -3709,7 +3709,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Cav'a Camille",
         "address": "69 rue Camille Godard",
         "city": "Bordeaux",
@@ -3731,7 +3731,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Chemin des Vignes",
         "address": "7 Rue Pasquier",
         "city": "Paris",
@@ -3753,7 +3753,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Cave Saint Honore",
         "address": "40 Rue Saint Honore",
         "city": "Paris",
@@ -3775,7 +3775,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Le Rouge et le Verre",
         "address": "8 Rue Maubeuge",
         "city": "Paris",
@@ -3797,7 +3797,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "KaDeWe Berlin",
         "address": "Tauentzienstr. 21-24",
         "city": "Berlin",
@@ -3819,7 +3819,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Movenpick - Fr1",
         "address": "Hanauer Landstrasse 204",
         "city": "Frankfurt am Main",
@@ -3841,7 +3841,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeries Lafayette",
         "address": "Friedrischtrasse 76-78",
         "city": "Berlin",
@@ -3863,7 +3863,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof",
         "address": "Konigstrasse 6",
         "city": "Stuttgart",
@@ -3885,7 +3885,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof",
         "address": "Monckenbergstrasse 3",
         "city": "Hamburg",
@@ -3907,7 +3907,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof",
         "address": "Karlsplatz 21",
         "city": "M\u00fcnchen",
@@ -3929,7 +3929,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof",
         "address": "Alexanderplatz 9",
         "city": "Berlin",
@@ -3951,7 +3951,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof",
         "address": "Zeil 116-126",
         "city": "Frankfurt am Main",
@@ -3973,7 +3973,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof Gourmet - Mu1",
         "address": "Kaufinger Strasse 1-5",
         "city": "M\u00fcnchen",
@@ -3995,7 +3995,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Hardy Weine",
         "address": "Thielallee 29",
         "city": "Berlin",
@@ -4017,7 +4017,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Gerards Wein-markt",
         "address": "Bergische Landstrabe 618",
         "city": "D\u00fcsseldorf",
@@ -4039,7 +4039,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Vinehoo",
         "address": "3005, b\u00e2timent Longhu MOCO4",
         "city": "Chongqinq",
@@ -4061,7 +4061,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "JD",
         "address": "JD Building, No. 18 Kechuang 11 Street",
         "city": "Beijing",
@@ -4083,7 +4083,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Yohaodian",
         "address": "295 Zu Chong Zhi Road Pudong",
         "city": "Shanghai",
@@ -4105,7 +4105,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Red Wine Cellar",
         "address": "20 Canal Road West",
         "city": "Hong Kong",
@@ -4127,7 +4127,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Le Quinze Vins Wanchai",
         "address": "9 Swatow Street",
         "city": "Hong Kong",
@@ -4149,7 +4149,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "City'Super- HK 1",
         "address": "1 Matheson Street ",
         "city": "Hong Kong",
@@ -4171,7 +4171,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Aeon - HK 2",
         "address": "2 Kornhill Road",
         "city": "Hong Kong",
@@ -4193,7 +4193,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Good Wine",
         "address": "75, Mody Road",
         "city": "Hong Kong",
@@ -4215,7 +4215,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Crystal Wines",
         "address": "491 River Valley Road",
         "city": "Singapore",
@@ -4237,7 +4237,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Wine Universe - SG",
         "address": "9 Raffles Boulevard",
         "city": "Singapore",
@@ -4259,7 +4259,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Vinurba SA ",
         "address": "Rue de La Tournelle 22",
         "city": "Orbe ",
@@ -4281,7 +4281,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Manor SA",
         "address": "Rue Cornavin 6",
         "city": "Gen\u00e8ve",
@@ -4303,7 +4303,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Mosca Vins",
         "address": "Route de la Carriere 14",
         "city": "Crissier",
@@ -4325,7 +4325,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Arthur's Fine Cellar",
         "address": "Rue du Rhone 29",
         "city": "Gen\u00e8ve",
@@ -4347,7 +4347,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Baur Au Lac",
         "address": "Borsenstrasse 27",
         "city": "Z\u00fcrich",
@@ -4369,7 +4369,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Movenpick Weinkeller - GV",
         "address": "Chemin du Grand-Puits 40",
         "city": "Meyrin",
@@ -4391,7 +4391,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Lea & Sandeman - 2",
         "address": "211 Kensington Church Street",
         "city": "London",
@@ -4413,7 +4413,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "The Wine Library",
         "address": "43 Trinity Square",
         "city": "London",
@@ -4435,7 +4435,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "K&L Wines",
         "address": "1400 Vine Street",
         "city": "Los Angeles",
@@ -4457,7 +4457,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Total Wines & More - LA1",
         "address": "471 South Associated Road",
         "city": "Los Angeles",
@@ -4479,7 +4479,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Total Wines & More - LA2",
         "address": "1505 Hawthorne Boulevard",
         "city": "Redondo Beach",
@@ -4501,7 +4501,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "67 Wine & Spirits",
         "address": "179 Columbus Avenue",
         "city": "New York City",
@@ -4523,7 +4523,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "K&L Wines-SF",
         "address": "855 Harrison Street",
         "city": "San Francisco",
@@ -4545,7 +4545,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Wine Exchange ",
         "address": "1500 East Village Way",
         "city": "Los Angeles",
@@ -4567,7 +4567,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Los Angeles Wine Company",
         "address": "McConnell Ave",
         "city": "Los Angeles",
@@ -4589,7 +4589,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Vendome Wine Studio City",
         "address": "11555 Ventura Boulevard",
         "city": "Los Angeles",
@@ -4611,7 +4611,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Wally's Wine",
         "address": "2107 Westwood Boulevard",
         "city": "Los Angeles",
@@ -4633,7 +4633,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Heights Chateau",
         "address": "123 Atlantic Avenue",
         "city": "New York City",
@@ -4655,7 +4655,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Wing Hop Fung - Arcadia",
         "address": "400 South Baldwin Avenue 2185",
         "city": "Los Angeles",
@@ -4677,7 +4677,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Ehrlich's Wines",
         "address": "222 Amsterdam Avenue",
         "city": "New York City",
@@ -4699,7 +4699,7 @@ const stores = {
       "properties": {
         "category": "Wineshops",
         "class": "wineshops",
-        "icon": "icon-pin-wineshops.svg",
+        "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Cora",
         "address": "101, Avenue des communaut\u00e9s",
         "city": "Woluwe",
@@ -4711,3 +4711,5 @@ const stores = {
     }
   ]
 }
+
+window.demoStores = stores;

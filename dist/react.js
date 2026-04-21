@@ -1,12 +1,17 @@
-import L from 'leaflet';
-import 'leaflet-gesture-handling';
-import 'leaflet.markercluster';
-import 'leaflet.locatecontrol';
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
+var react = require('react');
+var L = require('leaflet');
+require('leaflet-gesture-handling');
+require('leaflet.markercluster');
+require('leaflet.locatecontrol');
+require('leaflet/dist/leaflet.css');
+require('leaflet-gesture-handling/dist/leaflet-gesture-handling.css');
+require('leaflet.markercluster/dist/MarkerCluster.css');
+require('leaflet.markercluster/dist/MarkerCluster.Default.css');
+require('leaflet.locatecontrol/dist/L.Control.Locate.css');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var L__default = /*#__PURE__*/_interopDefaultLegacy(L);
 
 function _arrayLikeToArray(r, a) {
   (null == a || a > r.length) && (a = r.length);
@@ -368,15 +373,15 @@ var StoreLocator = /*#__PURE__*/function () {
     if (!stores.features.length) {
       return;
     }
-    var geoJson = L.geoJSON(stores, {
+    var geoJson = L__default["default"].geoJSON(stores, {
       pointToLayer: function pointToLayer(feature, latlng) {
-        var marker = L.marker(latlng);
+        var marker = L__default["default"].marker(latlng);
         var popup = _this2.resolvePopup(feature);
         var icon = _this2.resolveIcon(feature);
-        if (typeof popup === 'string' || popup instanceof L.Popup) {
+        if (typeof popup === 'string' || popup instanceof L__default["default"].Popup) {
           marker.bindPopup(popup);
         }
-        if (icon instanceof L.Icon) {
+        if (icon instanceof L__default["default"].Icon) {
           marker.setIcon(icon);
         }
         marker.on('click', function () {
@@ -420,10 +425,10 @@ var StoreLocator = /*#__PURE__*/function () {
     if (!mapContainer) {
       throw new Error('[store-locator] - Map container not found');
     }
-    this.map = L.map(mapContainer, this.options.map.options);
-    L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
+    this.map = L__default["default"].map(mapContainer, this.options.map.options);
+    L__default["default"].tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
     if (this.options.map.locate) {
-      L.control.locate().addTo(this.map);
+      L__default["default"].control.locate().addTo(this.map);
     }
     this.map.on('click', function () {
       var _this3$map;
@@ -433,7 +438,7 @@ var StoreLocator = /*#__PURE__*/function () {
       var _this3$map2;
       return (_this3$map2 = _this3.map) == null ? void 0 : _this3$map2.scrollWheelZoom.disable();
     });
-    this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
+    this.clusters = L__default["default"].markerClusterGroup(this.options.map.markers.clustersOptions);
     this.map.addLayer(this.clusters);
     this.refreshClusters(null, true, this.options.map.initialRecenter ? null : this.options.map.options.zoom);
   };
@@ -466,4 +471,137 @@ var StoreLocator = /*#__PURE__*/function () {
   return StoreLocator;
 }();
 
-export { StoreLocator as default };
+var toError = function toError(error) {
+  return error instanceof Error ? error : new Error('[store-locator/react] - Failed to initialize StoreLocator');
+};
+var useStoreLocator = function useStoreLocator(_ref) {
+  var _wrapperRef$current, _filtersRef$current;
+  var stores = _ref.stores,
+    options = _ref.options,
+    mapRef = _ref.mapRef,
+    wrapperRef = _ref.wrapperRef,
+    filtersRef = _ref.filtersRef,
+    _ref$disabled = _ref.disabled,
+    disabled = _ref$disabled === void 0 ? false : _ref$disabled,
+    onReady = _ref.onReady;
+  var _useState = react.useState(null),
+    instance = _useState[0],
+    setInstance = _useState[1];
+  var _useState2 = react.useState(null),
+    error = _useState2[0],
+    setError = _useState2[1];
+  var storesRef = react.useRef(stores);
+  var optionsRef = react.useRef(options);
+  var onReadyRef = react.useRef(onReady);
+  storesRef.current = stores;
+  optionsRef.current = options;
+  onReadyRef.current = onReady;
+  var currentWrapper = (_wrapperRef$current = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current : null;
+  var currentFilters = (_filtersRef$current = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current : null;
+  react.useEffect(function () {
+    var active = true;
+    var locator = null;
+    if (disabled || !mapRef.current) {
+      setInstance(null);
+      setError(null);
+      return;
+    }
+    var initialize = function initialize() {
+      try {
+        try {
+          var _optionsRef$current, _wrapperRef$current2, _filtersRef$current2;
+          if (!active || !mapRef.current) {
+            return Promise.resolve();
+          }
+          locator = new StoreLocator(_extends({}, (_optionsRef$current = optionsRef.current) != null ? _optionsRef$current : {}, {
+            stores: storesRef.current,
+            elements: {
+              map: mapRef.current,
+              wrapper: (_wrapperRef$current2 = wrapperRef == null ? void 0 : wrapperRef.current) != null ? _wrapperRef$current2 : null,
+              filters: (_filtersRef$current2 = filtersRef == null ? void 0 : filtersRef.current) != null ? _filtersRef$current2 : null
+            }
+          }));
+          if (!active) {
+            locator.destroy();
+            return Promise.resolve();
+          }
+          setInstance(locator);
+          setError(null);
+          onReadyRef.current == null || onReadyRef.current(locator);
+        } catch (nextError) {
+          if (active) {
+            setError(toError(nextError));
+            setInstance(null);
+          }
+        }
+        return Promise.resolve();
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    };
+    void initialize();
+    return function () {
+      active = false;
+      if (locator) {
+        locator.destroy();
+      }
+      setInstance(function (currentInstance) {
+        return currentInstance === locator ? null : currentInstance;
+      });
+    };
+  }, [disabled, filtersRef, mapRef, wrapperRef]);
+  react.useEffect(function () {
+    if (!instance) {
+      return;
+    }
+    instance.setStores(stores);
+  }, [instance, stores]);
+  react.useEffect(function () {
+    if (!instance) {
+      return;
+    }
+    instance.setFilters(currentFilters, currentWrapper);
+  }, [currentFilters, currentWrapper, instance]);
+  return {
+    instance: instance,
+    error: error,
+    ready: Boolean(instance) && !error
+  };
+};
+var StoreLocatorMap = function StoreLocatorMap(_ref2) {
+  var stores = _ref2.stores,
+    options = _ref2.options,
+    filtersRef = _ref2.filtersRef,
+    disabled = _ref2.disabled,
+    onReady = _ref2.onReady,
+    className = _ref2.className,
+    style = _ref2.style,
+    mapClassName = _ref2.mapClassName,
+    mapStyle = _ref2.mapStyle,
+    children = _ref2.children;
+  var wrapperRef = react.useRef(null);
+  var mapRef = react.useRef(null);
+  useStoreLocator({
+    stores: stores,
+    options: options,
+    filtersRef: filtersRef,
+    mapRef: mapRef,
+    wrapperRef: wrapperRef,
+    disabled: disabled,
+    onReady: onReady
+  });
+  return react.createElement('div', {
+    ref: wrapperRef,
+    className: className,
+    style: style
+  }, children, react.createElement('div', {
+    ref: mapRef,
+    className: mapClassName,
+    style: mapStyle != null ? mapStyle : {
+      minHeight: 400
+    }
+  }));
+};
+
+exports.StoreLocatorMap = StoreLocatorMap;
+exports.useStoreLocator = useStoreLocator;
