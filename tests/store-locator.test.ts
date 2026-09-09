@@ -274,6 +274,33 @@ describe('StoreLocator', () => {
     locator.destroy();
   });
 
+  it('does not let a later setStores discard filters queued before load', async () => {
+    // Les intentions en attente sont fusionnées, mais `filters` était écrasé.
+    // Or `setStores` passe `null` par défaut, sans rien savoir des filtres :
+    // l'ordre des appels décidait donc silencieusement du résultat. Ici le
+    // filtre est posé d'abord, puis un `setStores` arrive avant le `load`.
+    mapLibreMockState.autoLoad = false;
+
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    locator.refresh({ category: 'Coffee' });
+    locator.setStores(twoStores);
+
+    mapLibreMockState.maps[0].trigger('load');
+    await locator.whenReady();
+
+    const source = mapLibreMockState.maps[0].sources.get(SOURCE_ID);
+    const features = (source?.data as { features: Array<{ properties: { category: string; }; }>; }).features;
+
+    expect(features).toHaveLength(1);
+    expect(features[0].properties.category).toBe('Coffee');
+
+    locator.destroy();
+  });
+
   it('queues a refresh issued before the style has loaded', async () => {
     mapLibreMockState.autoLoad = false;
 

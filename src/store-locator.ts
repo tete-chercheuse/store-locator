@@ -49,6 +49,7 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
   private markerSync: MarkerSync<P> | null = null;
   private container: HTMLElement | null = null;
   private styleLoaded = false;
+  private isDestroyed = false;
   private pending: PendingRefresh | null = null;
   private readonly readyPromise: Promise<this>;
   private resolveReady!: (instance: this) => void;
@@ -56,6 +57,18 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
   private filterFields: Element[] = [];
   private filterChangeHandler: (() => void) | null = null;
   private resizeObserver: ResizeObserver | null = null;
+
+  /**
+   * `true` dès que `destroy()` a été appelé.
+   *
+   * `destroy()` résout délibérément `whenReady()` pour ne laisser aucun
+   * appelant en attente. Sans ce drapeau, un consommateur qui attend la
+   * promesse ne pourrait pas distinguer « la carte est prête » de
+   * « l'instance a été détruite » — les deux résolvent avec la même valeur.
+   */
+  get destroyed(): boolean {
+    return this.isDestroyed;
+  }
 
   /**
    * Instancie le store locator et démarre la carte.
@@ -155,7 +168,11 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
 
     if(!this.styleLoaded) {
       this.pending = {
-        filters,
+        // `null` ne porte aucune information de filtrage : `setStores` le passe
+        // par défaut, sans rien savoir des filtres. L'écraser rendrait la mise
+        // en file dépendante de l'ordre d'appel — un `setStores` après un
+        // `setFilters` effacerait silencieusement les filtres du formulaire.
+        filters: filters ?? this.pending?.filters ?? null,
         recenter: recenter || (this.pending?.recenter ?? false),
         maxZoom: maxZoom ?? this.pending?.maxZoom ?? null,
       };
@@ -198,6 +215,7 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
     this.map = null;
     this.filters = null;
     this.styleLoaded = false;
+    this.isDestroyed = true;
     this.resolveReady(this);
   }
 
