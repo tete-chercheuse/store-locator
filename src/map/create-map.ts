@@ -36,6 +36,11 @@ export const createMap = <P extends StoreLocatorProperties>(
     style: config.style,
   });
 
+  // Marqué dès que la carte existe, et avant l'ajout des contrôles : ceux-ci
+  // construisent du DOM et peuvent donc échouer. Une carte vivante sur un
+  // conteneur non enregistré laisserait le garde-fou en autoriser une seconde.
+  initializedContainers.add(container);
+
   if(config.navigation) {
     map.addControl(new NavigationControl());
   }
@@ -46,8 +51,6 @@ export const createMap = <P extends StoreLocatorProperties>(
       showUserLocation: true,
     }));
   }
-
-  initializedContainers.add(container);
 
   return map;
 };

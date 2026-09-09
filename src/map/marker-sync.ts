@@ -8,7 +8,7 @@
  * imbriquées en chaînes JSON.
  */
 import { Marker, Popup } from 'maplibre-gl';
-import type { MapGeoJSONFeature, Map as MapLibreMap } from 'maplibre-gl';
+import type { Map as MapLibreMap } from 'maplibre-gl';
 import type {
   StoreLocatorFeature,
   StoreLocatorFeatureCollection,
@@ -26,7 +26,14 @@ import { SOURCE_ID, UNCLUSTERED_FILTER } from './cluster-source';
  * se déclenche pour chaque tuile : la seule question utile est « resynchroniser
  * maintenant ? », pas « qu'est-ce qui a changé ? ».
  */
-const SYNC_EVENTS = ['move', 'moveend', 'sourcedata', 'idle'] as const;
+/**
+ * `move` est volontairement absent : `Marker` lie déjà son propre `_update` sur
+ * cet événement, donc les positions suivent la carte sans nous. La seule chose
+ * que `sync()` observe est *quelles tuiles sont chargées*, ce qui ne change que
+ * sur `sourcedata`, `moveend` et `idle`. L'y ajouter coûterait un balayage
+ * complet des tuiles à chaque frame de chaque déplacement, sans rien apporter.
+ */
+const SYNC_EVENTS = ['moveend', 'sourcedata', 'idle'] as const;
 
 export interface MarkerSyncOptions<P extends StoreLocatorProperties> {
   map: MapLibreMap;
@@ -35,13 +42,27 @@ export interface MarkerSyncOptions<P extends StoreLocatorProperties> {
   onMarkerClick: (feature: StoreLocatorFeature<P>) => void;
 }
 
+/**
+ * Un marqueur et ce qui a servi à le construire.
+ *
+ * La feature est conservée pour détecter qu'un `id` réutilisé désigne désormais
+ * un autre magasin, et l'écouteur pour pouvoir le détacher : `Marker.remove()`
+ * ne connaît que ses propres écouteurs, et l'appelant peut fournir un élément
+ * qu'il possède et réutilise.
+ */
+interface TrackedMarker<P extends StoreLocatorProperties> {
+  marker: Marker;
+  feature: StoreLocatorFeature<P>;
+  onClick: () => void;
+}
+
 export class MarkerSync<P extends StoreLocatorProperties> {
   private readonly map: MapLibreMap;
   private readonly resolveIcon: MarkerSyncOptions<P>['resolveIcon'];
   private readonly resolvePopup: MarkerSyncOptions<P>['resolvePopup'];
   private readonly onMarkerClick: MarkerSyncOptions<P>['onMarkerClick'];
 
-  private readonly markers = new Map<string | number, Marker>();
+  private readonly markers = new Map<string | number, TrackedMarker<P>>();
   private readonly features = new Map<string | number, StoreLocatorFeature<P>>();
   private readonly handler = (): void => this.sync();
 
@@ -66,7 +87,21 @@ export class MarkerSync<P extends StoreLocatorProperties> {
     this.started = true;
   }
 
-  /** Remplace la collection de référence et retire les marqueurs orphelins. */
+  /**
+   * Remplace la collection de référence et retire les marqueurs périmés.
+   *
+   * Élaguer sur la seule absence de l'`id` ne suffit pas. Les `id` sont
+   * positionnels : `setStores` réattribue `0..n-1`, donc un `id` peut survivre
+   * en désignant un tout autre magasin. Le marqueur construit depuis l'ancienne
+   * feature resterait alors en place — anciennes coordonnées, ancienne popup —
+   * et `sync()` ne le réparerait jamais, puisqu'il passe son tour dès que
+   * `markers.has(id)` est vrai.
+   *
+   * La comparaison porte donc sur l'identité de la feature. `filterFeatures`
+   * préserve les références d'origine, un simple filtrage ne provoque donc
+   * aucune reconstruction ; `normalizeStores` crée des objets neufs, un
+   * `setStores` en provoque bien une.
+   */
   setFeatures(collection: StoreLocatorFeatureCollection<P>): void {
     this.features.clear();
 
@@ -76,10 +111,9 @@ export class MarkerSync<P extends StoreLocatorProperties> {
       }
     }
 
-    for(const [id, marker] of this.markers) {
-      if(!this.features.has(id)) {
-        marker.remove();
-        this.markers.delete(id);
+    for(const [id, tracked] of this.markers) {
+      if(this.features.get(id) !== tracked.feature) {
+        this.removeMarker(id);
       }
     }
   }
@@ -89,9 +123,13 @@ export class MarkerSync<P extends StoreLocatorProperties> {
       return;
     }
 
+    // `validate: false` : la validation par défaut sérialise tout le style à
+    // chaque appel — une centaine de couches pour le fond OpenFreeMap Bright.
+    // `UNCLUSTERED_FILTER` est une constante de module, donc déjà validée.
     const rendered = this.map.querySourceFeatures(SOURCE_ID, {
       filter: UNCLUSTERED_FILTER,
-    }) as MapGeoJSONFeature[];
+      validate: false,
+    });
 
     const visible = new Set<string | number>();
 
@@ -117,10 +155,9 @@ export class MarkerSync<P extends StoreLocatorProperties> {
       this.markers.set(id, this.createMarker(feature));
     }
 
-    for(const [id, marker] of this.markers) {
+    for(const id of [...this.markers.keys()]) {
       if(!visible.has(id)) {
-        marker.remove();
-        this.markers.delete(id);
+        this.removeMarker(id);
       }
     }
   }
@@ -139,14 +176,31 @@ export class MarkerSync<P extends StoreLocatorProperties> {
   }
 
   private clear(): void {
-    for(const marker of this.markers.values()) {
-      marker.remove();
+    for(const id of [...this.markers.keys()]) {
+      this.removeMarker(id);
     }
-
-    this.markers.clear();
   }
 
-  private createMarker(feature: StoreLocatorFeature<P>): Marker {
+  /**
+   * Retire un marqueur et détache son écouteur.
+   *
+   * `Marker.remove()` ne détache que ses propres écouteurs. Le nôtre survivrait
+   * sur un élément fourni par l'appelant et réutilisé d'un rendu à l'autre,
+   * s'y empilant à chaque cycle et retenant l'instance au passage.
+   */
+  private removeMarker(id: string | number): void {
+    const tracked = this.markers.get(id);
+
+    if(!tracked) {
+      return;
+    }
+
+    tracked.marker.getElement().removeEventListener('click', tracked.onClick);
+    tracked.marker.remove();
+    this.markers.delete(id);
+  }
+
+  private createMarker(feature: StoreLocatorFeature<P>): TrackedMarker<P> {
     const iconOptions = normalizeIcon(this.resolveIcon(feature));
     const marker = new Marker(iconOptions ?? undefined);
 
@@ -167,9 +221,11 @@ export class MarkerSync<P extends StoreLocatorProperties> {
       marker.setPopup(instance);
     }
 
-    marker.getElement().addEventListener('click', () => this.onMarkerClick(feature));
+    const onClick = (): void => this.onMarkerClick(feature);
+
+    marker.getElement().addEventListener('click', onClick);
     marker.addTo(this.map);
 
-    return marker;
+    return { marker, feature, onClick };
   }
 }
