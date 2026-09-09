@@ -56,12 +56,34 @@ describe('matchesStoreProperty', () => {
 });
 
 describe('filterFeatures', () => {
-  it('returns every feature when no filter is given', () => {
-    expect(filterFeatures(collection, null).features).toHaveLength(3);
+  it('returns a fresh collection holding every feature when no filter is given', () => {
+    const result = filterFeatures(collection, null);
+
+    // Le résultat part directement dans `setData` de MapLibre : rendre la
+    // collection d'origine réutiliserait une référence que l'appelant possède.
+    expect(result).not.toBe(collection);
+    expect(result.features).not.toBe(collection.features);
+    expect(result.features).toHaveLength(3);
   });
 
   it('returns every feature when the filter value is empty', () => {
     expect(filterFeatures(collection, { category: '' }).features).toHaveLength(3);
+    expect(filterFeatures(collection, { category: [] }).features).toHaveLength(3);
+  });
+
+  it('tolerates a feature whose properties bag is null', () => {
+    // `"properties": null` est du GeoJSON conforme. `normalizeStores` le
+    // normalise en amont, mais `filterFeatures` est exporté et peut recevoir
+    // une collection non normalisée.
+    const withoutProperties: StoreLocatorFeatureCollection = {
+      type: 'FeatureCollection',
+      features: [
+        { type: 'Feature', id: 0, geometry: { type: 'Point', coordinates: [1, 1] }, properties: null as never },
+      ],
+    };
+
+    expect(filterFeatures(withoutProperties, { category: 'Coffee' }).features).toHaveLength(0);
+    expect(filterFeatures(withoutProperties, null).features).toHaveLength(1);
   });
 
   it('keeps only the features matching a single filter', () => {
@@ -77,9 +99,14 @@ describe('filterFeatures', () => {
   });
 
   it('accepts an array filter as a logical OR', () => {
-    const result = filterFeatures(collection, { city: ['Paris', 'Lyon'] });
+    // La première valeur ne correspond à rien, et l'ensemble ne couvre pas
+    // toutes les features : le test distingue donc un OU fonctionnel d'un
+    // filtre ignoré comme d'une lecture de la seule première valeur.
+    expect(filterFeatures(collection, { city: ['Berlin', 'Lyon'] }).features.map((feature) => feature.id))
+      .toEqual([2]);
 
-    expect(result.features).toHaveLength(3);
+    expect(filterFeatures(collection, { city: ['Paris', 'Berlin'] }).features.map((feature) => feature.id))
+      .toEqual([0, 1]);
   });
 
   it('returns an empty collection when nothing matches', () => {
