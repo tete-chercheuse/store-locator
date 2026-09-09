@@ -1,5 +1,11 @@
 import type * as GeoJSON from 'geojson';
-import type L from 'leaflet';
+import type {
+  ExpressionSpecification,
+  MapOptions as MapLibreMapOptions,
+  MarkerOptions,
+  PopupOptions,
+  StyleSpecification,
+} from 'maplibre-gl';
 
 export type StoreLocatorProperties = Record<string, unknown>;
 export type StoreLocatorCoordinateValue = number | `${number}`;
@@ -24,61 +30,109 @@ export type StoreLocatorStoresInput<P extends StoreLocatorProperties = StoreLoca
   | StoreLocatorFeature<P>[]
   | StoreLocatorCoordinateStore<P>[];
 
-export type StoreLocatorPopupFactory<P extends StoreLocatorProperties = StoreLocatorProperties> =
-  | StoreLocatorPopupValue
-  | ((feature: StoreLocatorFeature<P>) => StoreLocatorPopupValue | undefined);
+/**
+ * Bounds géographiques au format `[[ouest, sud], [est, nord]]`.
+ * Compatible `LngLatBoundsLike` sans dépendre de la classe `LngLatBounds`,
+ * ce qui garde `map/bounds.ts` testable sans mock.
+ */
+export type StoreLocatorBounds = [[number, number], [number, number]];
 
-export type StoreLocatorPopupContent = string | HTMLElement;
-
-export type StoreLocatorPopupOptions = L.PopupOptions & {
-  content?: StoreLocatorPopupContent | null;
-};
-
-export type StoreLocatorPopupValue =
-  | StoreLocatorPopupContent
-  | StoreLocatorPopupOptions
-  | L.Popup
-  | null;
-
-export type StoreLocatorIconOptions = L.IconOptions;
+/**
+ * Options d'icône, alignées sur `MarkerOptions` de MapLibre.
+ * `url` et `size` sont des raccourcis : la librairie construit l'élément `<img>`.
+ * `element` court-circuite tout et utilise le DOM fourni tel quel.
+ */
+export interface StoreLocatorIconOptions {
+  url?: string;
+  size?: [number, number];
+  element?: HTMLElement;
+  anchor?: MarkerOptions['anchor'];
+  offset?: MarkerOptions['offset'];
+  className?: string;
+  rotation?: number;
+}
 
 export type StoreLocatorIconValue =
   | string
+  | HTMLElement
   | StoreLocatorIconOptions
-  | L.Icon
-  | L.DivIcon
   | null;
 
 export type StoreLocatorIconFactory<P extends StoreLocatorProperties = StoreLocatorProperties> =
   | StoreLocatorIconValue
   | ((feature: StoreLocatorFeature<P>) => StoreLocatorIconValue | undefined);
 
-export interface StoreLocatorMapOptions extends L.MapOptions {
-  zoom: number;
-  maxZoom: number;
-  minZoom: number;
-  center: L.LatLngExpression;
-  gestureHandling?: boolean;
+export type StoreLocatorPopupContent = string | HTMLElement;
+
+/**
+ * Options de popup, alignées sur `PopupOptions` de MapLibre.
+ * Attention : `maxWidth` est une chaîne CSS (`'280px'`), pas un nombre.
+ */
+export interface StoreLocatorPopupOptions extends PopupOptions {
+  content?: StoreLocatorPopupContent | null;
 }
 
-export interface StoreLocatorTilesOptions {
-  url: string;
-  options: L.TileLayerOptions;
+export type StoreLocatorPopupValue =
+  | StoreLocatorPopupContent
+  | StoreLocatorPopupOptions
+  | null;
+
+export type StoreLocatorPopupFactory<P extends StoreLocatorProperties = StoreLocatorProperties> =
+  | StoreLocatorPopupValue
+  | ((feature: StoreLocatorFeature<P>) => StoreLocatorPopupValue | undefined);
+
+/** Valeur littérale ou expression MapLibre pilotée par les données. */
+export type StoreLocatorPaintValue<T> = T | ExpressionSpecification;
+
+export interface StoreLocatorClusterOptions {
+  enabled: boolean;
+  /** `clusterRadius` en pixels. */
+  radius: number;
+  /** `clusterMaxZoom` : zoom au-delà duquel les points ne sont plus regroupés. */
+  maxZoom: number;
+  /** `clusterMinPoints` : nombre minimal de points pour former un cluster. */
+  minPoints: number;
+  color: StoreLocatorPaintValue<string>;
+  size: StoreLocatorPaintValue<number>;
+  strokeColor: StoreLocatorPaintValue<string>;
+  strokeWidth: StoreLocatorPaintValue<number>;
+  textColor: StoreLocatorPaintValue<string>;
+  textSize: StoreLocatorPaintValue<number>;
+  /** Police du compteur. Doit exister dans les glyphes du style chargé. */
+  textFont: string[];
+}
+
+export interface StoreLocatorMapOptions extends Omit<MapLibreMapOptions, 'container' | 'style'> {
+  zoom: number;
+  minZoom: number;
+  maxZoom: number;
+  /** ⚠️ Ordre MapLibre : `[longitude, latitude]`. */
+  center: [number, number];
+  cooperativeGestures: boolean;
+}
+
+export interface StoreLocatorFitBoundsOptions {
+  padding: number;
+  maxZoom?: number;
 }
 
 export interface StoreLocatorMarkerOptions<P extends StoreLocatorProperties = StoreLocatorProperties> {
   popup: StoreLocatorPopupFactory<P>;
   icon: StoreLocatorIconFactory<P>;
-  clustersOptions: L.MarkerClusterGroupOptions;
 }
 
 export interface StoreLocatorMapConfig<P extends StoreLocatorProperties = StoreLocatorProperties> {
   refreshRecenter: boolean;
   initialRecenter: boolean;
+  /** Ajoute un `GeolocateControl`. */
   locate: boolean;
+  /** Ajoute un `NavigationControl`. MapLibre n'ajoute aucun contrôle de zoom par défaut. */
+  navigation: boolean;
+  style: string | StyleSpecification;
   options: StoreLocatorMapOptions;
-  tiles: StoreLocatorTilesOptions;
   markers: StoreLocatorMarkerOptions<P>;
+  clusters: StoreLocatorClusterOptions;
+  fitBoundsOptions: StoreLocatorFitBoundsOptions;
 }
 
 export interface StoreLocatorSelectors {
@@ -95,9 +149,11 @@ export interface StoreLocatorElements {
 
 export interface StoreLocatorOptions<P extends StoreLocatorProperties = StoreLocatorProperties> {
   stores: StoreLocatorStoresInput<P>;
-  map?: Partial<Omit<StoreLocatorMapConfig<P>, 'tiles' | 'markers'>> & {
-    tiles?: Partial<StoreLocatorTilesOptions>;
+  map?: Partial<Omit<StoreLocatorMapConfig<P>, 'options' | 'markers' | 'clusters' | 'fitBoundsOptions'>> & {
+    options?: Partial<StoreLocatorMapOptions>;
     markers?: Partial<StoreLocatorMarkerOptions<P>>;
+    clusters?: Partial<StoreLocatorClusterOptions>;
+    fitBoundsOptions?: Partial<StoreLocatorFitBoundsOptions>;
   };
   selectors?: Partial<StoreLocatorSelectors>;
   elements?: Partial<StoreLocatorElements>;
