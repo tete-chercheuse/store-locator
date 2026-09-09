@@ -66,7 +66,6 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
 
   private filterFields: Element[] = [];
   private filterChangeHandler: (() => void) | null = null;
-  private resizeObserver: ResizeObserver | null = null;
 
   /**
    * `true` dès que `destroy()` a été appelé.
@@ -209,9 +208,6 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
   destroy(): void {
     this.detachFilters();
 
-    this.resizeObserver?.disconnect();
-    this.resizeObserver = null;
-
     this.markerSync?.destroy();
     this.markerSync = null;
 
@@ -261,12 +257,9 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
       },
     });
 
+    // Pas de ResizeObserver de notre côté : MapLibre observe déjà le
+    // conteneur depuis son constructeur, en throttlant à 50 ms.
     this.map.on('load', () => this.handleStyleLoad());
-
-    if(typeof ResizeObserver !== 'undefined') {
-      this.resizeObserver = new ResizeObserver(() => this.map?.resize());
-      this.resizeObserver.observe(container);
-    }
   }
 
   private handleStyleLoad(): void {
