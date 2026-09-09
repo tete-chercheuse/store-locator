@@ -1,0 +1,269 @@
+import { vi } from 'vitest';
+
+/**
+ * Ce module exporte une classe nommée `Map`, qui masque le `Map` natif dans
+ * toute la portée du fichier. On capture la référence native avant l'ombrage.
+ */
+const NativeMap = globalThis.Map;
+
+type EventHandler = (...args: unknown[]) => void;
+
+export interface MockGeoJSONSource {
+  id: string;
+  data: Record<string, unknown>;
+  options: Record<string, unknown>;
+  setData: ReturnType<typeof vi.fn>;
+  getClusterExpansionZoom: ReturnType<typeof vi.fn>;
+}
+
+export interface MockMap {
+  container: HTMLElement | string;
+  options: Record<string, unknown>;
+  sources: Map<string, MockGeoJSONSource>;
+  layers: Array<Record<string, unknown>>;
+  controls: unknown[];
+  handlers: Record<string, EventHandler[]>;
+  removed: boolean;
+  on: ReturnType<typeof vi.fn>;
+  off: ReturnType<typeof vi.fn>;
+  once: ReturnType<typeof vi.fn>;
+  addControl: ReturnType<typeof vi.fn>;
+  addSource: ReturnType<typeof vi.fn>;
+  getSource: ReturnType<typeof vi.fn>;
+  removeSource: ReturnType<typeof vi.fn>;
+  addLayer: ReturnType<typeof vi.fn>;
+  getLayer: ReturnType<typeof vi.fn>;
+  removeLayer: ReturnType<typeof vi.fn>;
+  querySourceFeatures: ReturnType<typeof vi.fn>;
+  getCanvas: ReturnType<typeof vi.fn>;
+  easeTo: ReturnType<typeof vi.fn>;
+  fitBounds: ReturnType<typeof vi.fn>;
+  resize: ReturnType<typeof vi.fn>;
+  remove: ReturnType<typeof vi.fn>;
+  isSourceLoaded: ReturnType<typeof vi.fn>;
+  isStyleLoaded: ReturnType<typeof vi.fn>;
+  loaded: ReturnType<typeof vi.fn>;
+  /** Déclenche manuellement un événement. `layerId` cible les handlers de couche. */
+  trigger: (event: string, payload?: unknown, layerId?: string) => void;
+}
+
+export interface MockMarker {
+  options: Record<string, unknown> | undefined;
+  lngLat: [number, number] | null;
+  popup: MockPopup | null;
+  element: HTMLElement;
+  added: boolean;
+  removed: boolean;
+  setLngLat: ReturnType<typeof vi.fn>;
+  setPopup: ReturnType<typeof vi.fn>;
+  getElement: ReturnType<typeof vi.fn>;
+  addTo: ReturnType<typeof vi.fn>;
+  remove: ReturnType<typeof vi.fn>;
+}
+
+export interface MockPopup {
+  options: Record<string, unknown> | undefined;
+  html: string | null;
+  domContent: HTMLElement | null;
+  setHTML: ReturnType<typeof vi.fn>;
+  setDOMContent: ReturnType<typeof vi.fn>;
+}
+
+export const mapLibreMockState = {
+  maps: [] as MockMap[],
+  markers: [] as MockMarker[],
+  popups: [] as MockPopup[],
+  navigationControls: [] as Array<Record<string, unknown> | undefined>,
+  geolocateControls: [] as Array<Record<string, unknown> | undefined>,
+  /** Features renvoyées par `querySourceFeatures`. Alimenté par les tests. */
+  sourceFeatures: [] as Array<Record<string, unknown>>,
+  /** Quand `true`, chaque `Map` émet `load` au microtask suivant sa création. */
+  autoLoad: true,
+};
+
+const layerEventKey = (event: string, layerId: string): string => `${event}::${layerId}`;
+
+class MockMapImpl implements MockMap {
+  container: HTMLElement | string;
+  options: Record<string, unknown>;
+  sources = new NativeMap<string, MockGeoJSONSource>();
+  layers: Array<Record<string, unknown>> = [];
+  controls: unknown[] = [];
+  handlers: Record<string, EventHandler[]> = {};
+  removed = false;
+
+  on = vi.fn((event: string, second: unknown, third?: unknown) => {
+    const isLayerHandler = typeof second === 'string';
+    const key = isLayerHandler ? layerEventKey(event, second) : event;
+    const handler = (isLayerHandler ? third : second) as EventHandler;
+
+    this.handlers[key] ??= [];
+    this.handlers[key].push(handler);
+
+    return this;
+  });
+
+  off = vi.fn(() => this);
+  once = vi.fn((event: string, handler: EventHandler) => this.on(event, handler));
+
+  addControl = vi.fn((control: unknown) => {
+    this.controls.push(control);
+    return this;
+  });
+
+  addSource = vi.fn((id: string, options: Record<string, unknown>) => {
+    const source: MockGeoJSONSource = {
+      id,
+      data: options.data as Record<string, unknown>,
+      options,
+      setData: vi.fn((data: Record<string, unknown>) => {
+        source.data = data;
+      }),
+      getClusterExpansionZoom: vi.fn(() => Promise.resolve(12)),
+    };
+
+    this.sources.set(id, source);
+
+    return this;
+  });
+
+  getSource = vi.fn((id: string) => this.sources.get(id));
+
+  removeSource = vi.fn((id: string) => {
+    this.sources.delete(id);
+    return this;
+  });
+
+  addLayer = vi.fn((layer: Record<string, unknown>) => {
+    this.layers.push(layer);
+    return this;
+  });
+
+  getLayer = vi.fn((id: string) => this.layers.find((layer) => layer.id === id));
+
+  removeLayer = vi.fn((id: string) => {
+    this.layers = this.layers.filter((layer) => layer.id !== id);
+    return this;
+  });
+
+  querySourceFeatures = vi.fn(() => mapLibreMockState.sourceFeatures);
+  getCanvas = vi.fn(() => ({ style: {} as CSSStyleDeclaration }));
+  easeTo = vi.fn(() => this);
+  fitBounds = vi.fn(() => this);
+  resize = vi.fn(() => this);
+
+  remove = vi.fn(() => {
+    this.removed = true;
+  });
+
+  isSourceLoaded = vi.fn(() => true);
+  isStyleLoaded = vi.fn(() => true);
+  loaded = vi.fn(() => true);
+
+  constructor(options: Record<string, unknown>) {
+    this.container = options.container as HTMLElement | string;
+    this.options = options;
+
+    mapLibreMockState.maps.push(this);
+
+    if(mapLibreMockState.autoLoad) {
+      queueMicrotask(() => this.trigger('load'));
+    }
+  }
+
+  trigger(event: string, payload?: unknown, layerId?: string): void {
+    const key = layerId ? layerEventKey(event, layerId) : event;
+
+    for(const handler of this.handlers[key] ?? []) {
+      handler(payload);
+    }
+  }
+}
+
+class MockMarkerImpl implements MockMarker {
+  options: Record<string, unknown> | undefined;
+  lngLat: [number, number] | null = null;
+  popup: MockPopup | null = null;
+  element: HTMLElement;
+  added = false;
+  removed = false;
+
+  setLngLat = vi.fn((lngLat: [number, number]) => {
+    this.lngLat = lngLat;
+    return this;
+  });
+
+  setPopup = vi.fn((popup: MockPopup) => {
+    this.popup = popup;
+    return this;
+  });
+
+  getElement = vi.fn(() => this.element);
+
+  addTo = vi.fn(() => {
+    this.added = true;
+    return this;
+  });
+
+  remove = vi.fn(() => {
+    this.removed = true;
+    this.added = false;
+    return this;
+  });
+
+  constructor(options?: Record<string, unknown>) {
+    this.options = options;
+    this.element = (options?.element as HTMLElement | undefined) ?? document.createElement('div');
+
+    mapLibreMockState.markers.push(this);
+  }
+}
+
+class MockPopupImpl implements MockPopup {
+  options: Record<string, unknown> | undefined;
+  html: string | null = null;
+  domContent: HTMLElement | null = null;
+
+  setHTML = vi.fn((html: string) => {
+    this.html = html;
+    return this;
+  });
+
+  setDOMContent = vi.fn((node: HTMLElement) => {
+    this.domContent = node;
+    return this;
+  });
+
+  constructor(options?: Record<string, unknown>) {
+    this.options = options;
+    mapLibreMockState.popups.push(this);
+  }
+}
+
+class MockNavigationControl {
+  constructor(public readonly options?: Record<string, unknown>) {
+    mapLibreMockState.navigationControls.push(options);
+  }
+}
+
+class MockGeolocateControl {
+  constructor(public readonly options?: Record<string, unknown>) {
+    mapLibreMockState.geolocateControls.push(options);
+  }
+}
+
+export const resetMapLibreMocks = (): void => {
+  mapLibreMockState.maps.length = 0;
+  mapLibreMockState.markers.length = 0;
+  mapLibreMockState.popups.length = 0;
+  mapLibreMockState.navigationControls.length = 0;
+  mapLibreMockState.geolocateControls.length = 0;
+  mapLibreMockState.sourceFeatures.length = 0;
+  mapLibreMockState.autoLoad = true;
+};
+
+export const Map = MockMapImpl;
+export const Marker = MockMarkerImpl;
+export const Popup = MockPopupImpl;
+export const NavigationControl = MockNavigationControl;
+export const GeolocateControl = MockGeolocateControl;
