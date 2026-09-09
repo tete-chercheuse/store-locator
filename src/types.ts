@@ -3,6 +3,7 @@ import type {
   ExpressionSpecification,
   MapOptions as MapLibreMapOptions,
   MarkerOptions,
+  PaddingOptions,
   PopupOptions,
   StyleSpecification,
 } from 'maplibre-gl';
@@ -41,6 +42,11 @@ export type StoreLocatorBounds = [[number, number], [number, number]];
  * Options d'icône, alignées sur `MarkerOptions` de MapLibre.
  * `url` et `size` sont des raccourcis : la librairie construit l'élément `<img>`.
  * `element` court-circuite tout et utilise le DOM fourni tel quel.
+ *
+ * Fournir au moins l'un des deux : un objet sans `url` ni `element` ne produit
+ * aucune icône, et le marqueur retombe sur le pin par défaut de MapLibre. Les
+ * deux champs restent facultatifs pour que les surcharges partielles par
+ * fusion ou par spread demeurent naturelles.
  */
 export interface StoreLocatorIconOptions {
   url?: string;
@@ -99,7 +105,7 @@ export interface StoreLocatorClusterOptions {
   textColor: StoreLocatorPaintValue<string>;
   textSize: StoreLocatorPaintValue<number>;
   /** Police du compteur. Doit exister dans les glyphes du style chargé. */
-  textFont: string[];
+  textFont: StoreLocatorPaintValue<string[]>;
 }
 
 export interface StoreLocatorMapOptions extends Omit<MapLibreMapOptions, 'container' | 'style'> {
@@ -112,7 +118,13 @@ export interface StoreLocatorMapOptions extends Omit<MapLibreMapOptions, 'contai
 }
 
 export interface StoreLocatorFitBoundsOptions {
-  padding: number;
+  /**
+   * Marge appliquée au recentrage. Un nombre pour une marge uniforme, ou un
+   * objet `{ top, bottom, left, right }` pour une marge asymétrique — utile
+   * lorsqu'un panneau de filtres occupe un côté de la carte et masquerait
+   * les pins ajustés sous lui.
+   */
+  padding: number | PaddingOptions;
   maxZoom?: number;
 }
 
@@ -160,6 +172,12 @@ export interface StoreLocatorOptions<P extends StoreLocatorProperties = StoreLoc
 }
 
 export interface StoreLocatorResolvedOptions<P extends StoreLocatorProperties = StoreLocatorProperties> {
+  /**
+   * Reste nullable après résolution : `StoreLocatorOptions.stores` est requis
+   * et non nullable, donc `null` ne peut provenir que d'un appelant qui
+   * contourne le contrat typé — du JavaScript, des données faiblement typées,
+   * un cast. Le constructeur lève alors une erreur explicite.
+   */
   stores: StoreLocatorFeatureCollection<P> | null;
   map: StoreLocatorMapConfig<P>;
   selectors: StoreLocatorSelectors;
