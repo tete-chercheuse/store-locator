@@ -1,6 +1,5 @@
 import type * as GeoJSON from 'geojson';
 import type { GeoJSONSource, Map as MapLibreMap } from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type {
   StoreLocatorFeature,
@@ -39,6 +38,17 @@ interface PendingRefresh {
 
 /**
  * Store Locator
+ *
+ * **Le CSS de MapLibre n'est pas importé par ce module** : c'est à l'application
+ * de le charger, soit `import 'maplibre-gl/dist/maplibre-gl.css'` avec un
+ * bundler, soit une balise `<link>` sans bundler.
+ *
+ * L'importer ici casserait le chemin sans bundler. microbundle externalise
+ * `maplibre-gl`, spécificateur CSS compris, qui survit donc tel quel dans le
+ * bundle publié ; une importmap ne peut pas le résoudre, un `.css` ne pouvant
+ * pas être servi comme module script. Or c'est exactement le chemin
+ * d'installation que le README annonce, depuis GitHub et sans étape de build.
+ *
  * @module StoreLocator
  */
 export default class StoreLocator<P extends StoreLocatorProperties = StoreLocatorProperties> {
