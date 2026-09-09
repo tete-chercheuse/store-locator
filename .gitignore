@@ -115,3 +115,6 @@ Temporary Items
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 /test-results
+
+# Documents de travail internes (specs et plans de session)
+docs/superpowers/
