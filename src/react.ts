@@ -56,6 +56,7 @@ export const useStoreLocator = <P extends StoreLocatorProperties = StoreLocatorP
 }: UseStoreLocatorOptions<P>): UseStoreLocatorResult<P> => {
   const [instance, setInstance] = useState<StoreLocator<P> | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [ready, setReady] = useState(false);
 
   const storesRef = useRef(stores);
   const optionsRef = useRef(options);
@@ -72,10 +73,12 @@ export const useStoreLocator = <P extends StoreLocatorProperties = StoreLocatorP
     if(disabled || !mapRef.current) {
       setInstance(null);
       setError(null);
+      setReady(false);
       return;
     }
 
     let locator: StoreLocator<P> | null = null;
+    let cancelled = false;
 
     const timer = setTimeout(() => {
       if(!mapRef.current) {
@@ -95,20 +98,46 @@ export const useStoreLocator = <P extends StoreLocatorProperties = StoreLocatorP
 
         setInstance(locator);
         setError(null);
-        onReadyRef.current?.(locator);
+        setReady(false);
+
+        // whenReady() attend le chargement du style : avant lui, la source et
+        // les couches n'existent pas encore.
+        //
+        // Deux gardes, pour deux causes distinctes. `value.destroyed` couvre un
+        // `destroy()` déclenché par l'appelant sur l'instance qu'il détient
+        // alors que le composant reste monté : le nettoyage de l'effet ne passe
+        // pas, donc `cancelled` reste faux, et `destroy()` résolvant
+        // délibérément la promesse, `onReady` partirait pour une instance morte.
+        //
+        // `cancelled` couvre le démontage. Il est de fait redondant, puisque le
+        // nettoyage appelle `destroy()` et pose donc `destroyed` — vérifié par
+        // mutation. On le conserve néanmoins : c'est le garde idiomatique lié au
+        // cycle de vie de l'effet, et s'en passer coupleraient la sûreté du hook
+        // à un détail interne de `StoreLocator`.
+        void locator.whenReady().then((value) => {
+          if(cancelled || value.destroyed) {
+            return;
+          }
+
+          setReady(true);
+          onReadyRef.current?.(value);
+        });
       }
       catch (nextError) {
         setError(toError(nextError));
         setInstance(null);
+        setReady(false);
       }
     }, 0);
 
     return () => {
+      cancelled = true;
       clearTimeout(timer);
 
       if(locator) {
         locator.destroy();
         setInstance((currentInstance) => currentInstance === locator ? null : currentInstance);
+        setReady(false);
       }
     };
   }, [disabled, filtersRef, mapRef, wrapperRef]);
@@ -132,7 +161,7 @@ export const useStoreLocator = <P extends StoreLocatorProperties = StoreLocatorP
   return {
     instance,
     error,
-    ready: Boolean(instance) && !error,
+    ready,
   };
 };
 
