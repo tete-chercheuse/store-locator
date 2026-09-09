@@ -135,14 +135,33 @@ const isGeoJsonFeature = <P extends StoreLocatorProperties>(store: unknown): sto
 };
 
 /**
- * Assigne l'`id` de diff et garantit un sac de propriétés lisible.
+ * Met chaque feature en conformité avec les garanties de `StoreLocatorFeature`.
  *
- * `"properties": null` est du GeoJSON conforme à la norme, mais
- * `StoreLocatorFeature<P>` promet aux factories `icon` et `popup` que
- * `feature.properties` est toujours accessible. On normalise vers `{}` plutôt
- * que de rejeter : refuser casserait des données utilisateur pourtant valides.
+ * Deux normalisations, volontairement réunies ici pour que le contrat ne
+ * diverge pas d'une branche d'entrée à l'autre.
+ *
+ * **`id` séquentiel.** C'est la clé de diff des marqueurs et de déduplication
+ * entre tuiles. Elle écrase systématiquement un `id` racine fourni par
+ * l'appelant, y compris numérique : conditionner l'assignation exposerait à
+ * des collisions entre identifiants métier et index générés. L'identifiant
+ * métier reste disponible dans `properties`.
+ *
+ * Conséquence assumée : l'`id` étant positionnel, réordonner les mêmes stores
+ * change tous les identifiants et provoque la reconstruction de tous les
+ * marqueurs.
+ *
+ * **`properties` non nul.** `"properties": null` est du GeoJSON conforme à la
+ * norme, mais `StoreLocatorFeature<P>` promet aux factories `icon` et `popup`
+ * que `feature.properties` est toujours accessible. On normalise vers `{}`
+ * plutôt que de rejeter : refuser casserait des données utilisateur valides.
+ *
+ * Le cast `{} as P` n'est honnête que si `P` n'a aucune clé requise. Une
+ * feature dont les propriétés arrivent nulles perd donc les champs que son
+ * type déclare. C'est la contrepartie acceptée d'un assainissement en
+ * frontière : l'alternative — élargir le retour en `Partial<P>` — taxerait
+ * tous les consommateurs pour un cas marginal.
  */
-const withSequentialIds = <P extends StoreLocatorProperties>(
+const normalizeFeatures = <P extends StoreLocatorProperties>(
   features: StoreLocatorFeature<P>[],
 ): StoreLocatorFeature<P>[] => {
   return features.map((feature, index) => ({
@@ -155,12 +174,10 @@ const withSequentialIds = <P extends StoreLocatorProperties>(
 /**
  * Normalise les données d'entrée en `FeatureCollection` GeoJSON.
  *
- * Chaque feature reçoit un `id` numérique séquentiel au niveau racine. Cet
- * identifiant est la clé de diff des marqueurs et de déduplication entre
- * tuiles. Il écrase systématiquement un `id` racine fourni par l'appelant,
- * y compris numérique : conditionner l'assignation exposerait à des collisions
- * entre identifiants métier et index générés. L'identifiant métier reste
- * disponible dans `properties`.
+ * Accepte trois formes : une `FeatureCollection`, un tableau de `Feature`
+ * GeoJSON, ou un tableau d'objets plats porteurs de coordonnées. Les trois
+ * passent par {@link normalizeFeatures}, qui garantit l'`id` de diff et un
+ * sac de propriétés lisible. L'entrée n'est jamais mutée.
  */
 export const normalizeStores = <P extends StoreLocatorProperties>(
   stores: StoreLocatorStoresInput<P> | null | undefined,
@@ -172,7 +189,7 @@ export const normalizeStores = <P extends StoreLocatorProperties>(
   if(isPlainObject(stores) && stores.type === 'FeatureCollection' && Array.isArray(stores.features)) {
     return {
       ...(stores as StoreLocatorFeatureCollection<P>),
-      features: withSequentialIds((stores as StoreLocatorFeatureCollection<P>).features),
+      features: normalizeFeatures((stores as StoreLocatorFeatureCollection<P>).features),
     };
   }
 
@@ -183,13 +200,13 @@ export const normalizeStores = <P extends StoreLocatorProperties>(
   if(stores.every((store) => isGeoJsonFeature<P>(store))) {
     return {
       type:     'FeatureCollection',
-      features: withSequentialIds(stores as StoreLocatorFeature<P>[]),
+      features: normalizeFeatures(stores as StoreLocatorFeature<P>[]),
     };
   }
 
   return {
     type:     'FeatureCollection',
-    features: withSequentialIds(stores.map((store) => {
+    features: normalizeFeatures(stores.map((store) => {
       if(!isPlainObject(store)) {
         throw new Error('[store-locator] - Invalid stores format');
       }
