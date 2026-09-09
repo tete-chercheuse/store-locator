@@ -1,117 +1,41 @@
-import L from 'leaflet';
-import 'leaflet-gesture-handling';
-import 'leaflet.markercluster';
-import 'leaflet.locatecontrol';
-
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
+import type * as GeoJSON from 'geojson';
+import type { GeoJSONSource, Map as MapLibreMap } from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type {
   StoreLocatorFeature,
-  StoreLocatorFilterValue,
+  StoreLocatorFeatureCollection,
   StoreLocatorFilters,
-  StoreLocatorIconOptions,
   StoreLocatorIconValue,
   StoreLocatorOptions,
-  StoreLocatorPopupOptions,
   StoreLocatorPopupValue,
   StoreLocatorProperties,
   StoreLocatorResolvedOptions,
   StoreLocatorStoresInput,
 } from './types';
-import defaultOptions from './utils/default-options';
+import defaultOptions, { OPENFREEMAP_BRIGHT } from './utils/default-options';
+import { filterFeatures } from './utils/filters';
 import { extend, formValues, isFormElement, normalizeStores, resolveElement } from './utils/utils';
+import { computeBounds } from './map/bounds';
+import { createMap, releaseContainer } from './map/create-map';
+import { CLUSTER_LAYER_ID, SOURCE_ID, addClusterSource, setClusterData } from './map/cluster-source';
+import { MarkerSync } from './map/marker-sync';
 
-const normalizeFilterValues = (value: StoreLocatorFilterValue | null | undefined): string[] => {
-  return (Array.isArray(value) ? value : [value])
-    .filter((item): item is string => item !== '' && item !== null && item !== undefined)
-    .map((item) => `${item}`);
-};
-
-const isEmptyFilterValue = (value: StoreLocatorFilterValue | null | undefined): boolean => {
-  return !normalizeFilterValues(value).length;
-};
-
-const matchesStoreProperty = (property: unknown, filter: StoreLocatorFilterValue): boolean => {
-  if(property === null || property === undefined) {
-    return false;
-  }
-
-  const values = normalizeFilterValues(filter);
-
-  if(!values.length) {
-    return true;
-  }
-
-  const properties = (Array.isArray(property) ? property : [property]).map((item) => `${item}`);
-
-  return values.some((value) => properties.includes(value));
-};
-
-const isIconOptions = (value: unknown): value is StoreLocatorIconOptions => {
-  return typeof value === 'object'
-    && value !== null
-    && 'iconUrl' in value
-    && typeof (value as { iconUrl?: unknown; }).iconUrl === 'string';
-};
-
-const normalizeIconValue = (value: StoreLocatorIconValue | undefined): L.Icon | L.DivIcon | null | undefined => {
-  if(value === null || value === undefined) {
-    return value;
-  }
-
-  if(value instanceof L.Icon) {
-    return value;
-  }
-
-  if(typeof value === 'string') {
-    return L.icon({ iconUrl: value });
-  }
-
-  if(isIconOptions(value)) {
-    return L.icon(value);
-  }
-
-  return undefined;
-};
-
-const isHtmlElement = (value: unknown): value is HTMLElement => {
-  return typeof HTMLElement !== 'undefined' && value instanceof HTMLElement;
-};
-
-const isPopupOptions = (value: unknown): value is StoreLocatorPopupOptions => {
-  return typeof value === 'object'
-    && value !== null
-    && !isHtmlElement(value);
-};
-
-const normalizePopupValue = (
-  value: StoreLocatorPopupValue | undefined,
-): string | HTMLElement | L.Popup | null | undefined => {
-  if(value === null || value === undefined) {
-    return value;
-  }
-
-  if(typeof value === 'string' || isHtmlElement(value) || value instanceof L.Popup) {
-    return value;
-  }
-
-  if(isPopupOptions(value)) {
-    const { content, ...options } = value;
-    const popup = L.popup(options);
-
-    if(content !== null && content !== undefined) {
-      popup.setContent(content);
-    }
-
-    return popup;
-  }
-
-  return undefined;
-};
+/**
+ * Rafraîchissement mis en attente tant que le style MapLibre n'est pas chargé.
+ *
+ * Les intentions doivent être **fusionnées**, pas écrasées. En v2, le
+ * constructeur appelait `refreshClusters(null, true, …)` puis `setFilters()`
+ * relançait un rendu sans recentrage — les deux s'exécutaient dans l'ordre, de
+ * façon synchrone. En v3 les deux sont différés jusqu'à `load` : un simple
+ * écrasement ferait perdre le recentrage initial dès qu'un formulaire de
+ * filtres est présent.
+ */
+interface PendingRefresh {
+  filters: StoreLocatorFilters | null;
+  recenter: boolean;
+  maxZoom: number | null;
+}
 
 /**
  * Store Locator
@@ -119,17 +43,23 @@ const normalizePopupValue = (
  */
 export default class StoreLocator<P extends StoreLocatorProperties = StoreLocatorProperties> {
   options: StoreLocatorResolvedOptions<P>;
-  map: L.Map | null = null;
-  clusters: L.FeatureGroup<L.Layer> | null = null;
+  map: MapLibreMap | null = null;
   filters: HTMLFormElement | null = null;
+
+  private markerSync: MarkerSync<P> | null = null;
+  private container: HTMLElement | null = null;
+  private styleLoaded = false;
+  private pending: PendingRefresh | null = null;
+  private readonly readyPromise: Promise<this>;
+  private resolveReady!: (instance: this) => void;
 
   private filterFields: Element[] = [];
   private filterChangeHandler: (() => void) | null = null;
   private resizeObserver: ResizeObserver | null = null;
 
   /**
-   * Instantiate StoreLocator
-   * @param options Store locator options
+   * Instancie le store locator et démarre la carte.
+   * @param options Options du store locator
    */
   constructor(options: StoreLocatorOptions<P>) {
     this.options = this.createOptions(options);
@@ -138,10 +68,29 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
       throw new Error('[store-locator] - No stores available');
     }
 
+    this.readyPromise = new Promise<this>((resolve) => {
+      this.resolveReady = resolve;
+    });
+
+    this.pending = {
+      filters: null,
+      recenter: true,
+      maxZoom: this.options.map.initialRecenter ? null : this.options.map.options.zoom,
+    };
+
     this.initMap();
     this.setFilters();
   }
 
+  /**
+   * Résout quand le style MapLibre est chargé et que les couches sont en place.
+   * Résout également, avec l'instance détruite, si `destroy()` est appelé avant.
+   */
+  whenReady(): Promise<this> {
+    return this.readyPromise;
+  }
+
+  /** Remplace les données affichées et rafraîchit la carte. */
   setStores(
     stores: StoreLocatorStoresInput<P>,
     filters: StoreLocatorFilters | null = null,
@@ -149,9 +98,10 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
     maxZoom: number | null = null,
   ): void {
     this.options.stores = normalizeStores(stores);
-    this.refreshClusters(filters, recenter, maxZoom);
+    this.refresh(filters, recenter, maxZoom);
   }
 
+  /** Associe ou réassocie le formulaire de filtres. */
   setFilters(
     filters: string | HTMLFormElement | null = this.options.elements.filters ?? this.options.selectors.filters,
     wrapper: string | HTMLElement | null = this.options.elements.wrapper ?? this.options.selectors.wrapper,
@@ -184,91 +134,71 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
 
     this.filters = filtersElement;
     this.filterFields = Array.from(this.filters.elements);
-    this.filterChangeHandler = () => this.refreshClusters(formValues(this.filters as HTMLFormElement));
+    this.filterChangeHandler = () => this.refresh(formValues(this.filters as HTMLFormElement));
 
     for(const field of this.filterFields) {
       field.addEventListener('change', this.filterChangeHandler);
     }
 
-    this.refreshClusters(formValues(this.filters));
+    this.refresh(formValues(this.filters));
   }
 
-  refreshClusters(
+  /** Réapplique les filtres à la source et resynchronise les marqueurs. */
+  refresh(
     filters: StoreLocatorFilters | null = null,
     recenter = this.options.map.refreshRecenter,
     maxZoom: number | null = null,
   ): void {
-    if(!this.clusters || !this.options.stores) {
+    if(!this.map || !this.options.stores) {
       return;
     }
 
-    this.clusters.clearLayers();
-
-    const stores = {
-      ...this.options.stores,
-      features: [...this.options.stores.features],
-    };
-
-    if(filters) {
-      stores.features = stores.features.filter((store) => {
-        return Object.entries(filters).every(([filter, value]) => {
-          if(isEmptyFilterValue(value)) {
-            return true;
-          }
-
-          return matchesStoreProperty(store.properties?.[filter], value);
-        });
-      });
-    }
-
-    if(!stores.features.length) {
+    if(!this.styleLoaded) {
+      this.pending = {
+        filters,
+        recenter: recenter || (this.pending?.recenter ?? false),
+        maxZoom: maxZoom ?? this.pending?.maxZoom ?? null,
+      };
       return;
     }
 
-    const geoJson = L.geoJSON(stores, {
-      pointToLayer: (feature: StoreLocatorFeature<P>, latlng: L.LatLng) => {
-        const marker = L.marker(latlng);
-        const popup = this.resolvePopup(feature);
-        const icon = this.resolveIcon(feature);
+    const collection = filterFeatures(this.options.stores, filters);
 
-        if(popup !== null && popup !== undefined) {
-          marker.bindPopup(popup);
-        }
-
-        if(icon) {
-          marker.setIcon(icon);
-        }
-
-        marker.on('click', () => this.map?.setView(marker.getLatLng()));
-
-        return marker;
-      },
-    });
-
-    this.clusters.addLayer(geoJson);
+    setClusterData(this.map, collection);
+    this.markerSync?.setFeatures(collection);
+    this.markerSync?.sync();
 
     if(recenter) {
-      this.map?.fitBounds(this.clusters.getBounds(), { maxZoom: maxZoom ?? undefined });
+      this.fitToCollection(collection, maxZoom);
     }
   }
 
-  invalidateSize(options?: Parameters<L.Map['invalidateSize']>[0]): void {
-    this.map?.invalidateSize(options);
+  /** Relance le calcul de taille de la carte. Utile après un affichage différé. */
+  resize(): void {
+    this.map?.resize();
   }
 
+  /** Détruit la carte et libère tous les écouteurs. */
   destroy(): void {
     this.detachFilters();
+
     this.resizeObserver?.disconnect();
     this.resizeObserver = null;
 
-    if(this.map) {
-      this.map.off();
-      this.map.remove();
+    this.markerSync?.destroy();
+    this.markerSync = null;
+
+    this.map?.remove();
+
+    if(this.container) {
+      releaseContainer(this.container);
     }
 
+    this.container = null;
     this.map = null;
-    this.clusters = null;
     this.filters = null;
+    this.styleLoaded = false;
+    this.resolveReady(this);
   }
 
   private createOptions(options: StoreLocatorOptions<P>): StoreLocatorResolvedOptions<P> {
@@ -285,45 +215,111 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
   }
 
   private initMap(): void {
-    const mapContainer = this.resolveMapElement();
+    const container = this.resolveMapElement();
 
-    if(!mapContainer) {
+    if(!container) {
       throw new Error('[store-locator] - Map container not found');
     }
 
-    if((mapContainer as HTMLElement & { _leaflet_id?: number; })._leaflet_id) {
-      throw new Error(
-        '[store-locator] - Map container is already initialized. ' +
-        'Call destroy() on the previous instance before creating a new one on the same element.',
-      );
-    }
+    this.container = container;
+    this.map = createMap(container, this.options.map);
 
-    this.map = L.map(mapContainer, this.options.map.options);
+    this.markerSync = new MarkerSync<P>({
+      map: this.map,
+      resolveIcon: (feature) => this.resolveIcon(feature),
+      resolvePopup: (feature) => this.resolvePopup(feature),
+      onMarkerClick: (feature) => {
+        this.map?.easeTo({ center: feature.geometry.coordinates as [number, number] });
+      },
+    });
 
-    L.tileLayer(this.options.map.tiles.url, this.options.map.tiles.options).addTo(this.map);
-
-    if(this.options.map.locate) {
-      L.control.locate().addTo(this.map);
-    }
-
-    this.map.on('click', () => this.map?.scrollWheelZoom.enable());
-    this.map.on('mouseout', () => this.map?.scrollWheelZoom.disable());
-
-    this.clusters = L.markerClusterGroup(this.options.map.markers.clustersOptions);
-    this.map.addLayer(this.clusters);
+    this.map.on('load', () => this.handleStyleLoad());
 
     if(typeof ResizeObserver !== 'undefined') {
-      this.resizeObserver = new ResizeObserver(() => {
-        this.map?.invalidateSize();
-      });
-      this.resizeObserver.observe(mapContainer);
+      this.resizeObserver = new ResizeObserver(() => this.map?.resize());
+      this.resizeObserver.observe(container);
+    }
+  }
+
+  private handleStyleLoad(): void {
+    if(!this.map || !this.options.stores) {
+      return;
     }
 
-    this.refreshClusters(
-      null,
-      true,
-      this.options.map.initialRecenter ? null : this.options.map.options.zoom,
-    );
+    const pending = this.pending ?? { filters: null, recenter: true, maxZoom: null };
+
+    this.pending = null;
+
+    const collection = filterFeatures(this.options.stores, pending.filters);
+
+    addClusterSource(this.map, collection, this.options.map.clusters);
+    this.bindClusterInteractions();
+
+    this.markerSync?.setFeatures(collection);
+    this.markerSync?.start();
+    this.markerSync?.sync();
+
+    this.styleLoaded = true;
+
+    if(pending.recenter) {
+      this.fitToCollection(collection, pending.maxZoom);
+    }
+
+    this.resolveReady(this);
+  }
+
+  private bindClusterInteractions(): void {
+    if(!this.map || !this.options.map.clusters.enabled) {
+      return;
+    }
+
+    const map = this.map;
+
+    map.on('click', CLUSTER_LAYER_ID, (event) => {
+      const feature = event.features?.[0];
+      const clusterId = feature?.properties?.cluster_id as number | undefined;
+
+      // `feature` est redondant à l'exécution — sans feature, pas de
+      // `clusterId` — mais le cast ci-dessus coupe le lien d'inférence, et
+      // `feature` resterait `possibly undefined` dans le `.then()`.
+      if(!feature || clusterId === undefined) {
+        return;
+      }
+
+      const source = map.getSource(SOURCE_ID) as GeoJSONSource | undefined;
+
+      if(!source?.getClusterExpansionZoom) {
+        return;
+      }
+
+      void source.getClusterExpansionZoom(clusterId).then((zoom: number) => {
+        map.easeTo({
+          center: (feature.geometry as GeoJSON.Point).coordinates as [number, number],
+          zoom,
+        });
+      });
+    });
+
+    map.on('mouseenter', CLUSTER_LAYER_ID, () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', CLUSTER_LAYER_ID, () => {
+      map.getCanvas().style.cursor = '';
+    });
+  }
+
+  private fitToCollection(collection: StoreLocatorFeatureCollection<P>, maxZoom: number | null): void {
+    const bounds = computeBounds(collection);
+
+    if(!bounds || !this.map) {
+      return;
+    }
+
+    this.map.fitBounds(bounds, {
+      ...this.options.map.fitBoundsOptions,
+      ...(maxZoom !== null ? { maxZoom } : {}),
+    });
   }
 
   private resolveMapElement(): HTMLElement | null {
@@ -334,24 +330,16 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
     return this.options.elements.wrapper ?? resolveElement<HTMLElement>(this.options.selectors.wrapper);
   }
 
-  private resolvePopup(feature: StoreLocatorFeature<P>): string | HTMLElement | L.Popup | null | undefined {
+  private resolvePopup(feature: StoreLocatorFeature<P>): StoreLocatorPopupValue | undefined {
     const popup = this.options.map.markers.popup;
 
-    return normalizePopupValue(
-      typeof popup === 'function'
-        ? popup(feature)
-        : popup,
-    );
+    return typeof popup === 'function' ? popup(feature) : popup;
   }
 
-  private resolveIcon(feature: StoreLocatorFeature<P>): L.Icon | L.DivIcon | null | undefined {
+  private resolveIcon(feature: StoreLocatorFeature<P>): StoreLocatorIconValue | undefined {
     const icon = this.options.map.markers.icon;
 
-    return normalizeIconValue(
-      typeof icon === 'function'
-        ? icon(feature)
-        : icon,
-    );
+    return typeof icon === 'function' ? icon(feature) : icon;
   }
 
   private detachFilters(): void {
@@ -366,7 +354,11 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
   }
 }
 
+export { OPENFREEMAP_BRIGHT };
+
 export type {
+  StoreLocatorBounds,
+  StoreLocatorClusterOptions,
   StoreLocatorCoordinateStore,
   StoreLocatorCoordinateValue,
   StoreLocatorElements,
@@ -374,19 +366,21 @@ export type {
   StoreLocatorFeatureCollection,
   StoreLocatorFilterValue,
   StoreLocatorFilters,
+  StoreLocatorFitBoundsOptions,
   StoreLocatorIconFactory,
   StoreLocatorIconOptions,
   StoreLocatorIconValue,
   StoreLocatorMapConfig,
+  StoreLocatorMapOptions,
   StoreLocatorMarkerOptions,
   StoreLocatorOptions,
-  StoreLocatorPopupFactory,
+  StoreLocatorPaintValue,
   StoreLocatorPopupContent,
+  StoreLocatorPopupFactory,
   StoreLocatorPopupOptions,
   StoreLocatorPopupValue,
   StoreLocatorProperties,
   StoreLocatorResolvedOptions,
   StoreLocatorSelectors,
   StoreLocatorStoresInput,
-  StoreLocatorTilesOptions,
 } from './types';

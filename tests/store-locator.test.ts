@@ -1,73 +1,237 @@
 import { describe, expect, it } from 'vitest';
-import L from 'leaflet';
 import StoreLocator from '../src/store-locator';
-import { leafletMockState } from './mocks/leaflet';
+import { mapLibreMockState } from './mocks/maplibre-gl';
+import { CLUSTER_COUNT_LAYER_ID, CLUSTER_LAYER_ID, POINT_LAYER_ID, SOURCE_ID } from '../src/map/cluster-source';
+
+const twoStores = [
+  { id: 'store-1', name: 'Cafe', category: 'Coffee', lat: 16.2411, lng: -61.5336 },
+  { id: 'store-2', name: 'Bakery', category: 'Bakery', lat: 16.2062, lng: -61.4932 },
+];
+
+const mountMapElement = (): HTMLElement => {
+  const element = document.createElement('div');
+
+  document.body.appendChild(element);
+
+  return element;
+};
+
+/** Simule les features que MapLibre renverrait pour les tuiles chargées. */
+const renderSourceFeatures = (ids: number[]): void => {
+  mapLibreMockState.sourceFeatures.length = 0;
+  mapLibreMockState.sourceFeatures.push(...ids.map((id) => ({ id })));
+};
 
 describe('StoreLocator', () => {
-  it('initializes the map and creates clustered GeoJSON markers', () => {
-    const mapElement = document.createElement('div');
-    document.body.appendChild(mapElement);
-
+  it('creates the map, the clustered source and its three layers', async () => {
     const locator = new StoreLocator({
-      stores: [
-        { id: 'store-1', name: 'Cafe', lat: 16.2411, lng: -61.5336 },
-        { id: 'store-2', name: 'Bakery', lat: 16.2062, lng: -61.4932 },
-      ],
-      elements: {
-        map: mapElement,
-      },
-      map: {
-        markers: {
-          popup: (feature) => L.popup().setContent(feature.properties.name as string),
-          icon: () => L.icon({ iconUrl: '/pin.svg' }),
-        },
-      },
+      stores: twoStores,
+      elements: { map: mountMapElement() },
     });
 
-    expect(leafletMockState.maps).toHaveLength(1);
-    expect(leafletMockState.clusters).toHaveLength(1);
-    expect(leafletMockState.geoJSONCalls).toHaveLength(1);
-    expect(leafletMockState.geoJSONCalls[0].stores.features).toHaveLength(2);
-    expect(leafletMockState.markers).toHaveLength(2);
-    expect(leafletMockState.markers[0].bindPopup).toHaveBeenCalledTimes(1);
-    expect(leafletMockState.markers[0].setIcon).toHaveBeenCalledTimes(1);
-    expect(leafletMockState.maps[0].fitBounds).toHaveBeenCalledTimes(1);
+    await locator.whenReady();
 
-    leafletMockState.markers[0].trigger('click');
-    expect(leafletMockState.maps[0].setView).toHaveBeenCalledWith({ lat: 16.2411, lng: -61.5336 });
+    const map = mapLibreMockState.maps[0];
+
+    expect(mapLibreMockState.maps).toHaveLength(1);
+    expect(map.sources.get(SOURCE_ID)?.options).toMatchObject({
+      cluster: true,
+      clusterRadius: 50,
+      clusterMaxZoom: 14,
+      clusterMinPoints: 2,
+    });
+    expect(map.layers.map((layer) => layer.id)).toEqual([
+      POINT_LAYER_ID,
+      CLUSTER_LAYER_ID,
+      CLUSTER_COUNT_LAYER_ID,
+    ]);
 
     locator.destroy();
   });
 
-  it('refreshes markers from form filters', () => {
+  it('adds a navigation control by default and no geolocate control', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.navigationControls).toHaveLength(1);
+    expect(mapLibreMockState.geolocateControls).toHaveLength(0);
+
+    locator.destroy();
+  });
+
+  it('adds a geolocate control when locate is enabled', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+      map: { locate: true },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.geolocateControls).toHaveLength(1);
+
+    locator.destroy();
+  });
+
+  it('passes the OpenFreeMap Bright style and the default center to the map', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.maps[0].options).toMatchObject({
+      style: 'https://tiles.openfreemap.org/styles/bright',
+      center: [0, 0],
+      cooperativeGestures: true,
+    });
+
+    locator.destroy();
+  });
+
+  it('forwards a caller-supplied center to MapLibre without reordering it', async () => {
+    // Le défaut [0, 0] est symétrique et ne prouve donc rien sur l'ordre des
+    // coordonnées, qui est LE piège de cette migration : Leaflet attendait
+    // [lat, lng], MapLibre attend [lng, lat]. Ce test épingle le contrat de
+    // passe-plat avec une valeur asymétrique — Paris.
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+      map: { options: { center: [2.3522, 48.8566] } },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.maps[0].options.center).toEqual([2.3522, 48.8566]);
+
+    locator.destroy();
+  });
+
+  it('fits the map to the store bounds on the initial render', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.maps[0].fitBounds).toHaveBeenCalledWith(
+      [[-61.5336, 16.2062], [-61.4932, 16.2411]],
+      { padding: 48, maxZoom: 16 },
+    );
+
+    locator.destroy();
+  });
+
+  it('creates one marker per unclustered feature returned by the source', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+      map: {
+        markers: {
+          icon: (feature) => ({ url: `/${feature.properties.id as string}.svg`, size: [40, 44], anchor: 'bottom' }),
+          popup: (feature) => `<b>${feature.properties.name as string}</b>`,
+        },
+      },
+    });
+
+    await locator.whenReady();
+
+    renderSourceFeatures([0, 1]);
+    mapLibreMockState.maps[0].trigger('moveend');
+
+    expect(mapLibreMockState.markers).toHaveLength(2);
+    expect(mapLibreMockState.markers[0].lngLat).toEqual([-61.5336, 16.2411]);
+    expect(mapLibreMockState.markers[0].options).toMatchObject({ anchor: 'bottom' });
+    expect(mapLibreMockState.popups[0].setHTML).toHaveBeenCalledWith('<b>Cafe</b>');
+
+    locator.destroy();
+  });
+
+  it('deduplicates features returned from several tiles', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    await locator.whenReady();
+
+    renderSourceFeatures([0, 0, 1, 1]);
+    mapLibreMockState.maps[0].trigger('moveend');
+
+    expect(mapLibreMockState.markers).toHaveLength(2);
+
+    locator.destroy();
+  });
+
+  it('removes markers whose feature left the loaded tiles', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    await locator.whenReady();
+
+    renderSourceFeatures([0, 1]);
+    mapLibreMockState.maps[0].trigger('moveend');
+
+    renderSourceFeatures([0]);
+    mapLibreMockState.maps[0].trigger('moveend');
+
+    expect(mapLibreMockState.markers.filter((marker) => marker.added)).toHaveLength(1);
+
+    locator.destroy();
+  });
+
+  it('centers the map when a marker is clicked', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    await locator.whenReady();
+
+    renderSourceFeatures([0]);
+    mapLibreMockState.maps[0].trigger('moveend');
+
+    mapLibreMockState.markers[0].element.dispatchEvent(new Event('click'));
+
+    expect(mapLibreMockState.maps[0].easeTo).toHaveBeenCalledWith({ center: [-61.5336, 16.2411] });
+
+    locator.destroy();
+  });
+
+  it('refreshes the source data from form filters', async () => {
     document.body.innerHTML = `
       <div class="store-locator">
         <form class="store-locator-filters">
           <label><input checked name="category" type="radio" value="" />Toutes</label>
           <label><input name="category" type="radio" value="Coffee" />Coffee</label>
-          <label><input name="category" type="radio" value="Bakery" />Bakery</label>
         </form>
       </div>
     `;
 
     const mapElement = document.createElement('div');
+
     document.body.querySelector('.store-locator')?.appendChild(mapElement);
 
     const locator = new StoreLocator({
-      stores: [
-        { id: 'store-1', name: 'Cafe', category: 'Coffee', lat: 16.2411, lng: -61.5336 },
-        { id: 'store-2', name: 'Bakery', category: 'Bakery', lat: 16.2062, lng: -61.4932 },
-      ],
-      elements: {
-        map: mapElement,
-      },
+      stores: twoStores,
+      elements: { map: mapElement },
     });
 
-    expect(leafletMockState.geoJSONCalls.at(-1)?.stores.features).toHaveLength(2);
+    await locator.whenReady();
+
+    const source = mapLibreMockState.maps[0].sources.get(SOURCE_ID);
+
+    expect((source?.data as { features: unknown[]; }).features).toHaveLength(2);
 
     const coffeeInput = document.querySelector<HTMLInputElement>('input[value="Coffee"]');
-
-    expect(coffeeInput).not.toBeNull();
 
     if(!coffeeInput) {
       throw new Error('Coffee input not found');
@@ -76,92 +240,114 @@ describe('StoreLocator', () => {
     coffeeInput.checked = true;
     coffeeInput.dispatchEvent(new Event('change', { bubbles: true }));
 
-    expect(leafletMockState.geoJSONCalls.at(-1)?.stores.features).toHaveLength(1);
-    expect(leafletMockState.geoJSONCalls.at(-1)?.stores.features[0].properties?.category).toBe('Coffee');
+    expect(source?.setData).toHaveBeenCalledTimes(1);
+    expect((source?.data as { features: Array<{ properties: { category: string; }; }>; }).features).toHaveLength(1);
+    expect((source?.data as { features: Array<{ properties: { category: string; }; }>; }).features[0].properties.category).toBe('Coffee');
 
     locator.destroy();
   });
 
-  it('cleans up the Leaflet map instance on destroy', () => {
-    const mapElement = document.createElement('div');
-    document.body.appendChild(mapElement);
+  it('keeps the initial recenter intent when a filter form is attached before load', async () => {
+    document.body.innerHTML = `
+      <div class="store-locator">
+        <form class="store-locator-filters">
+          <label><input checked name="category" type="radio" value="" />Toutes</label>
+        </form>
+      </div>
+    `;
 
+    const mapElement = document.createElement('div');
+
+    document.body.querySelector('.store-locator')?.appendChild(mapElement);
+
+    // setFilters() déclenche un refresh avec recenter=false avant le chargement
+    // du style. Il ne doit pas annuler le recentrage initial.
     const locator = new StoreLocator({
-      stores: [{ id: 'store-1', lat: 16.2411, lng: -61.5336 }],
-      elements: {
-        map: mapElement,
-      },
+      stores: twoStores,
+      elements: { map: mapElement },
     });
 
-    const map = leafletMockState.maps[0];
+    await locator.whenReady();
+
+    expect(mapLibreMockState.maps[0].fitBounds).toHaveBeenCalledTimes(1);
+
+    locator.destroy();
+  });
+
+  it('queues a refresh issued before the style has loaded', async () => {
+    mapLibreMockState.autoLoad = false;
+
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    locator.setStores([{ id: 'store-3', name: 'Wineshop', lat: 1, lng: 1 }]);
+
+    expect(mapLibreMockState.maps[0].sources.size).toBe(0);
+
+    mapLibreMockState.maps[0].trigger('load');
+    await locator.whenReady();
+
+    const source = mapLibreMockState.maps[0].sources.get(SOURCE_ID);
+
+    expect((source?.data as { features: unknown[]; }).features).toHaveLength(1);
+
+    locator.destroy();
+  });
+
+  it('throws when the container already carries a live map', async () => {
+    const mapElement = mountMapElement();
+
+    const first = new StoreLocator({ stores: twoStores, elements: { map: mapElement } });
+
+    await first.whenReady();
+
+    expect(() => new StoreLocator({ stores: twoStores, elements: { map: mapElement } }))
+      .toThrow('[store-locator] - Map container is already initialized.');
+
+    first.destroy();
+
+    expect(() => new StoreLocator({ stores: twoStores, elements: { map: mapElement } })).not.toThrow();
+  });
+
+  it('tears the map down on destroy', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+    });
+
+    await locator.whenReady();
+
+    renderSourceFeatures([0, 1]);
+    mapLibreMockState.maps[0].trigger('moveend');
+
+    const map = mapLibreMockState.maps[0];
 
     locator.destroy();
 
-    expect(map.off).toHaveBeenCalledTimes(1);
     expect(map.remove).toHaveBeenCalledTimes(1);
+    expect(mapLibreMockState.markers.every((marker) => marker.removed)).toBe(true);
     expect(locator.map).toBeNull();
-    expect(locator.clusters).toBeNull();
     expect(locator.filters).toBeNull();
   });
 
-  it('creates marker icons from shorthand icon values', () => {
-    const mapElement = document.createElement('div');
-    document.body.appendChild(mapElement);
-
+  it('forwards resize to the map', async () => {
     const locator = new StoreLocator({
-      stores: [
-        { id: 'store-1', icon: '/pin.svg', lat: 16.2411, lng: -61.5336 },
-      ],
-      elements: {
-        map: mapElement,
-      },
-      map: {
-        markers: {
-          icon: (feature) => ({
-            iconUrl: feature.properties.icon as string,
-            iconSize: [40, 44],
-            iconAnchor: [20, 44],
-          }),
-        },
-      },
+      stores: twoStores,
+      elements: { map: mountMapElement() },
     });
 
-    expect(leafletMockState.markers[0].setIcon).toHaveBeenCalledTimes(1);
-    expect(leafletMockState.markers[0].icon).toBeInstanceOf(L.Icon);
-    expect((leafletMockState.markers[0].icon as L.Icon | null)?.options).toMatchObject({
-      iconUrl: '/pin.svg',
-      iconSize: [40, 44],
-      iconAnchor: [20, 44],
-    });
+    await locator.whenReady();
+    locator.resize();
+
+    expect(mapLibreMockState.maps[0].resize).toHaveBeenCalledTimes(1);
 
     locator.destroy();
   });
 
-  it('creates marker popups from shorthand popup values', () => {
-    const mapElement = document.createElement('div');
-    document.body.appendChild(mapElement);
-
-    const locator = new StoreLocator({
-      stores: [
-        { id: 'store-1', name: 'Cafe du Port', lat: 16.2411, lng: -61.5336 },
-      ],
-      elements: {
-        map: mapElement,
-      },
-      map: {
-        markers: {
-          popup: (feature) => ({
-            content: `<strong>${feature.properties.name as string}</strong>`,
-            maxWidth: 280,
-          }),
-        },
-      },
-    });
-
-    expect(leafletMockState.markers[0].bindPopup).toHaveBeenCalledTimes(1);
-    expect(leafletMockState.markers[0].popup).toBeInstanceOf(L.Popup);
-    expect((leafletMockState.markers[0].popup as L.Popup | null)?.content).toBe('<strong>Cafe du Port</strong>');
-
-    locator.destroy();
+  it('throws when no stores are provided', () => {
+    expect(() => new StoreLocator({ stores: null as never, elements: { map: mountMapElement() } }))
+      .toThrow('[store-locator] - No stores available');
   });
 });
