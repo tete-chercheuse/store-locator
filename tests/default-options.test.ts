@@ -30,6 +30,10 @@ describe('defaultOptions', () => {
     expect(defaultOptions.map.fitBoundsOptions.padding).toBe(48);
   });
 
+  it('caps the fitBounds zoom so a single result does not slam to street level', () => {
+    expect(defaultOptions.map.fitBoundsOptions.maxZoom).toBe(16);
+  });
+
   it('no longer exposes the removed Leaflet-era options', () => {
     const clusters = defaultOptions.map.clusters as Record<string, unknown>;
 

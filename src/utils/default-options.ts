@@ -35,6 +35,11 @@ const defaultMapOptions: StoreLocatorMapConfig = {
   },
   fitBoundsOptions: {
     padding: 48,
+    // Sans plafond, une collection réduite à un seul point donne une emprise
+    // dégénérée et `fitBounds` retombe sur le `maxZoom` de la carte, soit 18.
+    // Filtrer jusqu'à un unique magasin projetterait donc au niveau du bâtiment,
+    // sur des tuiles surzoomées. 16 montre le magasin dans sa rue.
+    maxZoom: 16,
   },
 };
 
