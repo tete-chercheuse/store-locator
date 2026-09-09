@@ -1,4 +1,5 @@
 import { vi } from 'vitest';
+import type { Mock } from 'vitest';
 
 /**
  * Ce module exporte une classe nommée `Map`, qui masque le `Map` natif dans
@@ -8,12 +9,17 @@ const NativeMap = globalThis.Map;
 
 type EventHandler = (...args: unknown[]) => void;
 
+/**
+ * Les deux méthodes sont typées par leur signature concrète plutôt qu'en
+ * `ReturnType<typeof vi.fn>`, qui vaut `any` et rendrait toute garde de dérive
+ * décorative — `any` étant assignable à n'importe quoi.
+ */
 export interface MockGeoJSONSource {
   id: string;
   data: Record<string, unknown>;
   options: Record<string, unknown>;
-  setData: ReturnType<typeof vi.fn>;
-  getClusterExpansionZoom: ReturnType<typeof vi.fn>;
+  setData: Mock<(data: Record<string, unknown>) => Promise<void>>;
+  getClusterExpansionZoom: Mock<(clusterId: number) => Promise<number>>;
 }
 
 export interface MockMap {
@@ -24,9 +30,9 @@ export interface MockMap {
   controls: unknown[];
   handlers: Record<string, EventHandler[]>;
   removed: boolean;
+  canvas: { style: CSSStyleDeclaration; };
   on: ReturnType<typeof vi.fn>;
   off: ReturnType<typeof vi.fn>;
-  once: ReturnType<typeof vi.fn>;
   addControl: ReturnType<typeof vi.fn>;
   addSource: ReturnType<typeof vi.fn>;
   getSource: ReturnType<typeof vi.fn>;
@@ -92,6 +98,9 @@ class MockMapImpl implements MockMap {
   handlers: Record<string, EventHandler[]> = {};
   removed = false;
 
+  // MapLibre v6 retourne un `Subscription`, pas la carte. Rendre `this` ici
+  // laisserait passer un chaînage à la Leaflet — `map.on(…).on(…)` — qui est
+  // fatal en navigateur.
   on = vi.fn((event: string, second: unknown, third?: unknown) => {
     const isLayerHandler = typeof second === 'string';
     const key = isLayerHandler ? layerEventKey(event, second) : event;
@@ -100,11 +109,22 @@ class MockMapImpl implements MockMap {
     this.handlers[key] ??= [];
     this.handlers[key].push(handler);
 
-    return this;
+    return { unsubscribe: () => this.off(event, handler) };
   });
 
-  off = vi.fn(() => this);
-  once = vi.fn((event: string, handler: EventHandler) => this.on(event, handler));
+  // Détache réellement : un `off` sans effet rendrait creuse toute assertion
+  // de nettoyage des écouteurs.
+  off = vi.fn((event: string, handler: EventHandler, layerId?: string) => {
+    const key = layerId ? layerEventKey(event, layerId) : event;
+    const handlers = this.handlers[key];
+    const index = handlers?.indexOf(handler) ?? -1;
+
+    if(handlers && index !== -1) {
+      handlers.splice(index, 1);
+    }
+
+    return this;
+  });
 
   addControl = vi.fn((control: unknown) => {
     this.controls.push(control);
@@ -116,8 +136,12 @@ class MockMapImpl implements MockMap {
       id,
       data: options.data as Record<string, unknown>,
       options,
-      setData: vi.fn((data: Record<string, unknown>) => {
+      // La vraie méthode retourne `Promise<void>` en v6 et a perdu son second
+      // paramètre. La mise à jour est ici synchrone — simplification assumée,
+      // pour qu'un test puisse observer les données juste après l'appel.
+      setData: vi.fn((data: Record<string, unknown>): Promise<void> => {
         source.data = data;
+        return Promise.resolve();
       }),
       getClusterExpansionZoom: vi.fn(() => Promise.resolve(12)),
     };
@@ -146,14 +170,26 @@ class MockMapImpl implements MockMap {
     return this;
   });
 
-  querySourceFeatures = vi.fn(() => mapLibreMockState.sourceFeatures);
-  getCanvas = vi.fn(() => ({ style: {} as CSSStyleDeclaration }));
+  // Copie défensive : la vraie méthode retourne un tableau neuf, et une
+  // implémentation qui trierait le résultat corromprait sinon l'état partagé.
+  querySourceFeatures = vi.fn(() => [...mapLibreMockState.sourceFeatures]);
+
+  // Instance stable, comme le vrai `HTMLCanvasElement`. Renvoyer un objet neuf
+  // à chaque appel rendrait invisible toute écriture sur `style.cursor`.
+  canvas = { style: {} as CSSStyleDeclaration };
+  getCanvas = vi.fn(() => this.canvas);
+
   easeTo = vi.fn(() => this);
   fitBounds = vi.fn(() => this);
   resize = vi.fn(() => this);
 
   remove = vi.fn(() => {
     this.removed = true;
+    // La vraie méthode démonte tout. Sans cela, une assertion de destruction
+    // passerait alors que les écouteurs et les sources survivent.
+    this.handlers = {};
+    this.sources.clear();
+    this.layers = [];
   });
 
   isSourceLoaded = vi.fn(() => true);
@@ -267,3 +303,32 @@ export const Marker = MockMarkerImpl;
 export const Popup = MockPopupImpl;
 export const NavigationControl = MockNavigationControl;
 export const GeolocateControl = MockGeolocateControl;
+
+/**
+ * Gardes de dérive.
+ *
+ * `tsconfig.json` ne couvre que `src/**`, donc rien ne relie ce mock au vrai
+ * type `maplibre-gl`. Sans ces assertions, une divergence de signature reste
+ * invisible : c'est exactement ainsi qu'un test peut rester vert pendant que
+ * la librairie casse en navigateur.
+ *
+ * L'assignation par méthode mord là où un `extends` sur la classe entière
+ * ne mordait pas — les champs `vi.fn` portent des signatures trop permissives
+ * pour qu'un test conditionnel discrimine.
+ *
+ * Contrôle : `./scripts/check-mock-drift.sh`
+ */
+declare const __map: MockMapImpl;
+declare const __source: MockGeoJSONSource;
+
+/** `Map.on` retourne un `Subscription` en v6, pas la carte. */
+export const __driftOn: ReturnType<import('maplibre-gl').Map['on']> =
+  null as unknown as ReturnType<typeof __map.on>;
+
+/** `GeoJSONSource.setData` retourne `Promise<void>` en v6. */
+export const __driftSetData: ReturnType<import('maplibre-gl').GeoJSONSource['setData']> =
+  null as unknown as ReturnType<typeof __source.setData>;
+
+/** `getClusterExpansionZoom` est passé en promesse. */
+export const __driftClusterZoom: ReturnType<import('maplibre-gl').GeoJSONSource['getClusterExpansionZoom']> =
+  null as unknown as ReturnType<typeof __source.getClusterExpansionZoom>;
