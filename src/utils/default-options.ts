@@ -1,31 +1,40 @@
 import type { StoreLocatorMapConfig, StoreLocatorResolvedOptions, StoreLocatorSelectors } from '../types';
 
+/** Style vectoriel Bright servi par OpenFreeMap : sans clé d'API, sans quota. */
+export const OPENFREEMAP_BRIGHT = 'https://tiles.openfreemap.org/styles/bright';
+
 const defaultMapOptions: StoreLocatorMapConfig = {
   refreshRecenter: false,
   initialRecenter: true,
   locate: false,
+  navigation: true,
+  style: OPENFREEMAP_BRIGHT,
   options: {
     zoom: 2,
     maxZoom: 18,
     minZoom: 2,
     center: [0, 0],
-    gestureHandling: true,
-  },
-  tiles: {
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
-    options: {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-    },
+    cooperativeGestures: true,
   },
   markers: {
     icon: null,
     popup: null,
-    clustersOptions: {
-      showCoverageOnHover: false,
-      spiderfyOnMaxZoom: false,
-      disableClusteringAtZoom: 15,
-    },
+  },
+  clusters: {
+    enabled: true,
+    radius: 50,
+    maxZoom: 14,
+    minPoints: 2,
+    color: '#2563eb',
+    size: 18,
+    strokeColor: '#ffffff',
+    strokeWidth: 2,
+    textColor: '#ffffff',
+    textSize: 12,
+    textFont: ['Noto Sans Regular'],
+  },
+  fitBoundsOptions: {
+    padding: 48,
   },
 };
 
