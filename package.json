@@ -13,7 +13,6 @@
   "source": "src/store-locator.ts",
   "module": "dist/store-locator.esm.js",
   "types": "dist/store-locator.d.ts",
-  "sideEffects": ["*.css"],
   "exports": {
     ".": {
       "types": "./dist/store-locator.d.ts",
