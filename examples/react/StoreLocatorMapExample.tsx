@@ -1,7 +1,4 @@
 import { StoreLocatorMap } from 'store-locator/react';
-// La librairie n'importe pas le CSS de MapLibre : c'est à l'application de le
-// charger. Sans bundler, une balise <link> fait l'affaire.
-import 'maplibre-gl/dist/maplibre-gl.css';
 
 type ExampleStore = {
   id: string;

@@ -140,6 +140,22 @@ export interface StoreLocatorMapConfig<P extends StoreLocatorProperties = StoreL
   locate: boolean;
   /** Ajoute un `NavigationControl`. MapLibre n'ajoute aucun contrôle de zoom par défaut. */
   navigation: boolean;
+  /**
+   * Injecte la feuille de style de MapLibre, embarquée dans la librairie.
+   * `false` rend la main à l'application, qui doit alors charger
+   * `maplibre-gl/dist/maplibre-gl.css` elle-même.
+   */
+  injectCss: boolean;
+  /** Nonce posé sur la balise `<style>` injectée, pour une CSP sans `'unsafe-inline'`. */
+  cssNonce: string | null;
+  /**
+   * Fournit une image transparente pour toute icône réclamée par le style et
+   * absente de son sprite, ce qui est le cas de plusieurs POI d'OpenFreeMap
+   * Bright. `false` restitue les avertissements de MapLibre.
+   *
+   * Les identifiants concernés restent lisibles par `unresolvedImages`.
+   */
+  resolveMissingImages: boolean;
   style: string | StyleSpecification;
   options: StoreLocatorMapOptions;
   markers: StoreLocatorMarkerOptions<P>;

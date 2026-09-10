@@ -39,15 +39,13 @@ interface PendingRefresh {
 /**
  * Store Locator
  *
- * **Le CSS de MapLibre n'est pas importé par ce module** : c'est à l'application
- * de le charger, soit `import 'maplibre-gl/dist/maplibre-gl.css'` avec un
- * bundler, soit une balise `<link>` sans bundler.
- *
- * L'importer ici casserait le chemin sans bundler. microbundle externalise
- * `maplibre-gl`, spécificateur CSS compris, qui survit donc tel quel dans le
- * bundle publié ; une importmap ne peut pas le résoudre, un `.css` ne pouvant
- * pas être servi comme module script. Or c'est exactement le chemin
- * d'installation que le README annonce, depuis GitHub et sans étape de build.
+ * Le CSS de MapLibre est embarqué en chaîne et injecté à la création de la
+ * carte — voir `map/inject-css.ts`. Ce module ne l'**importe** pas pour autant :
+ * microbundle externalise `maplibre-gl`, spécificateur CSS compris, qui
+ * survivrait donc tel quel dans le bundle publié ; une importmap ne peut pas le
+ * résoudre, un `.css` ne pouvant pas être servi comme module script. Or c'est
+ * exactement le chemin d'installation que le README annonce, depuis GitHub et
+ * sans étape de build.
  *
  * @module StoreLocator
  */
@@ -66,6 +64,20 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
 
   private filterFields: Element[] = [];
   private filterChangeHandler: (() => void) | null = null;
+  private readonly missingImages = new Set<string>();
+
+  /**
+   * Icônes réclamées par le style et absentes de son sprite, dans l'ordre où
+   * MapLibre les a demandées.
+   *
+   * `map.resolveMissingImages` fait taire les avertissements de MapLibre — dont
+   * ceux, nombreux, que produisent les couches POI d'OpenFreeMap Bright. Cette
+   * liste est là pour qu'un `addImage` oublié dans l'application reste
+   * trouvable, plutôt que noyé dans ce silence.
+   */
+  get unresolvedImages(): string[] {
+    return [...this.missingImages];
+  }
 
   /**
    * `true` dès que `destroy()` a été appelé.
@@ -246,7 +258,7 @@ export default class StoreLocator<P extends StoreLocatorProperties = StoreLocato
     }
 
     this.container = container;
-    this.map = createMap(container, this.options.map);
+    this.map = createMap(container, this.options.map, this.missingImages);
 
     this.markerSync = new MarkerSync<P>({
       map: this.map,

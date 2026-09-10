@@ -10,6 +10,8 @@
 import { GeolocateControl, Map as MapLibreMap, NavigationControl } from 'maplibre-gl';
 import type { StoreLocatorMapConfig, StoreLocatorProperties } from '../types';
 import { collapseAttribution } from './attribution';
+import { injectMapLibreCss } from './inject-css';
+import { resolveMissingImages } from './missing-images';
 
 /**
  * Conteneurs portant déjà une carte vivante. Remplace la sonde `_leaflet_id`
@@ -24,12 +26,20 @@ export const releaseContainer = (container: HTMLElement): void => {
 export const createMap = <P extends StoreLocatorProperties>(
   container: HTMLElement,
   config: StoreLocatorMapConfig<P>,
+  unresolvedImages: Set<string>,
 ): MapLibreMap => {
   if(initializedContainers.has(container)) {
     throw new Error(
       '[store-locator] - Map container is already initialized. ' +
       'Call destroy() on the previous instance before creating a new one on the same element.',
     );
+  }
+
+  // Avant la construction : MapLibre bâtit aussitôt le DOM de ses contrôles, et
+  // une feuille arrivée après laisserait paraître un instant leur version non
+  // mise en forme.
+  if(config.injectCss) {
+    injectMapLibreCss(config.cssNonce ?? undefined);
   }
 
   const map = new MapLibreMap({
@@ -46,6 +56,10 @@ export const createMap = <P extends StoreLocatorProperties>(
   // Après la construction : c'est elle qui ajoute l'`AttributionControl`, et
   // c'est son DOM que le repli va chercher.
   collapseAttribution(map);
+
+  if(config.resolveMissingImages) {
+    resolveMissingImages(map, unresolvedImages);
+  }
 
   if(config.navigation) {
     map.addControl(new NavigationControl());

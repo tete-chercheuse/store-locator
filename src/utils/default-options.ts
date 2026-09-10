@@ -14,6 +14,9 @@ const defaultMapOptions: StoreLocatorMapConfig = {
   initialRecenter: true,
   locate: false,
   navigation: true,
+  injectCss: true,
+  cssNonce: null,
+  resolveMissingImages: true,
   style: defaultStyle,
   options: {
     zoom: 2,

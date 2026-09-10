@@ -31,6 +31,13 @@ export interface MockMap {
   handlers: Record<string, EventHandler[]>;
   removed: boolean;
   canvas: { style: CSSStyleDeclaration; };
+  /**
+   * Nombre de feuilles de la librairie présentes dans `<head>` au moment de la
+   * construction. La vraie `Map` bâtit aussitôt le DOM de ses contrôles : une
+   * feuille arrivée après laisserait paraître un instant leur version non mise
+   * en forme, ce qu'aucune assertion sur l'état final ne verrait.
+   */
+  stylesAtConstruction: number;
   on: ReturnType<typeof vi.fn>;
   off: ReturnType<typeof vi.fn>;
   addControl: ReturnType<typeof vi.fn>;
@@ -43,6 +50,14 @@ export interface MockMap {
   querySourceFeatures: ReturnType<typeof vi.fn>;
   getCanvas: ReturnType<typeof vi.fn>;
   getContainer: ReturnType<typeof vi.fn>;
+  images: Map<string, unknown>;
+  addImage: ReturnType<typeof vi.fn>;
+  hasImage: ReturnType<typeof vi.fn>;
+  setMissingStyleImageResolver: ReturnType<typeof vi.fn>;
+  /** Résolveur posé par `setMissingStyleImageResolver`, appelé par `requestImage`. */
+  missingImageResolver: ((id: string) => void | Promise<void>) | null;
+  /** Rejoue ce que fait `_getImagesForIds` : résoudre, puis avertir si toujours absent. */
+  requestImage: (id: string) => Promise<'resolue' | 'manquante'>;
   easeTo: ReturnType<typeof vi.fn>;
   fitBounds: ReturnType<typeof vi.fn>;
   resize: ReturnType<typeof vi.fn>;
@@ -93,6 +108,7 @@ const layerEventKey = (event: string, layerId: string): string => `${event}::${l
 class MockMapImpl implements MockMap {
   container: HTMLElement;
   options: Record<string, unknown>;
+  stylesAtConstruction: number;
   sources = new NativeMap<string, MockGeoJSONSource>();
   layers: Array<Record<string, unknown>> = [];
   controls: unknown[] = [];
@@ -184,6 +200,47 @@ class MockMapImpl implements MockMap {
   // résout la chaîne dès son constructeur, et lève si elle ne désigne rien.
   getContainer = vi.fn(() => this.container);
 
+  images = new NativeMap<string, unknown>();
+
+  // La vraie méthode lève sur un identifiant déjà pris. Sans cette fidélité,
+  // un résolveur qui n'en tiendrait pas compte passerait les tests et casserait
+  // en navigateur.
+  addImage = vi.fn((id: string, image: unknown) => {
+    if(this.images.has(id)) {
+      throw new Error(`An image with the name "${id}" already exists.`);
+    }
+
+    this.images.set(id, image);
+  });
+
+  hasImage = vi.fn((id: string) => this.images.has(id));
+
+  missingImageResolver: ((id: string) => void | Promise<void>) | null = null;
+
+  setMissingStyleImageResolver = vi.fn((resolver: ((id: string) => void | Promise<void>) | null) => {
+    this.missingImageResolver = resolver;
+    return this;
+  });
+
+  /**
+   * Rejoue la séquence de `_getImagesForIds` : le résolveur est attendu, puis
+   * l'image est recherchée. Toujours absente, MapLibre émet
+   * `styleimagemissing` et journalise son avertissement.
+   */
+  async requestImage(id: string): Promise<'resolue' | 'manquante'> {
+    if(!this.images.has(id)) {
+      await this.missingImageResolver?.(id);
+    }
+
+    if(this.images.has(id)) {
+      return 'resolue';
+    }
+
+    this.trigger('styleimagemissing', { id });
+
+    return 'manquante';
+  }
+
   easeTo = vi.fn(() => this);
   fitBounds = vi.fn(() => this);
   resize = vi.fn(() => this);
@@ -195,6 +252,8 @@ class MockMapImpl implements MockMap {
     this.handlers = {};
     this.sources.clear();
     this.layers = [];
+    this.images.clear();
+    this.missingImageResolver = null;
   });
 
   isSourceLoaded = vi.fn(() => true);
@@ -212,6 +271,9 @@ class MockMapImpl implements MockMap {
 
     this.container = container;
     this.options = options;
+    this.stylesAtConstruction = typeof document === 'undefined'
+      ? 0
+      : document.head.querySelectorAll('style[data-store-locator-css]').length;
 
     mapLibreMockState.maps.push(this);
 
@@ -345,3 +407,11 @@ export const __driftSetData: ReturnType<import('maplibre-gl').GeoJSONSource['set
 /** `getClusterExpansionZoom` est passé en promesse. */
 export const __driftClusterZoom: ReturnType<import('maplibre-gl').GeoJSONSource['getClusterExpansionZoom']> =
   null as unknown as ReturnType<typeof __source.getClusterExpansionZoom>;
+
+/**
+ * Le résolveur d'images manquantes rend `void | Promise<void>`, et MapLibre
+ * attend le résultat. Un mock qui le typerait plus largement laisserait passer
+ * un résolveur asynchrone jamais attendu.
+ */
+export const __driftMissingImage: Parameters<import('maplibre-gl').Map['setMissingStyleImageResolver']>[0] =
+  null as unknown as Parameters<typeof __map.setMissingStyleImageResolver>[0];
