@@ -4,7 +4,8 @@
  * MapLibre n'ajoute aucun contrôle de zoom par défaut, contrairement à Leaflet :
  * `navigation` comble cet écart. L'attribution, elle, est ajoutée
  * automatiquement par MapLibre et alimentée par le style OpenFreeMap — ne pas
- * la désactiver, elle satisfait l'obligation OpenStreetMap / OpenMapTiles.
+ * la désactiver, elle satisfait l'obligation OpenStreetMap / OpenMapTiles. Elle
+ * est simplement repliée au chargement — voir `attribution.ts`.
  */
 import { Map as MapLibreMap } from 'maplibre-gl';
 import type { StoreLocatorMapConfig, StoreLocatorProperties } from '../types';

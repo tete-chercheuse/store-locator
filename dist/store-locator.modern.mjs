@@ -1764,6 +1764,10 @@ const defaultMapOptions = {
     minZoom: 0,
     center: [0, 0],
     cooperativeGestures: true
+    // Pas d'`attributionControl` ici : l'objet fourni *remplace* les défauts de
+    // MapLibre au lieu de les compléter, et ferait donc disparaître son
+    // `customAttribution`. `compact: true` est déjà le défaut ; le repli au
+    // chargement se joue ailleurs — voir `map/attribution.ts`.
   },
   markers: {
     icon: null,
@@ -2044,6 +2048,28 @@ const computeBounds = collection => {
   return found ? [[west, south], [east, north]] : null;
 };
 
+const ATTRIBUTION = '.maplibregl-ctrl-attrib';
+const COMPACT = 'maplibregl-compact';
+const COMPACT_SHOW = 'maplibregl-compact-show';
+const collapseAttribution = map => {
+  const replier = () => {
+    const controle = map.getContainer().querySelector(ATTRIBUTION);
+    if (!controle) {
+      return;
+    }
+    controle.classList.remove(COMPACT_SHOW);
+    // Une fois `maplibregl-compact` posée, la branche d'ajout de
+    // `_updateCompact` est gardée par son absence : elle ne repose plus rien.
+    // Le repli tient donc seul, et se désabonner évite de refermer dans le dos
+    // de qui vient d'ouvrir le panneau.
+    if (controle.classList.contains(COMPACT)) {
+      subscription.unsubscribe();
+    }
+  };
+  const subscription = map.on('styledata', replier);
+  replier();
+};
+
 /**
  * Conteneurs portant déjà une carte vivante. Remplace la sonde `_leaflet_id`
  * de la v2 sans écrire dans le DOM.
@@ -2064,6 +2090,9 @@ const createMap = (container, config) => {
   // construisent du DOM et peuvent donc échouer. Une carte vivante sur un
   // conteneur non enregistré laisserait le garde-fou en autoriser une seconde.
   initializedContainers.add(container);
+  // Après la construction : c'est elle qui ajoute l'`AttributionControl`, et
+  // c'est son DOM que le repli va chercher.
+  collapseAttribution(map);
   if (config.navigation) {
     map.addControl(new NavigationControl());
   }
