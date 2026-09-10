@@ -1,8 +1,17 @@
-/* global StoreLocator, demoStores */
+import StoreLocator from 'store-locator';
 
-new StoreLocator({
-  stores: demoStores,
+const locator = new StoreLocator({
+  stores: window.demoStores,
   map: {
+    options: {
+      // MapLibre affiche l'overlay des gestes coopératifs en anglais par
+      // défaut. La carte est ici dans une page française.
+      locale: {
+        'CooperativeGesturesHandler.WindowsHelpText': 'Utilisez Ctrl + molette pour zoomer',
+        'CooperativeGesturesHandler.MacHelpText': 'Utilisez ⌘ + molette pour zoomer',
+        'CooperativeGesturesHandler.MobileHelpText': 'Utilisez deux doigts pour déplacer la carte',
+      },
+    },
     locate: true,
     markers: {
       popup: (feature) => `
@@ -15,11 +24,14 @@ new StoreLocator({
         </div>
       `,
       icon: (feature) => ({
-        iconUrl: feature.properties.icon,
-        iconSize: [40, 44],
-        iconAnchor: [20, 44],
-        popupAnchor: [0, -44],
+        url: feature.properties.icon,
+        size: [40, 44],
+        anchor: 'bottom',
       }),
     },
   },
 });
+
+// Point d'ancrage documenté pour les tests E2E : les clusters sont rendus sur
+// le canvas WebGL et ne sont donc pas atteignables par sélecteur CSS.
+window.__storeLocator = locator;

@@ -1,21 +1,7 @@
-import React from 'https://esm.sh/react@19.2.0?dev';
-import { createRoot } from 'https://esm.sh/react-dom@19.2.0/client?dev';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { StoreLocatorMap } from 'store-locator/react';
 
-const loadScript = (src) => {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = src;
-    script.onload = resolve;
-    script.onerror = () => reject(new Error(`Impossible de charger ${src}`));
-    document.head.appendChild(script);
-  });
-};
-
-window.React = React;
-
-await loadScript('../../dist/react.umd.js');
-
-const { StoreLocatorMap } = window.StoreLocatorReact;
 const stores = window.demoStores;
 
 const radio = (value, label, checked = false) => {
@@ -50,7 +36,7 @@ const App = () => {
           React.createElement(
             'p',
             null,
-            'Cette démo charge React via ESM et le wrapper UMD React construit depuis la librairie.'
+            'Cette démo charge React via ESM et le bundle React construit depuis la librairie.'
           ),
         ),
         React.createElement(
@@ -73,7 +59,7 @@ const App = () => {
             React.createElement(
               'p',
               null,
-              'Le composant StoreLocatorMap gère le montage de Leaflet et la synchronisation des filtres.'
+              'Le composant StoreLocatorMap gère le montage de MapLibre et la synchronisation des filtres.'
             ),
           ),
         ),
@@ -84,8 +70,21 @@ const App = () => {
             stores,
             mapClassName: 'store-locator-map',
             mapStyle: { minHeight: '72vh' },
+            onReady: (instance) => {
+              // Point d'ancrage documenté pour les tests E2E.
+              window.__storeLocator = instance;
+            },
             options: {
               map: {
+                options: {
+                  // MapLibre affiche l'overlay des gestes coopératifs en anglais par
+                  // défaut. La carte est ici dans une page française.
+                  locale: {
+                    'CooperativeGesturesHandler.WindowsHelpText': 'Utilisez Ctrl + molette pour zoomer',
+                    'CooperativeGesturesHandler.MacHelpText': 'Utilisez ⌘ + molette pour zoomer',
+                    'CooperativeGesturesHandler.MobileHelpText': 'Utilisez deux doigts pour déplacer la carte',
+                  },
+                },
                 locate: true,
                 markers: {
                   popup: (feature) => `
@@ -98,10 +97,9 @@ const App = () => {
                     </div>
                   `,
                   icon: (feature) => ({
-                    iconUrl: feature.properties.icon,
-                    iconSize: [40, 44],
-                    iconAnchor: [20, 44],
-                    popupAnchor: [0, -44],
+                    url: feature.properties.icon,
+                    size: [40, 44],
+                    anchor: 'bottom',
                   }),
                 },
               },
@@ -119,7 +117,7 @@ const App = () => {
           'p',
           { className: 'demo-note' },
           'Source d’entrée: ',
-          React.createElement('code', null, 'dist/react.umd.js'),
+          React.createElement('code', null, 'dist/react.modern.mjs'),
         ),
       ),
     ),

@@ -5,11 +5,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>Store Locator - Démo vanilla</title>
-  <link href="../../node_modules/leaflet/dist/leaflet.css" rel="stylesheet"/>
-  <link href="../../node_modules/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet"/>
-  <link href="../../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css" rel="stylesheet"/>
-  <link href="../../node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css" rel="stylesheet"/>
-  <link href="../../node_modules/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" rel="stylesheet"/>
+  <link href="../../node_modules/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet"/>
   <link href="../assets/demo.css" rel="stylesheet"/>
 </head>
 
@@ -21,7 +17,7 @@
           <p class="demo-kicker">Démo vanilla</p>
           <h1>Intégration JavaScript classique</h1>
           <p>
-            Cette version charge le bundle UMD principal et instancie directement la classe
+            Cette version charge le bundle ESM principal et instancie directement la classe
             <code>StoreLocator</code>.
           </p>
         </div>
@@ -61,19 +57,22 @@
         </div>
 
         <p class="demo-note">
-          Source d’entrée: <code>dist/store-locator.umd.js</code>
+          Source d’entrée: <code>dist/store-locator.modern.mjs</code>
         </p>
       </section>
     </div>
   </main>
 
-  <script src="../../node_modules/leaflet/dist/leaflet.js"></script>
-  <script src="../../node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-  <script src="../../node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
-  <script src="../../node_modules/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.js"></script>
-  <script src="../../dist/store-locator.umd.js"></script>
   <script src="../shared/stores.js"></script>
-  <script src="./main.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "maplibre-gl": "../../node_modules/maplibre-gl/dist/maplibre-gl.mjs",
+        "store-locator": "../../dist/store-locator.modern.mjs"
+      }
+    }
+  </script>
+  <script type="module" src="./main.js"></script>
 </body>
 
 </html>
