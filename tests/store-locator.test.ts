@@ -37,7 +37,7 @@ describe('StoreLocator', () => {
     expect(map.sources.get(SOURCE_ID)?.options).toMatchObject({
       cluster: true,
       clusterRadius: 50,
-      clusterMaxZoom: 14,
+      clusterMaxZoom: 11,
       clusterMinPoints: 2,
     });
     expect(map.layers.map((layer) => layer.id)).toEqual([
