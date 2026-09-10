@@ -12,6 +12,13 @@ describe('defaultOptions', () => {
     expect(defaultOptions.map.options.cooperativeGestures).toBe(true);
   });
 
+  it('sets no zoom floor, which would silently override the initial fit', () => {
+    // Mesuré : avec minZoom à 2, un jeu multi-continental faisait calculer un
+    // zoom de 1,48 à fitBounds, ramené à 2, laissant 66 des 214 magasins hors
+    // écran sans le moindre signal.
+    expect(defaultOptions.map.options.minZoom).toBe(0);
+  });
+
   it('enables the navigation control, which MapLibre does not add by default', () => {
     expect(defaultOptions.map.navigation).toBe(true);
     expect(defaultOptions.map.locate).toBe(false);
@@ -21,7 +28,7 @@ describe('defaultOptions', () => {
     expect(defaultOptions.map.clusters).toMatchObject({
       enabled: true,
       radius: 50,
-      maxZoom: 14,
+      maxZoom: 11,
       minPoints: 2,
     });
   });
