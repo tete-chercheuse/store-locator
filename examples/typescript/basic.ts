@@ -1,4 +1,7 @@
 import StoreLocator from 'store-locator';
+// La librairie n'importe pas le CSS de MapLibre : c'est à l'application de le
+// charger. Sans bundler, une balise <link> fait l'affaire.
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 type DemoStore = {
   id: string;
@@ -53,13 +56,16 @@ const storeLocator = new StoreLocator<DemoStore>({
     markers: {
       popup: (feature) => feature.properties.store,
       icon: (feature) => ({
-        iconUrl: feature.properties.icon,
-        iconSize: [40, 44],
-        iconAnchor: [20, 44],
-        popupAnchor: [0, -44],
+        url: feature.properties.icon,
+        size: [40, 44],
+        // Sans ancrage explicite, MapLibre centre l'image sur la coordonnée.
+        // Pour un pin, on veut son pointe en bas.
+        anchor: 'bottom',
       }),
     },
   },
 });
 
-storeLocator.invalidateSize();
+await storeLocator.whenReady();
+
+storeLocator.resize();
