@@ -2463,8 +2463,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7598007,
-          -73.9657189999996
+          -73.9657189999996,
+          40.7598007
         ]
       },
       "properties": {
@@ -2484,8 +2484,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7453292,
-          -79.99920880000002
+          -79.99920880000002,
+          40.7453292
         ]
       },
       "properties": {
@@ -2547,8 +2547,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7306676,
-          -74.00924420000001
+          -74.00924420000001,
+          40.7306676
         ]
       },
       "properties": {
@@ -2631,8 +2631,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7934036,
-          -73.9734639999997
+          -73.9734639999997,
+          40.7934036
         ]
       },
       "properties": {
@@ -2652,8 +2652,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7601093,
-          -79.9728719999998
+          -79.9728719999998,
+          40.7601093
         ]
       },
       "properties": {
@@ -2673,8 +2673,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7772611,
-          -73.98304639999998
+          -73.98304639999998,
+          40.7772611
         ]
       },
       "properties": {
@@ -2694,8 +2694,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7684281,
-          -73.9589117
+          -73.9589117,
+          40.7684281
         ]
       },
       "properties": {
@@ -2715,8 +2715,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51.5084468,
-          -0.1953270999999859
+          -0.1953270999999859,
+          51.5084468
         ]
       },
       "properties": {
@@ -2736,8 +2736,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.7745801,
-          -73.9806082
+          -73.9806082,
+          40.7745801
         ]
       },
       "properties": {
@@ -2757,8 +2757,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40.710795,
-          -74.0068
+          -74.0068,
+          40.710795
         ]
       },
       "properties": {
@@ -3177,8 +3177,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8550377,
-          2.269597200000021
+          2.269597200000021,
+          48.8550377
         ]
       },
       "properties": {
@@ -3198,8 +3198,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8743097,
-          2.330202900000018
+          2.330202900000018,
+          48.8743097
         ]
       },
       "properties": {
@@ -3219,8 +3219,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.85463790000001,
-          2.324478799999952
+          2.324478799999952,
+          48.85463790000001
         ]
       },
       "properties": {
@@ -3240,8 +3240,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.85495960000001,
-          2.32493020000004
+          2.32493020000004,
+          48.85495960000001
         ]
       },
       "properties": {
@@ -3261,8 +3261,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8431911,
-          2.304675599999996
+          2.304675599999996,
+          48.8431911
         ]
       },
       "properties": {
@@ -3282,8 +3282,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.87763289999999,
-          2.339141299999937
+          2.339141299999937,
+          48.87763289999999
         ]
       },
       "properties": {
@@ -3303,8 +3303,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8481548,
-          2.262063200000057
+          2.262063200000057,
+          48.8481548
         ]
       },
       "properties": {
@@ -3324,8 +3324,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8407113,
-          2.349337500000047
+          2.349337500000047,
+          48.8407113
         ]
       },
       "properties": {
@@ -3345,8 +3345,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.84978479999999,
-          2.348481099999958
+          2.348481099999958,
+          48.84978479999999
         ]
       },
       "properties": {
@@ -3366,8 +3366,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.82555292,
-          2.346747499999992
+          2.346747499999992,
+          48.82555292
         ]
       },
       "properties": {
@@ -3387,8 +3387,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8739772,
-          2.327782899999988
+          2.327782899999988,
+          48.8739772
         ]
       },
       "properties": {
@@ -3408,8 +3408,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8488976,
-          2.325618999999961
+          2.325618999999961,
+          48.8488976
         ]
       },
       "properties": {
@@ -3429,8 +3429,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8658763,
-          2.347215699999992
+          2.347215699999992,
+          48.8658763
         ]
       },
       "properties": {
@@ -3450,8 +3450,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.86325009999999,
-          2.36218770000005
+          2.36218770000005,
+          48.86325009999999
         ]
       },
       "properties": {
@@ -3492,8 +3492,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8492006,
-          2.33929969999997
+          2.33929969999997,
+          48.8492006
         ]
       },
       "properties": {
@@ -3597,8 +3597,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.8764458,
-          2.341108500000018
+          2.341108500000018,
+          48.8764458
         ]
       },
       "properties": {
@@ -3660,8 +3660,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          52.51399079999999,
-          13.38926259999994
+          13.38926259999994,
+          52.51399079999999
         ]
       },
       "properties": {
@@ -3681,8 +3681,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.7819496,
-          9.18143770000006
+          9.18143770000006,
+          48.7819496
         ]
       },
       "properties": {
@@ -3702,8 +3702,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          53.5510811,
-          9.993719899999974
+          9.993719899999974,
+          53.5510811
         ]
       },
       "properties": {
@@ -3723,8 +3723,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48.13684,
-          11.57685000000004
+          11.57685000000004,
+          48.13684
         ]
       },
       "properties": {
@@ -3744,8 +3744,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          52.52344000000001,
-          13.41061000000002
+          13.41061000000002,
+          52.52344000000001
         ]
       },
       "properties": {
@@ -3765,8 +3765,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          50.113934,
-          8.67967959999995
+          8.67967959999995,
+          50.113934
         ]
       },
       "properties": {
@@ -3828,8 +3828,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51.26054000000001,
-          6.912440000000061
+          6.912440000000061,
+          51.26054000000001
         ]
       },
       "properties": {
@@ -4059,8 +4059,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          46.7235123,
-          6.536350699999957
+          6.536350699999957,
+          46.7235123
         ]
       },
       "properties": {
@@ -4080,8 +4080,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          46.2073955,
-          6.142428699999982
+          6.142428699999982,
+          46.2073955
         ]
       },
       "properties": {
@@ -4122,8 +4122,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          46.2043132,
-          6.14745199999993
+          6.14745199999993,
+          46.2043132
         ]
       },
       "properties": {
@@ -4143,8 +4143,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          47.36753179999999,
-          8.53872709999996
+          8.53872709999996,
+          47.36753179999999
         ]
       },
       "properties": {
