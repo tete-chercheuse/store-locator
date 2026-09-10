@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.1
+
+- L'attribution est repliée derrière son bouton ⓘ au chargement. MapLibre
+  l'affiche dépliée jusqu'au premier déplacement de la carte, et n'expose aucune
+  option pour l'en empêcher : `compact: true` est déjà son défaut et pose les
+  deux classes ensemble. Le repli emprunte le chemin de MapLibre lui-même — la
+  classe `maplibregl-compact-show` retirée, l'attribut `open` du `<details>`
+  laissé en place, comme le fait `_updateCompactMinimize` sur `drag`.
+
 ## 3.0.0
 
 Migration de Leaflet vers MapLibre GL JS et des tuiles raster CARTO vers les
@@ -80,12 +89,6 @@ Guide de migration : [docs/MIGRATION-v2-v3.md](./docs/MIGRATION-v2-v3.md).
   s'ancrait sur la coordonnée, donc par-dessus l'icône. Le principe de
   `popupAnchor` de Leaflet est ainsi rétabli, sous forme d'une table indexée par
   ancrage pour que le placement reste correct quand la popup bascule.
-- L'attribution est repliée derrière son bouton ⓘ au chargement. MapLibre
-  l'affiche dépliée jusqu'au premier déplacement de la carte, et n'expose aucune
-  option pour l'en empêcher : `compact: true` est déjà son défaut et pose les
-  deux classes ensemble. Le repli emprunte le chemin de MapLibre lui-même — la
-  classe `maplibregl-compact-show` retirée, l'attribut `open` du `<details>`
-  laissé en place, comme le fait `_updateCompactMinimize` sur `drag`.
 
 - `whenReady(): Promise<StoreLocator>`, nécessaire car MapLibre ne reçoit ses
   couches qu’après le chargement du style. Résout aussi sur `destroy()`, pour ne
