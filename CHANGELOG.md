@@ -1,5 +1,43 @@
 # Changelog
 
+## 3.1.0
+
+Installation sans étape manuelle : `npm install` puis `import`, sans plus rien à
+charger à côté.
+
+### Ajouts
+
+- **La feuille de style de MapLibre est embarquée et injectée** à la création de
+  la carte. C'était le prérequis qui faisait perdre le plus de temps, et il
+  n'était pas franchissable par un `import` depuis le point d'entrée :
+  microbundle externalise `maplibre-gl`, sous-chemin CSS compris, et le
+  spécificateur nu survivait dans le bundle publié, où aucune importmap ne peut
+  le résoudre.
+
+  Elle est insérée en tête de `<head>`, donc avant les feuilles de
+  l'application, qui gardent la priorité à spécificité égale — et une seule
+  fois, quel que soit le nombre de cartes. Coût : 14,8 ko gzippés sur un bundle
+  qui en pesait 15,2. Ce n'est pas du poids net, l'application chargeait déjà ce
+  fichier ; on y gagne un aller-retour réseau, on y perd un cache séparé.
+
+  `map.injectCss: false` rend la main. `map.cssNonce` couvre les CSP sans
+  `style-src 'unsafe-inline'`, la balise étant en ligne.
+
+- **Les avertissements d'icônes manquantes sont éteints.** Les couches POI
+  d'OpenFreeMap Bright tirent le nom de leur icône de la donnée des tuiles —
+  `["get","class"]` — et le vocabulaire d'OpenMapTiles dépasse les 264 icônes du
+  sprite : `bollard`, `bicycle_parking`, `swimming_pool` n'y sont pas. MapLibre
+  journalisait un avertissement par identifiant. L'écart est en amont, le style
+  Bright public porte les mêmes expressions.
+
+  Une image 1×1 transparente est désormais fournie pour ces identifiants. Le
+  rendu ne change pas — le POI garde son libellé sans pictogramme — seule la
+  console se vide. `map.resolveMissingImages: false` restitue les
+  avertissements.
+
+- `unresolvedImages: string[]` sur l'instance, qui liste ces identifiants : le
+  silence ci-dessus ne doit pas noyer un `addImage` oublié dans l'application.
+
 ## 3.0.1
 
 - L'attribution est repliée derrière son bouton ⓘ au chargement. MapLibre

@@ -43,29 +43,47 @@ npm install react
 
 ## Prérequis
 
-### Charge le CSS de MapLibre toi-même
+### Aucun CSS à charger
 
-**La librairie n’importe pas la feuille de style de MapLibre.** C’est le point
-qui fait perdre le plus de temps : sans elle, la carte s’affiche mais les
-contrôles de zoom sont empilés sans mise en forme, les popups sont mal
-positionnées et l’attribution est illisible.
+**Depuis la 3.1, la feuille de style de MapLibre est embarquée et injectée à la
+création de la carte.** Il n’y a plus rien à importer : `pnpm install` puis
+`import` suffisent, avec ou sans bundler.
 
-Avec un bundler:
+Elle est insérée en tête de `<head>` — donc **avant** les feuilles de
+l’application, qui gardent la priorité à spécificité égale — et une seule fois,
+quel que soit le nombre de cartes sur la page.
+
+Deux réserves:
+
+- Une CSP sans `style-src 'unsafe-inline'` exige un nonce: `map: { cssNonce }`.
+- `map: { injectCss: false }` rend la main. Charge alors la feuille toi-même,
+  par `import 'maplibre-gl/dist/maplibre-gl.css'` avec un bundler ou par un
+  `<link>` sans bundler. Sans elle, la carte s’affiche mais les contrôles de
+  zoom sont empilés sans mise en forme, les popups mal positionnées et
+  l’attribution illisible.
+
+Le point d’entrée ne l’importe pas pour autant: microbundle externalise
+`maplibre-gl`, sous-chemin CSS compris, et le spécificateur nu survivrait dans
+le bundle publié, où aucune importmap ne peut le résoudre. C’est pourquoi elle
+est embarquée en chaîne plutôt qu’importée, au prix de 14,8 ko gzippés.
+
+### Icônes absentes du sprite
+
+Les couches POI d’OpenFreeMap Bright tirent le nom de leur icône directement de
+la donnée des tuiles, et le vocabulaire d’OpenMapTiles dépasse les 264 icônes du
+sprite. MapLibre réclamait donc `bollard`, `bicycle_parking` ou `swimming_pool`
+en vain, et remplissait la console d’avertissements — l’écart est en amont, le
+style Bright public porte les mêmes expressions.
+
+La librairie fournit désormais une image transparente pour ces identifiants. Le
+rendu est inchangé — le POI garde son libellé sans pictogramme — mais la console
+est propre. Les identifiants concernés restent lisibles:
 
 ```js
-import 'maplibre-gl/dist/maplibre-gl.css';
+locator.unresolvedImages; // ['bollard', 'bicycle_parking', …]
 ```
 
-Sans bundler:
-
-```html
-<link href="node_modules/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
-```
-
-L’importer depuis le point d’entrée casserait l’installation sans étape de
-build: microbundle externalise `maplibre-gl`, sous-chemin CSS compris, et le
-spécificateur nu survivrait tel quel dans le bundle publié, où aucune importmap
-ne peut le résoudre.
+`map: { resolveMissingImages: false }` restitue les avertissements de MapLibre.
 
 ### ESM uniquement
 
@@ -228,7 +246,6 @@ Initialisation:
 
 ```js
 import StoreLocator from 'store-locator';
-import 'maplibre-gl/dist/maplibre-gl.css';
 
 new StoreLocator({
   stores,
@@ -271,7 +288,6 @@ Le cœur de la librairie est écrit en TypeScript et peut être utilisé dans un
 
 ```ts
 import StoreLocator from 'store-locator';
-import 'maplibre-gl/dist/maplibre-gl.css';
 
 type DemoStore = {
   id: string;
@@ -378,7 +394,6 @@ Exemple complet: [examples/react/StoreLocatorMapExample.tsx](./examples/react/St
 
 ```tsx
 import { StoreLocatorMap } from 'store-locator/react';
-import 'maplibre-gl/dist/maplibre-gl.css';
 
 export function StoresMap({ stores }) {
   return (
@@ -423,7 +438,6 @@ Exemple complet: [examples/react/useStoreLocatorExample.tsx](./examples/react/us
 ```tsx
 import { useRef } from 'react';
 import { useStoreLocator } from 'store-locator/react';
-import 'maplibre-gl/dist/maplibre-gl.css';
 
 export function StoresMap({ stores }) {
   const wrapperRef = useRef(null);
@@ -562,6 +576,7 @@ Supprime les écouteurs d’événements, détruit la carte et libère le conten
 | `filters` | `HTMLFormElement \| null` | le formulaire de filtres associé |
 | `options` | `StoreLocatorResolvedOptions` | les options après fusion avec les défauts |
 | `destroyed` | `boolean` | `true` dès que `destroy()` a été appelé |
+| `unresolvedImages` | `string[]` | icônes réclamées par le style et absentes de son sprite |
 
 ## Options disponibles
 
@@ -575,6 +590,9 @@ Valeurs par défaut:
     initialRecenter: true,
     locate: false,
     navigation: true,
+    injectCss: true,
+    cssNonce: null,
+    resolveMissingImages: true,
     style: 'https://tiles.openfreemap.org/styles/bright',
     options: {
       zoom: 2,
@@ -625,6 +643,13 @@ Résumé des options importantes:
 - `map.locate` — ajoute le bouton de géolocalisation (`GeolocateControl`).
 - `map.navigation` — ajoute les boutons de zoom (`NavigationControl`). Activé par
   défaut, car MapLibre n’en ajoute aucun de lui-même.
+- `map.injectCss` — injecte la feuille de MapLibre embarquée. `false` rend la
+  main à l’application.
+- `map.cssNonce` — nonce posé sur la balise `<style>` injectée, pour une CSP
+  sans `style-src 'unsafe-inline'`.
+- `map.resolveMissingImages` — fournit une image transparente aux icônes que le
+  sprite du style ne contient pas. `false` restitue les avertissements de
+  MapLibre.
 - `map.refreshRecenter` — recentre la carte après filtrage.
 - `map.initialRecenter` — ajuste le zoom initial sur les données.
 - `map.options` — options `MapOptions` de MapLibre, `locale` comprise. `container`

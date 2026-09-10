@@ -16,7 +16,7 @@ console.
 | Tes coordonnées sont dans les bornes | MapLibre les valide, Leaflet non → [§1](#1-vérifie-tes-coordonnées-avant-tout-le-reste) |
 | Ton projet est en ESM | Le paquet ne publie plus ni CommonJS ni UMD → [§2](#2-dépendances-et-format-du-paquet) |
 | Tes cibles navigateur ont WebGL 2 | MapLibre GL JS v6 l’exige → [§2](#2-dépendances-et-format-du-paquet) |
-| Tu charges le CSS de MapLibre toi-même | La librairie ne l’importe pas → [§3](#3-le-css-de-maplibre-nest-plus-fourni-par-la-librairie) |
+| Tu charges le CSS de Leaflet | À retirer, la librairie injecte celui de MapLibre → [§3](#3-le-css-de-maplibre-est-désormais-injecté-par-la-librairie) |
 
 ## 1. Vérifie tes coordonnées avant tout le reste
 
@@ -100,41 +100,36 @@ MapLibre GL JS v6 exige **WebGL 2**. Les navigateurs sans WebGL 2 ne sont plus
 supportés — en pratique, tout ce qui est antérieur à 2017 environ. Il n’existe
 pas de repli raster.
 
-## 3. Le CSS de MapLibre n’est plus fourni par la librairie
+## 3. Le CSS de MapLibre est désormais injecté par la librairie
 
-**C’est à ton application de charger la feuille de style de MapLibre.** La
-librairie ne l’importe pas, et ne l’importera pas.
+**Rien à charger.** La feuille de style de MapLibre est embarquée depuis la
+3.1.0 et injectée à la création de la carte, en tête de `<head>`.
 
-Avec un bundler :
+Si ton application v2 chargeait la feuille de Leaflet, retire-la : elle ne sert
+plus à rien.
 
-```js
-import 'maplibre-gl/dist/maplibre-gl.css';
+```diff
+- import 'leaflet/dist/leaflet.css';
+- import 'leaflet.markercluster/dist/MarkerCluster.css';
 ```
 
-Sans bundler :
-
-```html
-<link href="node_modules/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
-```
-
-Sans ce chargement, la carte s’affiche mais tout ce qui l’entoure est cassé :
-contrôles de zoom empilés sans mise en forme, popups sans positionnement,
-attribution illisible, overlay des gestes coopératifs à côté de la plaque.
+Et n’ajoute pas son équivalent MapLibre : ce serait une seconde copie des mêmes
+règles. Si tu préfères la piloter toi-même — CSP stricte, feuille déjà présente
+pour d’autres cartes —, `map: { injectCss: false }` rend la main, et
+`map: { cssNonce }` couvre le cas du nonce.
 
 <details>
-<summary>Pourquoi la librairie ne peut pas s’en charger elle-même</summary>
+<summary>Pourquoi elle est embarquée en chaîne, et non importée</summary>
 
-microbundle externalise `maplibre-gl`, sous-chemin CSS compris. Le
-spécificateur nu `maplibre-gl/dist/maplibre-gl.css` survivrait donc tel quel
-dans le bundle publié — et aucune importmap ne peut le résoudre, une réponse
-`text/css` ne pouvant pas être évaluée comme module script. Cela casserait
-exactement le chemin d’installation que le README annonce : depuis GitHub, sans
-étape de build.
+microbundle externalise `maplibre-gl`, sous-chemin CSS compris. Un
+`import 'maplibre-gl/dist/maplibre-gl.css'` depuis le point d’entrée laisserait
+le spécificateur nu survivre tel quel dans le bundle publié — et aucune
+importmap ne peut le résoudre, une réponse `text/css` ne pouvant pas être
+évaluée comme module script. Cela casserait exactement le chemin d’installation
+que le README annonce : depuis GitHub, sans étape de build.
 
 Pour la même raison, le `package.json` ne déclare **aucun champ
-`sideEffects`** : `sideEffects: ["*.css"]` marquait les bundles `.mjs` comme
-dépourvus d’effets de bord alors que ce sont eux qui portent l’import CSS,
-qu’un bundler pouvait dès lors élaguer.
+`sideEffects`**.
 </details>
 
 ## 4. Le centre de la carte est inversé
