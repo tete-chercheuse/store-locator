@@ -269,7 +269,7 @@ markers: {
 clusters: {
   enabled: true,
   radius: 50,
-  maxZoom: 14,      // équivaut à disableClusteringAtZoom: 15
+  maxZoom: 11,      // plus bas que l’équivalent v2, voir ci-dessous
   minPoints: 2,
 }
 ```
@@ -288,10 +288,37 @@ rendu v2 :
 clusters: { radius: 80 }
 ```
 
-`maxZoom: 14` en revanche est l’équivalent exact de `disableClusteringAtZoom: 15` :
+**Le zoom de dégroupement change aussi.** L’équivalent exact de
+`disableClusteringAtZoom: 15` serait `maxZoom: 14` :
 `leaflet.markercluster` calcule en interne `disableClusteringAtZoom - 1`, et
 MapLibre regroupe jusqu’à `clusterMaxZoom` inclus. À z14 les deux regroupent,
 à z15 les deux dégroupent.
+
+Le défaut v3 est pourtant **11**, volontairement plus bas. Mesuré sur Paris avec
+`maxZoom: 14`, un cluster de deux ou trois magasins ne s’ouvrait qu’au zoom 15,
+soit le niveau de la rue — il fallait donc zoomer à fond pour voir des points
+que le compteur annonçait à deux. À 11, il s’ouvre au zoom 12, niveau du
+quartier. Pour retrouver strictement le comportement v2 :
+
+```js
+clusters: { radius: 80, maxZoom: 14 }
+```
+
+### Le plancher de zoom a disparu
+
+`map.options.minZoom` passe de `2` à `0`, et c’est une correction, pas un
+réglage. Le plancher hérité de la v2 écrasait silencieusement le recentrage
+initial : sur un jeu de données multi-continental, `fitBounds` calculait
+correctement un zoom de 1,48, que le plancher ramenait à 2 — laissant 66 des
+214 magasins du jeu de démonstration hors écran, sans le moindre avertissement.
+
+Si tes magasins tiennent dans une région, un plancher reste utile pour empêcher
+l’utilisateur de dézoomer jusqu’à la vue mondiale. Pose-le toi-même, en
+vérifiant qu’il laisse passer le recentrage :
+
+```js
+map: { options: { minZoom: 4 } }
+```
 
 ### Les clusters ne sont plus des nœuds DOM
 

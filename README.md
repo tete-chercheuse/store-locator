@@ -441,7 +441,7 @@ map: {
   clusters: {
     enabled: true,
     radius: 50,
-    maxZoom: 14,
+    maxZoom: 11,
     minPoints: 2,
     color: ['step', ['get', 'point_count'], '#60a5fa', 10, '#2563eb', 50, '#1e3a8a'],
     size:  ['step', ['get', 'point_count'], 16, 10, 22, 50, 30],
@@ -555,7 +555,7 @@ Valeurs par défaut:
     options: {
       zoom: 2,
       maxZoom: 18,
-      minZoom: 2,
+      minZoom: 0,
       center: [0, 0],
       cooperativeGestures: true
     },
@@ -566,7 +566,7 @@ Valeurs par défaut:
     clusters: {
       enabled: true,
       radius: 50,
-      maxZoom: 14,
+      maxZoom: 11,
       minPoints: 2,
       color: '#2563eb',
       size: 18,

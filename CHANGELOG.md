@@ -10,6 +10,16 @@ Guide de migration : [docs/MIGRATION-v2-v3.md](./docs/MIGRATION-v2-v3.md).
 
 ### Ruptures
 
+- `map.options.minZoom` passe de `2` à `0`. La valeur héritée de la v2 écrasait
+  silencieusement le recentrage initial : sur un jeu multi-continental,
+  `fitBounds` calculait un zoom de 1,48 qui était ramené à 2, laissant 66 des
+  214 magasins du jeu de démonstration hors écran, sans aucun signal. Un
+  plancher reste légitime pour un locator régional — c'est désormais à
+  l'appelant de le poser.
+- `map.clusters.maxZoom` passe de `14` à `11`. Mesuré sur Paris : à 14, un
+  cluster de deux ou trois magasins ne s'ouvrait qu'au zoom 15, soit le niveau
+  de la rue. À 11, il s'ouvre au zoom 12, niveau du quartier.
+
 - Le paquet est publié en **ESM uniquement** : les formats CommonJS et UMD, les
   champs `main`, `unpkg` et `amdName` sont supprimés. `maplibre-gl@6` ne publie
   lui-même ni l’un ni l’autre.
