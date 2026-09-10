@@ -128,6 +128,12 @@ Les autres styles publics d'OpenFreeMap fonctionnent aussi : `liberty`,
 MapLibre injecte automatiquement l'attribution portée par le style. **Ne la
 désactive pas** : elle satisfait l'obligation OpenStreetMap et OpenMapTiles.
 
+Elle est repliée derrière son bouton ⓘ au chargement, et s'ouvre au clic.
+MapLibre, lui, l'affiche dépliée jusqu'au premier déplacement de la carte.
+Pour revenir à ce comportement, il n'y a pas d'option : la classe
+`maplibregl-compact-show` retirée par la librairie doit être reposée sur
+`.maplibregl-ctrl-attrib`.
+
 ## Lancer les démos
 
 Une page d’accueil regroupe les deux démos:

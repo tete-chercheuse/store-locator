@@ -185,6 +185,8 @@ vectorielles.
 
 L’attribution est injectée automatiquement par MapLibre depuis le style. **Ne
 la désactive pas** : elle satisfait l’obligation OpenStreetMap / OpenMapTiles.
+Elle est aussi plus discrète : là où Leaflet affichait une barre permanente,
+elle est repliée derrière son bouton ⓘ au chargement et s’ouvre au clic.
 
 ## 6. Icônes
 
