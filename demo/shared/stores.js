@@ -19,8 +19,7 @@ const stores = {
         "city": "Melbourne",
         "area1": "",
         "country": "Australia",
-        "phone": "0061 3 9691 3888",
-
+        "phone": "0061 3 9691 3888"
       }
     },
     {
@@ -41,8 +40,7 @@ const stores = {
         "city": "Aubel",
         "area1": "",
         "country": "Belgium",
-        "phone": "0032 8 744 50 37",
-
+        "phone": "0032 8 744 50 37"
       }
     },
     {
@@ -63,8 +61,7 @@ const stores = {
         "city": "Brusels",
         "area1": "",
         "country": "Belgium",
-        "phone": "0032 2 502 20 16",
-
+        "phone": "0032 2 502 20 16"
       }
     },
     {
@@ -85,8 +82,7 @@ const stores = {
         "city": "Brussels",
         "area1": "",
         "country": "Belgium",
-        "phone": "0032 2\u00a0505 53 00",
-
+        "phone": "0032 2 505 53 00"
       }
     },
     {
@@ -107,8 +103,7 @@ const stores = {
         "city": "Brussels",
         "area1": "",
         "country": "Belgium",
-        "phone": "0032 2 466 65 91",
-
+        "phone": "0032 2 466 65 91"
       }
     },
     {
@@ -129,8 +124,7 @@ const stores = {
         "city": "Sao Paulo",
         "area1": "",
         "country": "Brazil",
-        "phone": "00 55 11 3085 4148 ",
-
+        "phone": "00 55 11 3085 4148 "
       }
     },
     {
@@ -151,8 +145,7 @@ const stores = {
         "city": "Lake Louise",
         "area1": "Alberta",
         "country": "Canada",
-        "phone": "403-522-3511",
-
+        "phone": "403-522-3511"
       }
     },
     {
@@ -173,8 +166,7 @@ const stores = {
         "city": "Niagara Falls",
         "area1": "Ontario",
         "country": "Canada",
-        "phone": "905-468-3246",
-
+        "phone": "905-468-3246"
       }
     },
     {
@@ -195,8 +187,7 @@ const stores = {
         "city": "Toronto",
         "area1": "",
         "country": "Canada",
-        "phone": "416-569-6405",
-
+        "phone": "416-569-6405"
       }
     },
     {
@@ -217,8 +208,7 @@ const stores = {
         "city": "Toronto",
         "area1": "Ontario",
         "country": "Canada",
-        "phone": "416-260-5100",
-
+        "phone": "416-260-5100"
       }
     },
     {
@@ -239,8 +229,7 @@ const stores = {
         "city": "Toronto",
         "area1": "Ontario",
         "country": "Canada",
-        "phone": "416-926-1010",
-
+        "phone": "416-926-1010"
       }
     },
     {
@@ -261,8 +250,7 @@ const stores = {
         "city": "Toronto",
         "area1": "",
         "country": "Canada",
-        "phone": "602-247-8573",
-
+        "phone": "602-247-8573"
       }
     },
     {
@@ -283,8 +271,7 @@ const stores = {
         "city": "Vancouver",
         "area1": "",
         "country": "Canada",
-        "phone": "604-915-9463",
-
+        "phone": "604-915-9463"
       }
     },
     {
@@ -305,8 +292,7 @@ const stores = {
         "city": "Vancouver",
         "area1": "British Columbia",
         "country": "Canada",
-        "phone": "604-915-9463",
-
+        "phone": "604-915-9463"
       }
     },
     {
@@ -327,8 +313,7 @@ const stores = {
         "city": "Vancouver",
         "area1": "British Columbia",
         "country": "Canada",
-        "phone": "604-568-1701",
-
+        "phone": "604-568-1701"
       }
     },
     {
@@ -349,8 +334,7 @@ const stores = {
         "city": "Whistler",
         "area1": "British Columbia",
         "country": "Canada",
-        "phone": "604-932-4540",
-
+        "phone": "604-932-4540"
       }
     },
     {
@@ -371,8 +355,7 @@ const stores = {
         "city": "Whistler",
         "area1": "",
         "country": "Canada",
-        "phone": "604-905-5555",
-
+        "phone": "604-905-5555"
       }
     },
     {
@@ -393,8 +376,7 @@ const stores = {
         "city": "Whistler",
         "area1": "British Columbia",
         "country": "Canada",
-        "phone": "604-932-5565",
-
+        "phone": "604-932-5565"
       }
     },
     {
@@ -415,8 +397,7 @@ const stores = {
         "city": "Hong Kong",
         "area1": "",
         "country": "China",
-        "phone": "00852-3565-6513",
-
+        "phone": "00852-3565-6513"
       }
     },
     {
@@ -437,8 +418,7 @@ const stores = {
         "city": "Hong Kong",
         "area1": "",
         "country": "China",
-        "phone": "00852-2506-0888",
-
+        "phone": "00852-2506-0888"
       }
     },
     {
@@ -459,8 +439,7 @@ const stores = {
         "city": "Shanghai",
         "area1": "Jing an",
         "country": "China",
-        "phone": "0086 21 2216 6988",
-
+        "phone": "0086 21 2216 6988"
       }
     },
     {
@@ -481,8 +460,7 @@ const stores = {
         "city": "Bordeaux",
         "area1": "blvd centre",
         "country": "France",
-        "phone": "05 56 02 20 27",
-
+        "phone": "05 56 02 20 27"
       }
     },
     {
@@ -503,8 +481,7 @@ const stores = {
         "city": "Bordeaux",
         "area1": "",
         "country": "France",
-        "phone": "05 57 80 33 33 ",
-
+        "phone": "05 57 80 33 33 "
       }
     },
     {
@@ -525,8 +502,7 @@ const stores = {
         "city": "Bordeaux",
         "area1": "",
         "country": "France",
-        "phone": "05 56 44 88 54",
-
+        "phone": "05 56 44 88 54"
       }
     },
     {
@@ -542,13 +518,12 @@ const stores = {
         "category": "Restaurants",
         "class": "restaurants",
         "icon": "../assets/icon-pin-restaurants.svg",
-        "store": "Auberge du Ch\u00e2teau Table des Blot",
+        "store": "Auberge du Château Table des Blot",
         "address": "1 Grande Rue",
         "city": "Dampierre-en-Yvelines",
         "area1": "",
         "country": "France",
-        "phone": "01 30 47 56 56",
-
+        "phone": "01 30 47 56 56"
       }
     },
     {
@@ -569,8 +544,7 @@ const stores = {
         "city": "Les Arcs",
         "area1": "",
         "country": "France",
-        "phone": "04 94 47 40 93",
-
+        "phone": "04 94 47 40 93"
       }
     },
     {
@@ -591,8 +565,7 @@ const stores = {
         "city": "Nice",
         "area1": "",
         "country": "France",
-        "phone": "04 89 97 14 37",
-
+        "phone": "04 89 97 14 37"
       }
     },
     {
@@ -613,8 +586,7 @@ const stores = {
         "city": "Nice",
         "area1": "",
         "country": "France",
-        "phone": "06 25 86 40 26",
-
+        "phone": "06 25 86 40 26"
       }
     },
     {
@@ -635,8 +607,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 43 26 48 23",
-
+        "phone": "01 43 26 48 23"
       }
     },
     {
@@ -657,8 +628,7 @@ const stores = {
         "city": "Paris",
         "area1": "75003",
         "country": "France",
-        "phone": "01 42 71 77 78",
-
+        "phone": "01 42 71 77 78"
       }
     },
     {
@@ -679,8 +649,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 44 31 40 00",
-
+        "phone": "01 44 31 40 00"
       }
     },
     {
@@ -701,8 +670,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 85 73 33 33 ",
-
+        "phone": "01 85 73 33 33 "
       }
     },
     {
@@ -723,8 +691,7 @@ const stores = {
         "city": "Paris",
         "area1": "75007",
         "country": "France",
-        "phone": "01 47 05 46 44",
-
+        "phone": "01 47 05 46 44"
       }
     },
     {
@@ -745,8 +712,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 56 62 39 05",
-
+        "phone": "01 56 62 39 05"
       }
     },
     {
@@ -767,8 +733,7 @@ const stores = {
         "city": "Paris",
         "area1": "75002",
         "country": "France",
-        "phone": "01 42 97 40 68",
-
+        "phone": "01 42 97 40 68"
       }
     },
     {
@@ -789,8 +754,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 47 64 86 04",
-
+        "phone": "01 47 64 86 04"
       }
     },
     {
@@ -811,8 +775,7 @@ const stores = {
         "city": "Paris",
         "area1": "75006",
         "country": "France",
-        "phone": "01 43 26 68 18",
-
+        "phone": "01 43 26 68 18"
       }
     },
     {
@@ -833,8 +796,7 @@ const stores = {
         "city": "Bad-Neuenahr-Ahrweiler",
         "area1": "",
         "country": "Germany",
-        "phone": "0049-26 41 97 750 ",
-
+        "phone": "0049-26 41 97 750 "
       }
     },
     {
@@ -855,8 +817,7 @@ const stores = {
         "city": "Berlin",
         "area1": "",
         "country": "Germany",
-        "phone": "0049-3031 3918 4",
-
+        "phone": "0049-3031 3918 4"
       }
     },
     {
@@ -877,8 +838,7 @@ const stores = {
         "city": "Bremen",
         "area1": "",
         "country": "Germany",
-        "phone": "0049-421-3408-0",
-
+        "phone": "0049-421-3408-0"
       }
     },
     {
@@ -899,8 +859,7 @@ const stores = {
         "city": "Hamburg",
         "area1": "",
         "country": "Germany",
-        "phone": "0049-4088 1295 3132",
-
+        "phone": "0049-4088 1295 3132"
       }
     },
     {
@@ -921,8 +880,7 @@ const stores = {
         "city": "Herxheim am Berg",
         "area1": "",
         "country": "Germany",
-        "phone": "0049-7276-5080",
-
+        "phone": "0049-7276-5080"
       }
     },
     {
@@ -939,12 +897,11 @@ const stores = {
         "class": "restaurants",
         "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Le Salon im Kesselhaus",
-        "address": "Griesbachstr.\u00a010c",
+        "address": "Griesbachstr. 10c",
         "city": "Karlsruhe",
         "area1": "",
         "country": "Germany",
-        "phone": "0721 269 66 99",
-
+        "phone": "0721 269 66 99"
       }
     },
     {
@@ -962,11 +919,10 @@ const stores = {
         "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Eisenbahn",
         "address": "Karl-Kurz-strasse 2",
-        "city": "M\u00fcnchen",
+        "city": "München",
         "area1": "Bavaria ",
         "country": "Germany",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -987,8 +943,7 @@ const stores = {
         "city": "Jakarta",
         "area1": "West Java",
         "country": "Indonesia",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -1009,8 +964,7 @@ const stores = {
         "city": "Jakarta",
         "area1": "West Java",
         "country": "Indonesia",
-        "phone": "62 212993 8824",
-
+        "phone": "62 212993 8824"
       }
     },
     {
@@ -1031,8 +985,7 @@ const stores = {
         "city": "Kuta",
         "area1": "Bali",
         "country": "Indonesia",
-        "phone": "62 3614 7378 88",
-
+        "phone": "62 3614 7378 88"
       }
     },
     {
@@ -1053,8 +1006,7 @@ const stores = {
         "city": "Tokyo",
         "area1": "",
         "country": "Japan",
-        "phone": "0081 3-3409-1331",
-
+        "phone": "0081 3-3409-1331"
       }
     },
     {
@@ -1075,8 +1027,7 @@ const stores = {
         "city": "Tokyo",
         "area1": "Ginza",
         "country": "Japan",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -1097,8 +1048,7 @@ const stores = {
         "city": "Tokyo",
         "area1": "",
         "country": "Japan",
-        "phone": "0081 3-5220-4011",
-
+        "phone": "0081 3-5220-4011"
       }
     },
     {
@@ -1119,8 +1069,7 @@ const stores = {
         "city": "Tokyo",
         "area1": "Chuo",
         "country": "Japan",
-        "phone": "0081 3-5159-5500",
-
+        "phone": "0081 3-5159-5500"
       }
     },
     {
@@ -1141,8 +1090,7 @@ const stores = {
         "city": "Tokyo",
         "area1": "Chiyoda ",
         "country": "Japan",
-        "phone": "0081 3-6212-1566",
-
+        "phone": "0081 3-6212-1566"
       }
     },
     {
@@ -1163,8 +1111,7 @@ const stores = {
         "city": "Tokyo",
         "area1": "",
         "country": "Japan",
-        "phone": "0081 6-6949-3246",
-
+        "phone": "0081 6-6949-3246"
       }
     },
     {
@@ -1185,8 +1132,7 @@ const stores = {
         "city": "Tokyo",
         "area1": "",
         "country": "Japan",
-        "phone": "0081 3-5453-0301",
-
+        "phone": "0081 3-5453-0301"
       }
     },
     {
@@ -1207,8 +1153,7 @@ const stores = {
         "city": "Tokyo ",
         "area1": "",
         "country": "Japan",
-        "phone": "0081 3-3409-1331",
-
+        "phone": "0081 3-3409-1331"
       }
     },
     {
@@ -1229,8 +1174,7 @@ const stores = {
         "city": "Kuah",
         "area1": "Kedah",
         "country": "Malaysia",
-        "phone": "60 4 9500 500",
-
+        "phone": "60 4 9500 500"
       }
     },
     {
@@ -1251,8 +1195,7 @@ const stores = {
         "city": "Kuah",
         "area1": "Kedah",
         "country": "Malaysia",
-        "phone": "60 4 9500 500",
-
+        "phone": "60 4 9500 500"
       }
     },
     {
@@ -1273,8 +1216,7 @@ const stores = {
         "city": "Kuah",
         "area1": "Kedah",
         "country": "Malaysia",
-        "phone": "60 4 9500 500",
-
+        "phone": "60 4 9500 500"
       }
     },
     {
@@ -1295,8 +1237,7 @@ const stores = {
         "city": "Kuala Lumpur",
         "area1": "",
         "country": "Malaysia",
-        "phone": "60321798000",
-
+        "phone": "60321798000"
       }
     },
     {
@@ -1317,8 +1258,7 @@ const stores = {
         "city": "Rangoon",
         "area1": "Yangon",
         "country": "Myanmar",
-        "phone": "95 01 514 230",
-
+        "phone": "95 01 514 230"
       }
     },
     {
@@ -1339,8 +1279,7 @@ const stores = {
         "city": "Rangoon",
         "area1": "Yangon",
         "country": "Myanmar",
-        "phone": "9972784841",
-
+        "phone": "9972784841"
       }
     },
     {
@@ -1361,8 +1300,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6291-6816",
-
+        "phone": "65-6291-6816"
       }
     },
     {
@@ -1370,8 +1308,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.293043,
-          103.8269330000001
+          103.8269330000001,
+          1.293043
         ]
       },
       "properties": {
@@ -1383,8 +1321,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6737-3540",
-
+        "phone": "65-6737-3540"
       }
     },
     {
@@ -1392,8 +1329,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.3026266,
-          103.8346306
+          103.8346306,
+          1.3026266
         ]
       },
       "properties": {
@@ -1405,8 +1342,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6836-3068",
-
+        "phone": "65-6836-3068"
       }
     },
     {
@@ -1414,21 +1350,20 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.2829522,
-          103.8512079
+          103.8512079,
+          1.2829522
         ]
       },
       "properties": {
         "category": "Restaurants",
         "class": "restaurants",
         "icon": "../assets/icon-pin-restaurants.svg",
-        "store": "Bar \u00e0 vin - SG",
+        "store": "Bar à vin - SG",
         "address": "9 Raffles Place",
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6438-9982",
-
+        "phone": "65-6438-9982"
       }
     },
     {
@@ -1436,8 +1371,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.331949,
-          103.95243
+          103.95243,
+          1.331949
         ]
       },
       "properties": {
@@ -1449,8 +1384,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6245-3949",
-
+        "phone": "65-6245-3949"
       }
     },
     {
@@ -1471,8 +1405,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6225-6897",
-
+        "phone": "65-6225-6897"
       }
     },
     {
@@ -1493,8 +1426,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6423-0353",
-
+        "phone": "65-6423-0353"
       }
     },
     {
@@ -1515,8 +1447,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6333-9312",
-
+        "phone": "65-6333-9312"
       }
     },
     {
@@ -1537,8 +1468,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6688-9955",
-
+        "phone": "65-6688-9955"
       }
     },
     {
@@ -1559,8 +1489,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6438-0410",
-
+        "phone": "65-6438-0410"
       }
     },
     {
@@ -1581,8 +1510,7 @@ const stores = {
         "city": "Bern",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 31 972 56 55",
-
+        "phone": "0041 31 972 56 55"
       }
     },
     {
@@ -1603,8 +1531,7 @@ const stores = {
         "city": "Fribourg",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 26 321 46 46",
-
+        "phone": "0041 26 321 46 46"
       }
     },
     {
@@ -1622,11 +1549,10 @@ const stores = {
         "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Loti at Hotel La Reserve",
         "address": "301 route de Lausanne",
-        "city": "Gen\u00e8ve",
+        "city": "Genève",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 22 959 59 79",
-
+        "phone": "0041 22 959 59 79"
       }
     },
     {
@@ -1647,8 +1573,7 @@ const stores = {
         "city": "Weggis",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 41 392 05 05",
-
+        "phone": "0041 41 392 05 05"
       }
     },
     {
@@ -1669,8 +1594,7 @@ const stores = {
         "city": "Zermatt",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 27 966 71 71",
-
+        "phone": "0041 27 966 71 71"
       }
     },
     {
@@ -1687,12 +1611,11 @@ const stores = {
         "class": "restaurants",
         "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Kronenhalle",
-        "address": "R\u00e4mistrasse 4",
-        "city": "Z\u00fcrich",
+        "address": "Rämistrasse 4",
+        "city": "Zürich",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 44 262 99 00",
-
+        "phone": "0041 44 262 99 00"
       }
     },
     {
@@ -1710,11 +1633,10 @@ const stores = {
         "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Wunderbrunnen",
         "address": "Dorfstrasse 36",
-        "city": "Z\u00fcrich",
+        "city": "Zürich",
         "area1": "Opfikon",
         "country": "Switzerland",
-        "phone": "0041 44 810 24 24 ",
-
+        "phone": "0041 44 810 24 24 "
       }
     },
     {
@@ -1735,8 +1657,7 @@ const stores = {
         "city": "Bangkok",
         "area1": "",
         "country": "Thailand",
-        "phone": "66 2 672 9040",
-
+        "phone": "66 2 672 9040"
       }
     },
     {
@@ -1757,8 +1678,7 @@ const stores = {
         "city": "Bangkok",
         "area1": "",
         "country": "Thailand",
-        "phone": "66 2 625 3388",
-
+        "phone": "66 2 625 3388"
       }
     },
     {
@@ -1779,8 +1699,7 @@ const stores = {
         "city": "Bangkok",
         "area1": "",
         "country": "Thailand",
-        "phone": "66 9 6 8607 990",
-
+        "phone": "66 9 6 8607 990"
       }
     },
     {
@@ -1797,12 +1716,11 @@ const stores = {
         "class": "restaurants",
         "icon": "../assets/icon-pin-restaurants.svg",
         "store": "Acqua",
-        "address": "324\/15 Prabaramee Road, Kalim Bay",
+        "address": "324/15 Prabaramee Road, Kalim Bay",
         "city": "Phuket",
         "area1": "",
         "country": "Thailand",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -1823,8 +1741,7 @@ const stores = {
         "city": "Brockenhurst",
         "area1": "-",
         "country": "United Kingdom",
-        "phone": "44 1-590-624-467",
-
+        "phone": "44 1-590-624-467"
       }
     },
     {
@@ -1845,8 +1762,7 @@ const stores = {
         "city": "Horsham",
         "area1": "",
         "country": "United Kingdom",
-        "phone": "44 1-403-891-711",
-
+        "phone": "44 1-403-891-711"
       }
     },
     {
@@ -1867,8 +1783,7 @@ const stores = {
         "city": "London",
         "area1": "England",
         "country": "United Kingdom",
-        "phone": "44 2 038-734-060",
-
+        "phone": "44 2 038-734-060"
       }
     },
     {
@@ -1889,8 +1804,7 @@ const stores = {
         "city": "London",
         "area1": "England",
         "country": "United Kingdom",
-        "phone": "44 2 033-277-776",
-
+        "phone": "44 2 033-277-776"
       }
     },
     {
@@ -1911,8 +1825,7 @@ const stores = {
         "city": "London",
         "area1": "King's Cross",
         "country": "United Kingdom",
-        "phone": "44 2 033-880-818",
-
+        "phone": "44 2 033-880-818"
       }
     },
     {
@@ -1933,8 +1846,7 @@ const stores = {
         "city": "London",
         "area1": "England",
         "country": "United Kingdom",
-        "phone": "44 2 079-650-165",
-
+        "phone": "44 2 079-650-165"
       }
     },
     {
@@ -1955,8 +1867,7 @@ const stores = {
         "city": "London",
         "area1": "England",
         "country": "United Kingdom",
-        "phone": "44 2 089-400-902",
-
+        "phone": "44 2 089-400-902"
       }
     },
     {
@@ -1977,8 +1888,7 @@ const stores = {
         "city": "London",
         "area1": "England",
         "country": "United Kingdom",
-        "phone": "44 2 076-140-177",
-
+        "phone": "44 2 076-140-177"
       }
     },
     {
@@ -1999,8 +1909,7 @@ const stores = {
         "city": "London",
         "area1": "England",
         "country": "United Kingdom",
-        "phone": "44 2 077-247-243",
-
+        "phone": "44 2 077-247-243"
       }
     },
     {
@@ -2021,8 +1930,7 @@ const stores = {
         "city": "London",
         "area1": "England",
         "country": "United Kingdom",
-        "phone": "44 2 078-819-844",
-
+        "phone": "44 2 078-819-844"
       }
     },
     {
@@ -2043,8 +1951,7 @@ const stores = {
         "city": "Boca Raton",
         "area1": "",
         "country": "United States",
-        "phone": "561-998-3881",
-
+        "phone": "561-998-3881"
       }
     },
     {
@@ -2065,8 +1972,7 @@ const stores = {
         "city": "Boulder ",
         "area1": "Colorado ",
         "country": "United States",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -2087,8 +1993,7 @@ const stores = {
         "city": "Breckenridge",
         "area1": "Colorado",
         "country": "United States",
-        "phone": "001-970-453-9948",
-
+        "phone": "001-970-453-9948"
       }
     },
     {
@@ -2096,8 +2001,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          33.91205100000001,
-          -117.881995
+          -117.881995,
+          33.91205100000001
         ]
       },
       "properties": {
@@ -2109,8 +2014,7 @@ const stores = {
         "city": "Brea",
         "area1": "California",
         "country": "United States",
-        "phone": "001 855-330-6673",
-
+        "phone": "001 855-330-6673"
       }
     },
     {
@@ -2118,8 +2022,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          33.8679936,
-          -118.3527106
+          -118.3527106,
+          33.8679936
         ]
       },
       "properties": {
@@ -2131,8 +2035,7 @@ const stores = {
         "city": "Redondo",
         "area1": "California",
         "country": "United States",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -2140,8 +2043,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.8745338,
-          -96.76830919999998
+          -96.76830919999998,
+          32.8745338
         ]
       },
       "properties": {
@@ -2153,8 +2056,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(214)750-4605",
-
+        "phone": "(214)750-4605"
       }
     },
     {
@@ -2162,8 +2064,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.6729889,
-          -97.4005626
+          -97.4005626,
+          32.6729889
         ]
       },
       "properties": {
@@ -2175,8 +2077,7 @@ const stores = {
         "city": "Fort Worth",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(817)292-2503",
-
+        "phone": "(817)292-2503"
       }
     },
     {
@@ -2184,8 +2085,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          30.3918255999999,
-          -97.7450101
+          -97.7450101,
+          30.3918255999999
         ]
       },
       "properties": {
@@ -2197,8 +2098,7 @@ const stores = {
         "city": "Austin",
         "area1": "Texas",
         "country": "United States",
-        "phone": "512-340-9997",
-
+        "phone": "512-340-9997"
       }
     },
     {
@@ -2206,8 +2106,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.0961910000001,
-          -118.3267894
+          -118.3267894,
+          34.0961910000001
         ]
       },
       "properties": {
@@ -2219,8 +2119,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "California",
         "country": "United States",
-        "phone": "001 650-364-8544",
-
+        "phone": "001 650-364-8544"
       }
     },
     {
@@ -2228,8 +2127,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.8102996,
-          -96.80673330000002
+          -96.80673330000002,
+          32.8102996
         ]
       },
       "properties": {
@@ -2241,8 +2140,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(214) 765-6878",
-
+        "phone": "(214) 765-6878"
       }
     },
     {
@@ -2250,8 +2148,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.7246089,
-          -97.42156749999998
+          -97.42156749999998,
+          32.7246089
         ]
       },
       "properties": {
@@ -2263,8 +2161,7 @@ const stores = {
         "city": "Fort Worth",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(817)289-1657",
-
+        "phone": "(817)289-1657"
       }
     },
     {
@@ -2272,8 +2169,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.8757765,
-          -96.760673
+          -96.760673,
+          32.8757765
         ]
       },
       "properties": {
@@ -2285,8 +2182,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(214) 765-6871",
-
+        "phone": "(214) 765-6871"
       }
     },
     {
@@ -2294,8 +2190,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.8073259,
-          -96.79662940000003
+          -96.79662940000003,
+          32.8073259
         ]
       },
       "properties": {
@@ -2307,8 +2203,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "214-780-0373",
-
+        "phone": "214-780-0373"
       }
     },
     {
@@ -2316,8 +2211,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.8640154,
-          -96.88198520000003
+          -96.88198520000003,
+          32.8640154
         ]
       },
       "properties": {
@@ -2329,8 +2224,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United states",
-        "phone": "(214) 765-6870",
-
+        "phone": "(214) 765-6870"
       }
     },
     {
@@ -2338,8 +2232,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.8554346,
-          -96.76935789999999
+          -96.76935789999999,
+          32.8554346
         ]
       },
       "properties": {
@@ -2351,8 +2245,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(214)739-4012",
-
+        "phone": "(214)739-4012"
       }
     },
     {
@@ -2360,8 +2253,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.8163064,
-          -96.79315299999996
+          -96.79315299999996,
+          32.8163064
         ]
       },
       "properties": {
@@ -2373,8 +2266,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(214)635-3162",
-
+        "phone": "(214)635-3162"
       }
     },
     {
@@ -2395,8 +2287,7 @@ const stores = {
         "city": "Dallas",
         "area1": "",
         "country": "United States",
-        "phone": "001-214-741-5560",
-
+        "phone": "001-214-741-5560"
       }
     },
     {
@@ -2404,8 +2295,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          29.8916783,
-          -95.53750159999998
+          -95.53750159999998,
+          29.8916783
         ]
       },
       "properties": {
@@ -2417,8 +2308,7 @@ const stores = {
         "city": "Houston",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(713)466-1583",
-
+        "phone": "(713)466-1583"
       }
     },
     {
@@ -2426,8 +2316,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          29.7408871,
-          -95.4109143
+          -95.4109143,
+          29.7408871
         ]
       },
       "properties": {
@@ -2439,8 +2329,7 @@ const stores = {
         "city": "Houston",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(713) 524-3397",
-
+        "phone": "(713) 524-3397"
       }
     },
     {
@@ -2448,8 +2337,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          29.7897201,
-          -95.41107299999999
+          -95.41107299999999,
+          29.7897201
         ]
       },
       "properties": {
@@ -2461,8 +2350,7 @@ const stores = {
         "city": "Houston",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(713) 880-4496",
-
+        "phone": "(713) 880-4496"
       }
     },
     {
@@ -2470,8 +2358,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.80077,
-          -96.835283
+          -96.835283,
+          32.80077
         ]
       },
       "properties": {
@@ -2483,8 +2371,7 @@ const stores = {
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "(214)747-9463",
-
+        "phone": "(214)747-9463"
       }
     },
     {
@@ -2500,13 +2387,12 @@ const stores = {
         "category": "Restaurants",
         "class": "restaurants",
         "icon": "../assets/icon-pin-restaurants.svg",
-        "store": "Lavendou Bistrot Proven\u00e7al",
+        "store": "Lavendou Bistrot Provençal",
         "address": "19009 Preston Road",
         "city": "Dallas",
         "area1": "Texas",
         "country": "United States",
-        "phone": "001-972-248-1911",
-
+        "phone": "001-972-248-1911"
       }
     },
     {
@@ -2514,8 +2400,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.171,
-          -118.2901783
+          -118.2901783,
+          34.171
         ]
       },
       "properties": {
@@ -2527,8 +2413,7 @@ const stores = {
         "city": "Glendale",
         "area1": "California",
         "country": "United States",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -2549,8 +2434,7 @@ const stores = {
         "city": "Houston",
         "area1": "Texas",
         "country": "United States",
-        "phone": "001-713-465-2901",
-
+        "phone": "001-713-465-2901"
       }
     },
     {
@@ -2571,8 +2455,7 @@ const stores = {
         "city": "Houston",
         "area1": "Texas",
         "country": "United States",
-        "phone": "001-713-485-0466",
-
+        "phone": "001-713-485-0466"
       }
     },
     {
@@ -2593,8 +2476,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -2615,8 +2497,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "001-212-243-1355",
-
+        "phone": "001-212-243-1355"
       }
     },
     {
@@ -2637,8 +2518,7 @@ const stores = {
         "city": "Houston",
         "area1": "",
         "country": "United States",
-        "phone": "001-713-780-7352",
-
+        "phone": "001-713-780-7352"
       }
     },
     {
@@ -2659,8 +2539,7 @@ const stores = {
         "city": "Houston",
         "area1": "Texas",
         "country": "United States",
-        "phone": "001-713-622-6778",
-
+        "phone": "001-713-622-6778"
       }
     },
     {
@@ -2681,8 +2560,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "001-212-924-6999",
-
+        "phone": "001-212-924-6999"
       }
     },
     {
@@ -2703,8 +2581,7 @@ const stores = {
         "city": "Jacksonville",
         "area1": "Florida",
         "country": "United States",
-        "phone": "904-381-0909",
-
+        "phone": "904-381-0909"
       }
     },
     {
@@ -2725,8 +2602,7 @@ const stores = {
         "city": "Mc Lean",
         "area1": "Virginia",
         "country": "United States",
-        "phone": "703.506.4300",
-
+        "phone": "703.506.4300"
       }
     },
     {
@@ -2747,8 +2623,7 @@ const stores = {
         "city": "Miami",
         "area1": "",
         "country": "United States",
-        "phone": "305-674-8822",
-
+        "phone": "305-674-8822"
       }
     },
     {
@@ -2769,8 +2644,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "001-212-932-0990",
-
+        "phone": "001-212-932-0990"
       }
     },
     {
@@ -2791,8 +2665,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "001-212-355-0940",
-
+        "phone": "001-212-355-0940"
       }
     },
     {
@@ -2813,8 +2686,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "001-212-877-6090",
-
+        "phone": "001-212-877-6090"
       }
     },
     {
@@ -2835,8 +2707,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "001-212-639-9463",
-
+        "phone": "001-212-639-9463"
       }
     },
     {
@@ -2857,8 +2728,7 @@ const stores = {
         "city": "London",
         "area1": "",
         "country": "United Kingdom",
-        "phone": "44 2-072-211-982",
-
+        "phone": "44 2-072-211-982"
       }
     },
     {
@@ -2879,8 +2749,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "001-212-724-6767",
-
+        "phone": "001-212-724-6767"
       }
     },
     {
@@ -2901,8 +2770,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -2923,8 +2791,7 @@ const stores = {
         "city": "Miami",
         "area1": "",
         "country": "United States",
-        "phone": "786-717-7512",
-
+        "phone": "786-717-7512"
       }
     },
     {
@@ -2945,8 +2812,7 @@ const stores = {
         "city": "Miami Beach",
         "area1": "",
         "country": "United States",
-        "phone": "305-604-6988",
-
+        "phone": "305-604-6988"
       }
     },
     {
@@ -2967,8 +2833,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "212-488-2110",
-
+        "phone": "212-488-2110"
       }
     },
     {
@@ -2989,8 +2854,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "212-477-0777",
-
+        "phone": "212-477-0777"
       }
     },
     {
@@ -3011,8 +2875,7 @@ const stores = {
         "city": "New York City",
         "area1": "",
         "country": "United States",
-        "phone": "212-625-9463",
-
+        "phone": "212-625-9463"
       }
     },
     {
@@ -3033,8 +2896,7 @@ const stores = {
         "city": "Orlando",
         "area1": "Florida",
         "country": "United States",
-        "phone": "407-354-2467",
-
+        "phone": "407-354-2467"
       }
     },
     {
@@ -3055,8 +2917,7 @@ const stores = {
         "city": "San Antonio",
         "area1": "",
         "country": "United States",
-        "phone": "001-210-472-2600",
-
+        "phone": "001-210-472-2600"
       }
     },
     {
@@ -3077,8 +2938,7 @@ const stores = {
         "city": "Silverthorne",
         "area1": "Colorado",
         "country": "United States",
-        "phone": "001-970-496-4161",
-
+        "phone": "001-970-496-4161"
       }
     },
     {
@@ -3099,8 +2959,7 @@ const stores = {
         "city": "Tampa",
         "area1": "Florida",
         "country": "United States",
-        "phone": "813-353-9706",
-
+        "phone": "813-353-9706"
       }
     },
     {
@@ -3121,8 +2980,7 @@ const stores = {
         "city": "Washington",
         "area1": "Maryland",
         "country": "United States",
-        "phone": "202-868-5100",
-
+        "phone": "202-868-5100"
       }
     },
     {
@@ -3143,8 +3001,7 @@ const stores = {
         "city": "Brussels",
         "area1": "Ixelles",
         "country": "Belgium",
-        "phone": "0032-2534-1560",
-
+        "phone": "0032-2534-1560"
       }
     },
     {
@@ -3165,8 +3022,7 @@ const stores = {
         "city": "Brussels",
         "area1": "",
         "country": "Belgium",
-        "phone": "32 (0) 2 537 07 71",
-
+        "phone": "32 (0) 2 537 07 71"
       }
     },
     {
@@ -3187,8 +3043,7 @@ const stores = {
         "city": "Beijing",
         "area1": "",
         "country": "China",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -3205,12 +3060,11 @@ const stores = {
         "class": "wineshops",
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "La Cave d'Ulysse",
-        "address": "2 Rue de la Tr\u00e9moille",
+        "address": "2 Rue de la Trémoille",
         "city": "Margaux",
         "area1": "33460",
         "country": "France",
-        "phone": "05 57 88 79 94",
-
+        "phone": "05 57 88 79 94"
       }
     },
     {
@@ -3231,8 +3085,7 @@ const stores = {
         "city": "Bordeaux",
         "area1": "Tourny",
         "country": "France",
-        "phone": "05 56 52 23 72",
-
+        "phone": "05 56 52 23 72"
       }
     },
     {
@@ -3253,8 +3106,7 @@ const stores = {
         "city": "Bordeaux",
         "area1": "Tourny",
         "country": "France",
-        "phone": "05 56 48 01 29",
-
+        "phone": "05 56 48 01 29"
       }
     },
     {
@@ -3275,8 +3127,7 @@ const stores = {
         "city": "Bordeaux",
         "area1": "Tourny",
         "country": "France",
-        "phone": "05 56 52 32 05",
-
+        "phone": "05 56 52 32 05"
       }
     },
     {
@@ -3297,8 +3148,7 @@ const stores = {
         "city": "Paris",
         "area1": "75001",
         "country": "France",
-        "phone": "01 71 27 45 00",
-
+        "phone": "01 71 27 45 00"
       }
     },
     {
@@ -3319,8 +3169,7 @@ const stores = {
         "city": "Paris",
         "area1": "75006",
         "country": "France",
-        "phone": "06 37 20 83 13",
-
+        "phone": "06 37 20 83 13"
       }
     },
     {
@@ -3341,8 +3190,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 72 63 63 37",
-
+        "phone": "01 72 63 63 37"
       }
     },
     {
@@ -3363,8 +3211,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 40 23 52 67",
-
+        "phone": "01 40 23 52 67"
       }
     },
     {
@@ -3385,8 +3232,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 45 48 80 93",
-
+        "phone": "01 45 48 80 93"
       }
     },
     {
@@ -3407,8 +3253,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 72 63 68 70",
-
+        "phone": "01 72 63 68 70"
       }
     },
     {
@@ -3429,8 +3274,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 72 63 68 78",
-
+        "phone": "01 72 63 68 78"
       }
     },
     {
@@ -3451,8 +3295,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 72 63 68 57",
-
+        "phone": "01 72 63 68 57"
       }
     },
     {
@@ -3473,8 +3316,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 72 63 68 31",
-
+        "phone": "01 72 63 68 31"
       }
     },
     {
@@ -3495,8 +3337,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 72 63 68 59",
-
+        "phone": "01 72 63 68 59"
       }
     },
     {
@@ -3517,8 +3358,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 79 60 00 14",
-
+        "phone": "01 79 60 00 14"
       }
     },
     {
@@ -3539,8 +3379,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 79 60 00 09",
-
+        "phone": "01 79 60 00 09"
       }
     },
     {
@@ -3561,8 +3400,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -3583,8 +3421,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 73 75 80 41",
-
+        "phone": "01 73 75 80 41"
       }
     },
     {
@@ -3605,8 +3442,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 72 63 68 48",
-
+        "phone": "01 72 63 68 48"
       }
     },
     {
@@ -3627,8 +3463,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 48 87 73 68",
-
+        "phone": "01 48 87 73 68"
       }
     },
     {
@@ -3649,8 +3484,7 @@ const stores = {
         "city": "Paris",
         "area1": "75002",
         "country": "France",
-        "phone": "01 42 97 20 20",
-
+        "phone": "01 42 97 20 20"
       }
     },
     {
@@ -3671,8 +3505,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "06 37 20 83 13",
-
+        "phone": "06 37 20 83 13"
       }
     },
     {
@@ -3690,11 +3523,10 @@ const stores = {
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Cash Vin - Artigues",
         "address": "60 Avenue de l'ile de France",
-        "city": "Artigues-pr\u00e8s-Bordeaux",
+        "city": "Artigues-près-Bordeaux",
         "area1": "",
         "country": "France",
-        "phone": "05 56 68 33 22",
-
+        "phone": "05 56 68 33 22"
       }
     },
     {
@@ -3715,8 +3547,7 @@ const stores = {
         "city": "Bordeaux",
         "area1": "Chartrons",
         "country": "France",
-        "phone": "05 56 58 84 86",
-
+        "phone": "05 56 58 84 86"
       }
     },
     {
@@ -3737,8 +3568,7 @@ const stores = {
         "city": "Paris",
         "area1": "75008",
         "country": "France",
-        "phone": "01 42 65 39 86",
-
+        "phone": "01 42 65 39 86"
       }
     },
     {
@@ -3759,8 +3589,7 @@ const stores = {
         "city": "Paris",
         "area1": "",
         "country": "France",
-        "phone": "01 42 33 34 58",
-
+        "phone": "01 42 33 34 58"
       }
     },
     {
@@ -3781,8 +3610,7 @@ const stores = {
         "city": "Paris",
         "area1": "75009",
         "country": "France",
-        "phone": "01 48 78 68 43",
-
+        "phone": "01 48 78 68 43"
       }
     },
     {
@@ -3803,8 +3631,7 @@ const stores = {
         "city": "Berlin",
         "area1": "",
         "country": "Germany",
-        "phone": "0049 49-302-1210",
-
+        "phone": "0049 49-302-1210"
       }
     },
     {
@@ -3825,8 +3652,7 @@ const stores = {
         "city": "Frankfurt am Main",
         "area1": "",
         "country": "Germany",
-        "phone": "(0 69) 48 98 16 86",
-
+        "phone": "(0 69) 48 98 16 86"
       }
     },
     {
@@ -3847,8 +3673,7 @@ const stores = {
         "city": "Berlin",
         "area1": "",
         "country": "Germany",
-        "phone": "0049 30-209-480",
-
+        "phone": "0049 30-209-480"
       }
     },
     {
@@ -3869,8 +3694,7 @@ const stores = {
         "city": "Stuttgart",
         "area1": "",
         "country": "Germany",
-        "phone": "00490711\/2036-0",
-
+        "phone": "00490711/2036-0"
       }
     },
     {
@@ -3891,8 +3715,7 @@ const stores = {
         "city": "Hamburg",
         "area1": "",
         "country": "Germany",
-        "phone": "0049 40 3330 70",
-
+        "phone": "0049 40 3330 70"
       }
     },
     {
@@ -3910,11 +3733,10 @@ const stores = {
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof",
         "address": "Karlsplatz 21",
-        "city": "M\u00fcnchen",
+        "city": "München",
         "area1": "",
         "country": "Germany",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -3935,8 +3757,7 @@ const stores = {
         "city": "Berlin",
         "area1": "",
         "country": "Germany",
-        "phone": "0049 80-026-661-11",
-
+        "phone": "0049 80-026-661-11"
       }
     },
     {
@@ -3957,8 +3778,7 @@ const stores = {
         "city": "Frankfurt am Main",
         "area1": "",
         "country": "Germany",
-        "phone": "0049 069 219 10",
-
+        "phone": "0049 069 219 10"
       }
     },
     {
@@ -3976,11 +3796,10 @@ const stores = {
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Galeria KaufHof Gourmet - Mu1",
         "address": "Kaufinger Strasse 1-5",
-        "city": "M\u00fcnchen",
+        "city": "München",
         "area1": "",
         "country": "Germany",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -4001,8 +3820,7 @@ const stores = {
         "city": "Berlin",
         "area1": "",
         "country": "Germany",
-        "phone": "0049 30-831-2598",
-
+        "phone": "0049 30-831-2598"
       }
     },
     {
@@ -4020,11 +3838,10 @@ const stores = {
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Gerards Wein-markt",
         "address": "Bergische Landstrabe 618",
-        "city": "D\u00fcsseldorf",
+        "city": "Düsseldorf",
         "area1": "North-Rine",
         "country": "Germany",
-        "phone": "0049 21-049-5940",
-
+        "phone": "0049 21-049-5940"
       }
     },
     {
@@ -4032,8 +3849,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          29.4315861,
-          106.912251
+          106.912251,
+          29.4315861
         ]
       },
       "properties": {
@@ -4041,12 +3858,11 @@ const stores = {
         "class": "wineshops",
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Vinehoo",
-        "address": "3005, b\u00e2timent Longhu MOCO4",
+        "address": "3005, bâtiment Longhu MOCO4",
         "city": "Chongqinq",
         "area1": "",
         "country": "China",
-        "phone": "023-67682699",
-
+        "phone": "023-67682699"
       }
     },
     {
@@ -4054,8 +3870,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          39.90419989999999,
-          116.4073963000001
+          116.4073963000001,
+          39.90419989999999
         ]
       },
       "properties": {
@@ -4067,8 +3883,7 @@ const stores = {
         "city": "Beijing",
         "area1": "",
         "country": "China",
-        "phone": "400-606-9933",
-
+        "phone": "400-606-9933"
       }
     },
     {
@@ -4076,8 +3891,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31.230416,
-          121.473701
+          121.473701,
+          31.230416
         ]
       },
       "properties": {
@@ -4089,8 +3904,7 @@ const stores = {
         "city": "Shanghai",
         "area1": "",
         "country": "China",
-        "phone": "86-21-1010-1111",
-
+        "phone": "86-21-1010-1111"
       }
     },
     {
@@ -4098,8 +3912,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          22.2780025,
-          114.1808344
+          114.1808344,
+          22.2780025
         ]
       },
       "properties": {
@@ -4111,8 +3925,7 @@ const stores = {
         "city": "Hong Kong",
         "area1": "",
         "country": "China",
-        "phone": "(852)2155-2215",
-
+        "phone": "(852)2155-2215"
       }
     },
     {
@@ -4120,8 +3933,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          22.27532,
-          114.1715976
+          114.1715976,
+          22.27532
         ]
       },
       "properties": {
@@ -4133,8 +3946,7 @@ const stores = {
         "city": "Hong Kong",
         "area1": "",
         "country": "China",
-        "phone": "00852-2673-7636",
-
+        "phone": "00852-2673-7636"
       }
     },
     {
@@ -4142,8 +3954,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          22.278717,
-          114.182003
+          114.182003,
+          22.278717
         ]
       },
       "properties": {
@@ -4155,8 +3967,7 @@ const stores = {
         "city": "Hong Kong",
         "area1": "",
         "country": "China",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -4164,8 +3975,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          22.2839104,
-          114.2161994000001
+          114.2161994000001,
+          22.2839104
         ]
       },
       "properties": {
@@ -4177,8 +3988,7 @@ const stores = {
         "city": "Hong Kong",
         "area1": "",
         "country": "China",
-        "phone": "00852 2884-6888",
-
+        "phone": "00852 2884-6888"
       }
     },
     {
@@ -4199,8 +4009,7 @@ const stores = {
         "city": "Hong Kong",
         "area1": "Tsim Sha Tsui",
         "country": "Hong Kong",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -4221,8 +4030,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6737-3540",
-
+        "phone": "65-6737-3540"
       }
     },
     {
@@ -4243,8 +4051,7 @@ const stores = {
         "city": "Singapore",
         "area1": "",
         "country": "Singapore",
-        "phone": "65-6338-0717",
-
+        "phone": "65-6338-0717"
       }
     },
     {
@@ -4265,8 +4072,7 @@ const stores = {
         "city": "Orbe ",
         "area1": "Vaud",
         "country": "Switzerland",
-        "phone": "0041 244-416-170",
-
+        "phone": "0041 244-416-170"
       }
     },
     {
@@ -4284,11 +4090,10 @@ const stores = {
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Manor SA",
         "address": "Rue Cornavin 6",
-        "city": "Gen\u00e8ve",
+        "city": "Genève",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 229-094-699",
-
+        "phone": "0041 229-094-699"
       }
     },
     {
@@ -4309,8 +4114,7 @@ const stores = {
         "city": "Crissier",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 216-349-121",
-
+        "phone": "0041 216-349-121"
       }
     },
     {
@@ -4328,11 +4132,10 @@ const stores = {
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Arthur's Fine Cellar",
         "address": "Rue du Rhone 29",
-        "city": "Gen\u00e8ve",
+        "city": "Genève",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 223-186-098",
-
+        "phone": "0041 223-186-098"
       }
     },
     {
@@ -4350,11 +4153,10 @@ const stores = {
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Baur Au Lac",
         "address": "Borsenstrasse 27",
-        "city": "Z\u00fcrich",
+        "city": "Zürich",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041-42-205-055",
-
+        "phone": "0041-42-205-055"
       }
     },
     {
@@ -4375,8 +4177,7 @@ const stores = {
         "city": "Meyrin",
         "area1": "",
         "country": "Switzerland",
-        "phone": "0041 227-826-572 ",
-
+        "phone": "0041 227-826-572 "
       }
     },
     {
@@ -4397,8 +4198,7 @@ const stores = {
         "city": "London",
         "area1": "Notting Hill Gate",
         "country": "United Kingdom",
-        "phone": "44 2 072-211-982",
-
+        "phone": "44 2 072-211-982"
       }
     },
     {
@@ -4419,8 +4219,7 @@ const stores = {
         "city": "London",
         "area1": "Tower Hill",
         "country": "United Kingdom",
-        "phone": "44 2 074-810-415",
-
+        "phone": "44 2 074-810-415"
       }
     },
     {
@@ -4441,8 +4240,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "Hollywood",
         "country": "United States",
-        "phone": "001 650-364-8544",
-
+        "phone": "001 650-364-8544"
       }
     },
     {
@@ -4463,8 +4261,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "Brea",
         "country": "United States",
-        "phone": "001 855-330-6673",
-
+        "phone": "001 855-330-6673"
       }
     },
     {
@@ -4485,8 +4282,7 @@ const stores = {
         "city": "Redondo Beach",
         "area1": "redondo Beach",
         "country": "United States",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -4507,8 +4303,7 @@ const stores = {
         "city": "New York City",
         "area1": "UWS",
         "country": "United States",
-        "phone": "001-212-724-6767",
-
+        "phone": "001-212-724-6767"
       }
     },
     {
@@ -4529,8 +4324,7 @@ const stores = {
         "city": "San Francisco",
         "area1": "Soma",
         "country": "United States",
-        "phone": "001 650-364-8544",
-
+        "phone": "001 650-364-8544"
       }
     },
     {
@@ -4538,8 +4332,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          33.8226459,
-          -117.837994
+          -117.837994,
+          33.8226459
         ]
       },
       "properties": {
@@ -4551,8 +4345,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "California",
         "country": "United States",
-        "phone": "001 714-974-1454",
-
+        "phone": "001 714-974-1454"
       }
     },
     {
@@ -4560,8 +4353,8 @@ const stores = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          33.9827198,
-          -118.4242039
+          -118.4242039,
+          33.9827198
         ]
       },
       "properties": {
@@ -4573,8 +4366,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "California",
         "country": "United States",
-        "phone": "001-310-306-9463",
-
+        "phone": "001-310-306-9463"
       }
     },
     {
@@ -4595,8 +4387,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "Studio City",
         "country": "United States",
-        "phone": "001 818-766-5272",
-
+        "phone": "001 818-766-5272"
       }
     },
     {
@@ -4617,8 +4408,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "Los Angeles",
         "country": "United States",
-        "phone": "001 310-475-0606",
-
+        "phone": "001 310-475-0606"
       }
     },
     {
@@ -4639,8 +4429,7 @@ const stores = {
         "city": "New York City",
         "area1": "Brooklyn Heights",
         "country": "United States",
-        "phone": "001-718-330-0963",
-
+        "phone": "001-718-330-0963"
       }
     },
     {
@@ -4661,8 +4450,7 @@ const stores = {
         "city": "Los Angeles",
         "area1": "",
         "country": "United States",
-        "phone": "",
-
+        "phone": ""
       }
     },
     {
@@ -4683,8 +4471,7 @@ const stores = {
         "city": "New York City",
         "area1": "UWS",
         "country": "United States",
-        "phone": "001-212-877-6090",
-
+        "phone": "001-212-877-6090"
       }
     },
     {
@@ -4701,15 +4488,14 @@ const stores = {
         "class": "wineshops",
         "icon": "../assets/icon-pin-wineshops.svg",
         "store": "Cora",
-        "address": "101, Avenue des communaut\u00e9s",
+        "address": "101, Avenue des communautés",
         "city": "Woluwe",
         "area1": "1200",
         "country": "Belgium",
-        "phone": "0032 2778 18 11",
-
+        "phone": "0032 2778 18 11"
       }
     }
   ]
-}
+};
 
 window.demoStores = stores;
