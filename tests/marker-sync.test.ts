@@ -61,6 +61,70 @@ describe('MarkerSync', () => {
     expect(liveMarkers()[0].lngLat).toEqual([1, 2]);
   });
 
+  it('offsets the popup clear of the icon it was given', () => {
+    // MapLibre ne dérive un décalage que pour son marqueur par défaut : avec un
+    // élément fourni, la popup s'ancrerait sur la coordonnée, donc sur la pointe
+    // du pin.
+    const map = new MockMap({ container: document.createElement('div') });
+
+    map.addSource(SOURCE_ID, { data: {} });
+
+    const sync = new MarkerSync({
+      map:           map as never,
+      resolveIcon:   () => ({ url: '/pin.svg', size: [40, 44], anchor: 'bottom' }),
+      resolvePopup:  () => '<b>Cafe</b>',
+      onMarkerClick: () => undefined,
+    });
+
+    sync.setFeatures(collectionOf([{ id: 0, name: 'Cafe', coordinates: [1, 2] }]));
+    renderIds([0]);
+    sync.sync();
+
+    const offset = mapLibreMockState.popups.at(-1)?.options?.offset as Record<string, [number, number]>;
+
+    expect(offset.bottom).toEqual([0, -52]);
+    expect(offset.top).toEqual([0, 8]);
+  });
+
+  it('respects an offset the caller set explicitly', () => {
+    const map = new MockMap({ container: document.createElement('div') });
+
+    map.addSource(SOURCE_ID, { data: {} });
+
+    const sync = new MarkerSync({
+      map:           map as never,
+      resolveIcon:   () => ({ url: '/pin.svg', size: [40, 44], anchor: 'bottom' }),
+      resolvePopup:  () => ({ content: '<b>Cafe</b>', offset: [0, -100] }),
+      onMarkerClick: () => undefined,
+    });
+
+    sync.setFeatures(collectionOf([{ id: 0, name: 'Cafe', coordinates: [1, 2] }]));
+    renderIds([0]);
+    sync.sync();
+
+    expect(mapLibreMockState.popups.at(-1)?.options?.offset).toEqual([0, -100]);
+  });
+
+  it('leaves the offset to MapLibre when the icon size is unknown', () => {
+    // Un élément DOM brut n'a pas de dimensions mesurables avant insertion.
+    const map = new MockMap({ container: document.createElement('div') });
+
+    map.addSource(SOURCE_ID, { data: {} });
+
+    const sync = new MarkerSync({
+      map:           map as never,
+      resolveIcon:   () => document.createElement('div'),
+      resolvePopup:  () => '<b>Cafe</b>',
+      onMarkerClick: () => undefined,
+    });
+
+    sync.setFeatures(collectionOf([{ id: 0, name: 'Cafe', coordinates: [1, 2] }]));
+    renderIds([0]);
+    sync.sync();
+
+    expect(mapLibreMockState.popups.at(-1)?.options).not.toHaveProperty('offset');
+  });
+
   it('deduplicates a feature returned from several tiles', () => {
     const { sync } = createSync();
 

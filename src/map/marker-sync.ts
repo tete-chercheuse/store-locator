@@ -16,8 +16,9 @@ import type {
   StoreLocatorPopupValue,
   StoreLocatorProperties,
 } from '../types';
-import { normalizeIcon } from './normalize-icon';
+import { iconSize, normalizeIcon } from './normalize-icon';
 import { normalizePopup } from './normalize-popup';
+import { popupOffsetForIcon } from './popup-offset';
 import { SOURCE_ID, UNCLUSTERED_FILTER } from './cluster-source';
 
 /**
@@ -201,7 +202,8 @@ export class MarkerSync<P extends StoreLocatorProperties> {
   }
 
   private createMarker(feature: StoreLocatorFeature<P>): TrackedMarker<P> {
-    const iconOptions = normalizeIcon(this.resolveIcon(feature));
+    const iconValue = this.resolveIcon(feature);
+    const iconOptions = normalizeIcon(iconValue);
     const marker = new Marker(iconOptions ?? undefined);
 
     marker.setLngLat(feature.geometry.coordinates as [number, number]);
@@ -209,7 +211,15 @@ export class MarkerSync<P extends StoreLocatorProperties> {
     const popup = normalizePopup(this.resolvePopup(feature));
 
     if(popup) {
-      const instance = new Popup(popup.options);
+      // MapLibre ne dérive un décalage de popup que pour son marqueur par
+      // défaut ; avec un élément fourni, la popup s'ancrerait sur la coordonnée
+      // elle-même, donc par-dessus l'icône. Un `offset` explicite de l'appelant
+      // reste prioritaire.
+      const offset = 'offset' in popup.options
+        ? undefined
+        : popupOffsetForIcon(iconSize(iconValue), iconOptions?.anchor);
+
+      const instance = new Popup(offset ? { ...popup.options, offset } : popup.options);
 
       if(typeof popup.content === 'string') {
         instance.setHTML(popup.content);

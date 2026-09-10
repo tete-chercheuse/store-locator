@@ -62,6 +62,22 @@ const withMarkerOptions = (
   return markerOptions;
 };
 
+/**
+ * Dimensions déclarées de l'icône, quand elles le sont.
+ *
+ * Exposé parce que le placement de la popup en dérive : sans taille, aucune
+ * géométrie à partir de laquelle décaler. Une icône fournie sous forme
+ * d'élément DOM brut n'en a pas — ses dimensions ne sont pas mesurables avant
+ * insertion dans le document.
+ */
+export const iconSize = (value: StoreLocatorIconValue | undefined): [number, number] | undefined => {
+  if(value === null || value === undefined || typeof value === 'string' || isHtmlElement(value)) {
+    return undefined;
+  }
+
+  return isIconOptions(value) ? value.size : undefined;
+};
+
 export const normalizeIcon = (value: StoreLocatorIconValue | undefined): MarkerOptions | null => {
   if(value === null || value === undefined) {
     return null;
