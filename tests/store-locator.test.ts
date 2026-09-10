@@ -77,7 +77,7 @@ describe('StoreLocator', () => {
     locator.destroy();
   });
 
-  it('passes the OpenFreeMap Bright style and the default center to the map', async () => {
+  it('passes the embedded style object and the default center to the map', async () => {
     const locator = new StoreLocator({
       stores: twoStores,
       elements: { map: mountMapElement() },
@@ -85,11 +85,13 @@ describe('StoreLocator', () => {
 
     await locator.whenReady();
 
-    expect(mapLibreMockState.maps[0].options).toMatchObject({
-      style: 'https://tiles.openfreemap.org/styles/bright',
-      center: [0, 0],
-      cooperativeGestures: true,
-    });
+    const options = mapLibreMockState.maps[0].options;
+
+    expect(options).toMatchObject({ center: [0, 0], cooperativeGestures: true });
+
+    // Le style par défaut est un objet embarqué, plus une URL : ce qui est
+    // transmis à MapLibre doit être la spécification elle-même.
+    expect((options.style as { version: number; }).version).toBe(8);
 
     locator.destroy();
   });

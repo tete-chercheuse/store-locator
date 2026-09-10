@@ -1,6 +1,12 @@
 import type { StoreLocatorMapConfig, StoreLocatorResolvedOptions, StoreLocatorSelectors } from '../types';
+import defaultStyle from '../styles/default-style';
 
-/** Style vectoriel Bright servi par OpenFreeMap : sans clé d'API, sans quota. */
+/**
+ * Style Bright public d'OpenFreeMap : sans clé d'API, sans quota.
+ *
+ * Ce n'est plus le défaut — voir `src/styles/default-style.ts` — mais il reste
+ * exporté pour pouvoir y revenir en une ligne : `map: { style: OPENFREEMAP_BRIGHT }`.
+ */
 export const OPENFREEMAP_BRIGHT = 'https://tiles.openfreemap.org/styles/bright';
 
 const defaultMapOptions: StoreLocatorMapConfig = {
@@ -8,7 +14,7 @@ const defaultMapOptions: StoreLocatorMapConfig = {
   initialRecenter: true,
   locate: false,
   navigation: true,
-  style: OPENFREEMAP_BRIGHT,
+  style: defaultStyle,
   options: {
     zoom: 2,
     maxZoom: 18,
