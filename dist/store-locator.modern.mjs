@@ -30,7 +30,12 @@ const defaultMapOptions = {
   options: {
     zoom: 2,
     maxZoom: 18,
-    minZoom: 2,
+    // Pas de plancher de zoom. `minZoom: 2`, héritée de la v2, écrasait
+    // silencieusement le recentrage initial : sur un jeu de données
+    // multi-continental, `fitBounds` calculait un zoom de 1,48 qui était
+    // ramené à 2, laissant un tiers des magasins hors écran. Un plancher est
+    // légitime pour un locator régional — c'est alors à l'appelant de le poser.
+    minZoom: 0,
     center: [0, 0],
     cooperativeGestures: true
   },
@@ -41,7 +46,10 @@ const defaultMapOptions = {
   clusters: {
     enabled: true,
     radius: 50,
-    maxZoom: 14,
+    // Zoom au-delà duquel les points ne sont plus regroupés. Mesuré sur Paris :
+    // à 14, un cluster de deux ou trois magasins ne s'ouvrait qu'à z15, soit le
+    // niveau de la rue. À 11, il s'ouvre à z12, niveau du quartier.
+    maxZoom: 11,
     minPoints: 2,
     color: '#2563eb',
     size: 18,
