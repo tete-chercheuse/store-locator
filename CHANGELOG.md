@@ -71,6 +71,16 @@ Guide de migration : [docs/MIGRATION-v2-v3.md](./docs/MIGRATION-v2-v3.md).
 
 ### Ajouts
 
+- Le style par défaut est désormais **embarqué** : une variante de OpenFreeMap
+  Bright, dans `src/styles/default-style.ts`, régénérable par
+  `node scripts/import-style.mjs`. Un aller-retour réseau de moins au premier
+  affichage, pour 4,8 ko gzippés. `OPENFREEMAP_BRIGHT` reste exporté.
+- Le décalage de la popup est dérivé de la géométrie de l'icône. MapLibre ne le
+  fait que pour son marqueur par défaut : avec un élément fourni, la popup
+  s'ancrait sur la coordonnée, donc par-dessus l'icône. Le principe de
+  `popupAnchor` de Leaflet est ainsi rétabli, sous forme d'une table indexée par
+  ancrage pour que le placement reste correct quand la popup bascule.
+
 - `whenReady(): Promise<StoreLocator>`, nécessaire car MapLibre ne reçoit ses
   couches qu’après le chargement du style. Résout aussi sur `destroy()`, pour ne
   laisser aucun appelant en attente.

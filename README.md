@@ -88,27 +88,45 @@ Le package expose deux points d’entrée:
 
 ## Fond de carte
 
-Par défaut, la librairie charge le style vectoriel **Bright** d’[OpenFreeMap](https://openfreemap.org):
-sans clé d’API, sans inscription, sans quota, usage commercial autorisé.
+Le style par défaut est **embarqué dans la librairie** : une variante de
+OpenFreeMap Bright, dans `src/styles/default-style.ts`. Sources, glyphes et
+sprite pointent tous sur [OpenFreeMap](https://openfreemap.org) — sans clé
+d'API, sans quota, usage commercial autorisé.
 
-```js
-map: { style: 'https://tiles.openfreemap.org/styles/bright' }
+Il est embarqué plutôt que référencé par URL : c'est un aller-retour réseau de
+moins sur le chemin critique du premier affichage, pour 4,8 ko gzippés.
+
+### Modifier le style
+
+Édite-le dans [Maputnik](https://maputnik.github.io), exporte le JSON, puis :
+
+```bash
+node scripts/import-style.mjs ~/Downloads/mon-style.json
 ```
 
-La constante est aussi exportée, si tu préfères ne pas recopier l’URL:
+Le script valide le style, écarte les clés que Maputnik ajoute hors
+spécification, normalise ce que les types de MapLibre refusent alors que son
+parseur l'accepte, et réécrit le module. Il affiche les polices utilisées :
+`clusters.textFont` doit en faire partie, sinon le compteur des clusters ne
+s'affichera pas.
+
+### Utiliser un autre style
+
+`map.style` accepte une URL ou un objet `StyleSpecification` complet, donc
+n'importe quel fournisseur de tuiles vectorielles. Le style Bright public reste
+exporté :
 
 ```js
 import StoreLocator, { OPENFREEMAP_BRIGHT } from 'store-locator';
+
+new StoreLocator({ stores, map: { style: OPENFREEMAP_BRIGHT } });
 ```
 
-Les autres styles OpenFreeMap fonctionnent sans code supplémentaire:
-`liberty`, `positron`, `dark`, `fiord`. `style` accepte aussi un objet
-`StyleSpecification` complet, donc n’importe quel fournisseur de tuiles
-vectorielles.
+Les autres styles publics d'OpenFreeMap fonctionnent aussi : `liberty`,
+`positron`, `dark`, `fiord`.
 
-MapLibre injecte automatiquement l’attribution portée par le style. **Ne la
-désactive pas** : elle satisfait l’obligation d’attribution OpenStreetMap et
-OpenMapTiles.
+MapLibre injecte automatiquement l'attribution portée par le style. **Ne la
+désactive pas** : elle satisfait l'obligation OpenStreetMap et OpenMapTiles.
 
 ## Lancer les démos
 

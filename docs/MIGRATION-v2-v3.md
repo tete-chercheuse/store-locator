@@ -229,6 +229,29 @@ aucune icône : le marqueur retombe alors sur le pin par défaut de MapLibre.
 
 ## 7. Popups
 
+### Le placement est de nouveau automatique
+
+Leaflet dérivait la position de la popup de `iconSize` et `popupAnchor`.
+MapLibre ne le fait que pour son propre marqueur : avec un élément fourni — le
+cas dès que tu passes une icône — la popup s'ancrait sur la coordonnée
+elle-même, donc par-dessus l'icône.
+
+La librairie rétablit ce comportement. Dès que `icon.size` est renseigné, la
+popup se place juste à l'extérieur de l'icône, du côté correspondant à
+l'ancrage retenu par MapLibre. Rien à faire :
+
+```js
+markers: {
+  icon: () => ({ url: '/pin.svg', size: [40, 44], anchor: 'bottom' }),
+  popup: (feature) => feature.properties.store,
+}
+```
+
+Un `offset` explicite sur la popup reste prioritaire. Et sans `size` — une
+icône fournie sous forme d'élément DOM brut, dont les dimensions ne sont pas
+mesurables avant insertion — le placement revient à MapLibre.
+
+
 Le contrat est aligné sur les `PopupOptions` de MapLibre.
 
 | v2 | v3 |
