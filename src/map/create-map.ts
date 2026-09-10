@@ -4,10 +4,12 @@
  * MapLibre n'ajoute aucun contrôle de zoom par défaut, contrairement à Leaflet :
  * `navigation` comble cet écart. L'attribution, elle, est ajoutée
  * automatiquement par MapLibre et alimentée par le style OpenFreeMap — ne pas
- * la désactiver, elle satisfait l'obligation OpenStreetMap / OpenMapTiles.
+ * la désactiver, elle satisfait l'obligation OpenStreetMap / OpenMapTiles. Elle
+ * est simplement repliée au chargement — voir `attribution.ts`.
  */
 import { GeolocateControl, Map as MapLibreMap, NavigationControl } from 'maplibre-gl';
 import type { StoreLocatorMapConfig, StoreLocatorProperties } from '../types';
+import { collapseAttribution } from './attribution';
 
 /**
  * Conteneurs portant déjà une carte vivante. Remplace la sonde `_leaflet_id`
@@ -40,6 +42,10 @@ export const createMap = <P extends StoreLocatorProperties>(
   // construisent du DOM et peuvent donc échouer. Une carte vivante sur un
   // conteneur non enregistré laisserait le garde-fou en autoriser une seconde.
   initializedContainers.add(container);
+
+  // Après la construction : c'est elle qui ajoute l'`AttributionControl`, et
+  // c'est son DOM que le repli va chercher.
+  collapseAttribution(map);
 
   if(config.navigation) {
     map.addControl(new NavigationControl());

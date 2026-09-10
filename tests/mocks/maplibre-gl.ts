@@ -23,7 +23,7 @@ export interface MockGeoJSONSource {
 }
 
 export interface MockMap {
-  container: HTMLElement | string;
+  container: HTMLElement;
   options: Record<string, unknown>;
   sources: Map<string, MockGeoJSONSource>;
   layers: Array<Record<string, unknown>>;
@@ -42,6 +42,7 @@ export interface MockMap {
   removeLayer: ReturnType<typeof vi.fn>;
   querySourceFeatures: ReturnType<typeof vi.fn>;
   getCanvas: ReturnType<typeof vi.fn>;
+  getContainer: ReturnType<typeof vi.fn>;
   easeTo: ReturnType<typeof vi.fn>;
   fitBounds: ReturnType<typeof vi.fn>;
   resize: ReturnType<typeof vi.fn>;
@@ -90,7 +91,7 @@ export const mapLibreMockState = {
 const layerEventKey = (event: string, layerId: string): string => `${event}::${layerId}`;
 
 class MockMapImpl implements MockMap {
-  container: HTMLElement | string;
+  container: HTMLElement;
   options: Record<string, unknown>;
   sources = new NativeMap<string, MockGeoJSONSource>();
   layers: Array<Record<string, unknown>> = [];
@@ -179,6 +180,10 @@ class MockMapImpl implements MockMap {
   canvas = { style: {} as CSSStyleDeclaration };
   getCanvas = vi.fn(() => this.canvas);
 
+  // Le vrai `getContainer()` retourne l'élément, jamais l'identifiant : MapLibre
+  // résout la chaîne dès son constructeur, et lève si elle ne désigne rien.
+  getContainer = vi.fn(() => this.container);
+
   easeTo = vi.fn(() => this);
   fitBounds = vi.fn(() => this);
   resize = vi.fn(() => this);
@@ -197,7 +202,15 @@ class MockMapImpl implements MockMap {
   loaded = vi.fn(() => true);
 
   constructor(options: Record<string, unknown>) {
-    this.container = options.container as HTMLElement | string;
+    const container = typeof options.container === 'string'
+      ? document.getElementById(options.container)
+      : options.container as HTMLElement;
+
+    if(!container) {
+      throw new Error(`Container '${options.container as string}' not found.`);
+    }
+
+    this.container = container;
     this.options = options;
 
     mapLibreMockState.maps.push(this);

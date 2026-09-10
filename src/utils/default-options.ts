@@ -26,6 +26,10 @@ const defaultMapOptions: StoreLocatorMapConfig = {
     minZoom: 0,
     center: [0, 0],
     cooperativeGestures: true,
+    // Pas d'`attributionControl` ici : l'objet fourni *remplace* les défauts de
+    // MapLibre au lieu de les compléter, et ferait donc disparaître son
+    // `customAttribution`. `compact: true` est déjà le défaut ; le repli au
+    // chargement se joue ailleurs — voir `map/attribution.ts`.
   },
   markers: {
     icon: null,
