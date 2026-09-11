@@ -85,6 +85,27 @@ locator.unresolvedImages; // ['bollard', 'bicycle_parking', …]
 
 `map: { resolveMissingImages: false }` restitue les avertissements de MapLibre.
 
+### Aucun worker à copier
+
+MapLibre ne sait pas fonctionner sans Web Worker : c’est là que vivent l’analyse
+des tuiles vectorielles et le clustering. Or il déduit l’URL de son worker de
+`import.meta.url` et abandonne si ce n’est pas une URL `http(s)` — ce que Webpack
+réécrit en `file://`. Sous Next.js, l’URL retombait donc sur `''` et
+`new Worker('')` allait chercher la page HTML comme script. **Symptôme : carte
+grise, aucune tuile, aucune erreur en console.** Il fallait recopier
+`maplibre-gl-worker.mjs` et `maplibre-gl-shared.mjs` dans `public/`.
+
+La librairie livre désormais son propre worker, empaqueté en un fichier
+autonome, et le désigne par `new URL('./…', import.meta.url)`. Webpack, Vite,
+Turbopack et Rollup émettent ce fichier et réécrivent l’URL ; sans bundler, il
+est simplement le voisin du module publié. Rien à configurer.
+
+> ⚠️ Le worker livré provient d’une version donnée de `maplibre-gl`, et le
+> protocole qu’il échange avec le thread principal est interne à MapLibre. Si la
+> version installée n’est pas sur la même mineure, la librairie **ne l’utilise
+> pas** et le dit en console — aligne `maplibre-gl`, ou passe
+> `map: { workerUrl }` pour servir les fichiers d’origine toi-même.
+
 ### ESM uniquement
 
 Le package ne publie ni CommonJS ni UMD, comme `maplibre-gl@6`. Un projet en
@@ -592,6 +613,7 @@ Valeurs par défaut:
     navigation: true,
     injectCss: true,
     cssNonce: null,
+    workerUrl: null,
     resolveMissingImages: true,
     style: 'https://tiles.openfreemap.org/styles/bright',
     options: {
@@ -647,6 +669,9 @@ Résumé des options importantes:
   main à l’application.
 - `map.cssNonce` — nonce posé sur la balise `<style>` injectée, pour une CSP
   sans `style-src 'unsafe-inline'`.
+- `map.workerUrl` — URL du worker de MapLibre, qui court-circuite celui
+  embarqué. Utile si `maplibre-gl` n’est pas sur la mineure dont provient le
+  worker livré.
 - `map.resolveMissingImages` — fournit une image transparente aux icônes que le
   sprite du style ne contient pas. `false` restitue les avertissements de
   MapLibre.

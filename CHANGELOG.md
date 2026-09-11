@@ -38,6 +38,48 @@ charger à côté.
 - `unresolvedImages: string[]` sur l'instance, qui liste ces identifiants : le
   silence ci-dessus ne doit pas noyer un `addImage` oublié dans l'application.
 
+- **Le worker de MapLibre est livré empaqueté**, et plus rien à recopier dans
+  `public/`. MapLibre ne sait pas travailler sans worker — `Dispatcher.initActors`
+  lève `No actors found` si le pool est vide, et c'est là que vivent l'analyse
+  des tuiles et supercluster — mais il déduit son URL de `import.meta.url` et
+  abandonne si ce n'est pas une URL `http(s)`. Webpack réécrivant cette
+  expression en `file://`, l'URL retombait sur `''` et `new Worker('')` allait
+  chercher la page HTML comme script : carte grise, aucune tuile, aucune erreur
+  en console.
+
+  Le worker est empaqueté en un fichier autonome par
+  `scripts/bundle-worker.mjs`, puis désigné par
+  `new URL('./store-locator-worker.cjs', import.meta.url)`. Webpack et Vite
+  émettent ce fichier comme asset et réécrivent l'URL — vérifié sur les deux ;
+  sans bundler, il est le voisin du module publié. Un seul fichier était
+  indispensable : un bundler n'émet pas le graphe d'un `new URL`, et le worker
+  d'origine importe `./maplibre-gl-shared.mjs` par un spécificateur relatif.
+
+  Format IIFE et extension `.cjs`, parce que MapLibre décide du type de worker
+  sur ce seul suffixe : un worker classique est reconnu partout, là où un worker
+  de module demande Firefox 114 ou plus.
+
+  `map.workerUrl` court-circuite le worker livré. Comme le protocole entre les
+  deux threads est interne à MapLibre, la librairie refuse son worker si la
+  version installée n'est pas sur la même mineure, et le dit en console : un
+  message précis vaut mieux qu'une carte grise. Les codes de messages, le
+  `RequestResponseMessageMap` publié et les 78 clés du registre de sérialisation
+  sont restés identiques de 6.8.0 à 6.9.0, mais rien ne le garantit.
+
+### Corrections
+
+- `extend` écrasait une valeur par défaut avec un `undefined` explicite.
+  `new StoreLocator({ stores, map: undefined })` effaçait donc toute la
+  configuration de carte et levait sur `initialRecenter` — ce qui arrive dès
+  qu'une prop React optionnelle n'est pas passée, `map={props.mapConfig}`.
+  `null` reste une valeur signifiante : `markers.icon`, `cssNonce` et
+  `workerUrl` l'ont pour défaut.
+
+### Interne
+
+- `maplibre-gl` passe en 6.9.0 côté développement. Le CSS embarqué est
+  inchangé, seule sa constante de version bouge.
+
 ## 3.0.1
 
 - L'attribution est repliée derrière son bouton ⓘ au chargement. MapLibre
