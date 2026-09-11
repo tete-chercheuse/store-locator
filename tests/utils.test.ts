@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formValues, normalizeStores } from '../src/utils/utils';
+import { extend, formValues, normalizeStores } from '../src/utils/utils';
 
 describe('normalizeStores', () => {
   it('converts plain coordinate stores to a GeoJSON FeatureCollection', () => {
@@ -131,6 +131,30 @@ describe('formValues', () => {
     expect(formValues(form as HTMLFormElement)).toEqual({
       category: ['Coffee', 'Bakery'],
       city: 'Pointe-a-Pitre',
+    });
+  });
+});
+
+describe('extend', () => {
+  it('traite un undefined explicite comme « non fourni »', () => {
+    // Écrire la valeur écraserait le défaut déjà fusionné. C'est ce qui arrive
+    // dès qu'une prop React optionnelle n'est pas passée — `map={props.config}`
+    // effaçait alors toute la configuration de carte, et le constructeur levait
+    // sur `initialRecenter` d'un objet absent.
+    expect(extend(true, { map: { navigation: true } }, { map: undefined })).toEqual({
+      map: { navigation: true },
+    });
+  });
+
+  it('garde null, qui est une valeur signifiante', () => {
+    // `markers.icon`, `cssNonce` et `workerUrl` ont `null` pour défaut : le
+    // confondre avec « non fourni » empêcherait de désactiver quoi que ce soit.
+    expect(extend(true, { icon: '/pin.svg' }, { icon: null })).toEqual({ icon: null });
+  });
+
+  it('ignore un undefined imbriqué sans écraser la branche fusionnée', () => {
+    expect(extend(true, { map: { navigation: true, locate: true } }, { map: { locate: undefined } })).toEqual({
+      map: { navigation: true, locate: true },
     });
   });
 });

@@ -42,6 +42,16 @@ export const extend = <T extends object>(deep = false, ...objects: Array<AnyReco
 
       const value = object[prop];
 
+      // Un `undefined` explicite vaut « non fourni ». L'écrire écraserait le
+      // défaut déjà fusionné : `{ map: undefined }` effaçait toute la
+      // configuration de carte, ce qui arrive dès qu'une prop React optionnelle
+      // n'est pas passée — `map={props.mapConfig}`. `null`, lui, reste une
+      // valeur signifiante : `markers.icon`, `cssNonce` et `workerUrl` l'ont
+      // pour défaut.
+      if(value === undefined) {
+        continue;
+      }
+
       if(deep && isPlainObject(value)) {
         extended[prop] = extend(true, extended[prop] as AnyRecord | undefined, value);
         continue;
