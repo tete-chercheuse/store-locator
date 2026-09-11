@@ -96,9 +96,17 @@ grise, aucune tuile, aucune erreur en console.** Il fallait recopier
 `maplibre-gl-worker.mjs` et `maplibre-gl-shared.mjs` dans `public/`.
 
 La librairie livre désormais son propre worker, empaqueté en un fichier
-autonome, et le désigne par `new URL('./…', import.meta.url)`. Webpack, Vite,
-Turbopack et Rollup émettent ce fichier et réécrivent l’URL ; sans bundler, il
-est simplement le voisin du module publié. Rien à configurer.
+autonome, et le désigne par `new URL('./…', import.meta.url)`. Le bundler émet
+ce fichier et réécrit l’URL ; sans bundler, il est simplement le voisin du
+module publié. Rien à configurer.
+
+Vérifié en construisant réellement, puis en ouvrant le résultat : **Webpack 5**
+et **Vite 7** émettent l’asset et la carte se charge. **Next.js n’est pas encore
+vérifié** — la documentation de MapLibre signale que Next, en mode Turbopack
+comme en `next build --webpack`, émet l’asset d’un `new URL` *sans son voisin*.
+Le worker livré ici n’a précisément aucun voisin, donc le cas devrait passer,
+mais la mesure manque. En attendant, `map: { workerUrl: '/maplibre/…' }` reprend
+la recette officielle.
 
 > ⚠️ Le worker livré provient d’une version donnée de `maplibre-gl`, et le
 > protocole qu’il échange avec le thread principal est interne à MapLibre. Si la

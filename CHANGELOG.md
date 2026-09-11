@@ -49,9 +49,13 @@ charger à côté.
 
   Le worker est empaqueté en un fichier autonome par
   `scripts/bundle-worker.mjs`, puis désigné par
-  `new URL('./store-locator-worker.cjs', import.meta.url)`. Webpack et Vite
-  émettent ce fichier comme asset et réécrivent l'URL — vérifié sur les deux ;
-  sans bundler, il est le voisin du module publié. Un seul fichier était
+  `new URL('./store-locator-worker.cjs', import.meta.url)`. Webpack 5 et Vite 7
+  émettent ce fichier comme asset et réécrivent l'URL — vérifié en construisant
+  réellement les deux, puis en ouvrant le résultat ; sans bundler, il est le
+  voisin du module publié. **Next.js reste à vérifier** : la documentation de
+  MapLibre signale qu'il émet l'asset d'un `new URL` sans son voisin, en mode
+  Turbopack comme en `next build --webpack`. Le worker livré ici n'a aucun
+  voisin, donc le cas devrait passer, mais la mesure manque. Un seul fichier était
   indispensable : un bundler n'émet pas le graphe d'un `new URL`, et le worker
   d'origine importe `./maplibre-gl-shared.mjs` par un spécificateur relatif.
 
