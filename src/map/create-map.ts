@@ -71,9 +71,15 @@ export const createMap = <P extends StoreLocatorProperties>(
   }
 
   if(config.locate) {
+    // Les défauts de la librairie, qu'un objet fourni complète ou corrige. Le
+    // cas à connaître est `positionOptions` : MapLibre y impose
+    // `maximumAge: 0`, qui interdit toute position en cache. Sur macOS,
+    // CoreLocation répond alors volontiers `kCLErrorLocationUnknown` plutôt
+    // qu'un relevé, et rien ici ne permettait de l'assouplir.
     map.addControl(new GeolocateControl({
       trackUserLocation: true,
       showUserLocation: true,
+      ...(config.locate === true ? {} : config.locate),
     }));
   }
 

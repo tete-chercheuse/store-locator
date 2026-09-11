@@ -77,6 +77,69 @@ describe('StoreLocator', () => {
     locator.destroy();
   });
 
+  it('applies the library defaults to the geolocate control', async () => {
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+      map: { locate: true },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.geolocateControls[0]).toEqual({
+      trackUserLocation: true,
+      showUserLocation: true,
+    });
+
+    locator.destroy();
+  });
+
+  it('merges caller geolocate options over those defaults', async () => {
+    // MapLibre impose `maximumAge: 0` à `positionOptions`, qui interdit toute
+    // position en cache — sur macOS, CoreLocation répond alors volontiers
+    // `kCLErrorLocationUnknown`. Rien ne permettait de l'assouplir.
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+      map: {
+        locate: {
+          positionOptions: { maximumAge: 60_000, timeout: 15_000 },
+          showUserLocation: false,
+        },
+      },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.geolocateControls[0]).toEqual({
+      trackUserLocation: true,
+      showUserLocation: false,
+      positionOptions: { maximumAge: 60_000, timeout: 15_000 },
+    });
+
+    locator.destroy();
+  });
+
+  it('adds no geolocate control for an empty options object', async () => {
+    // `{}` est vrai en JavaScript : un objet vide doit donc ajouter le contrôle
+    // avec les seuls défauts, et non être confondu avec `false`.
+    const locator = new StoreLocator({
+      stores: twoStores,
+      elements: { map: mountMapElement() },
+      map: { locate: {} },
+    });
+
+    await locator.whenReady();
+
+    expect(mapLibreMockState.geolocateControls).toHaveLength(1);
+    expect(mapLibreMockState.geolocateControls[0]).toEqual({
+      trackUserLocation: true,
+      showUserLocation: true,
+    });
+
+    locator.destroy();
+  });
+
   it('passes the embedded style object and the default center to the map', async () => {
     const locator = new StoreLocator({
       stores: twoStores,

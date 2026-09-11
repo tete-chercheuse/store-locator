@@ -1,6 +1,7 @@
 import type * as GeoJSON from 'geojson';
 import type {
   ExpressionSpecification,
+  GeolocateControlOptions,
   MapOptions as MapLibreMapOptions,
   MarkerOptions,
   PaddingOptions,
@@ -136,8 +137,18 @@ export interface StoreLocatorMarkerOptions<P extends StoreLocatorProperties = St
 export interface StoreLocatorMapConfig<P extends StoreLocatorProperties = StoreLocatorProperties> {
   refreshRecenter: boolean;
   initialRecenter: boolean;
-  /** Ajoute un `GeolocateControl`. */
-  locate: boolean;
+  /**
+   * Ajoute un `GeolocateControl`. `true` retient
+   * `{ trackUserLocation: true, showUserLocation: true }` ; un objet fusionne
+   * par-dessus, et donne accès à tout `GeolocateControlOptions`.
+   *
+   * `positionOptions` mérite l'attention : MapLibre y impose
+   * `{ enableHighAccuracy: false, maximumAge: 0, timeout: 6000 }`. Le
+   * `maximumAge: 0` interdit toute position en cache, et sur macOS CoreLocation
+   * répond alors volontiers `kCLErrorLocationUnknown` plutôt qu'un relevé —
+   * typiquement sans Wi-Fi, dont dépend sa triangulation.
+   */
+  locate: boolean | GeolocateControlOptions;
   /** Ajoute un `NavigationControl`. MapLibre n'ajoute aucun contrôle de zoom par défaut. */
   navigation: boolean;
   /**
