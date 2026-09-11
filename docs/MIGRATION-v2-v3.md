@@ -76,8 +76,9 @@ npm uninstall leaflet leaflet-gesture-handling leaflet.locatecontrol leaflet.mar
 npm install maplibre-gl
 ```
 
-`maplibre-gl` est désormais une `peerDependency` (`^6.8.0`) : c’est ton
-application qui contrôle sa version.
+`maplibre-gl` est désormais une `peerDependency` (`^6.9.0`) : c’est ton
+application qui contrôle sa version. Le plancher est passé à 6.9.0 avec la
+3.1.0, version dont provient le worker livré par la librairie.
 
 ### Le paquet est publié en ESM uniquement
 

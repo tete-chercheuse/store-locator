@@ -79,6 +79,12 @@ charger à côté.
   `maximumAge: 0` interdit toute position en cache, et sur macOS CoreLocation
   répond alors volontiers `kCLErrorLocationUnknown` plutôt qu'un relevé.
 
+- **`maplibre-gl` passe de `^6.8.0` à `^6.9.0`** en `peerDependency`. Le worker
+  livré vient de 6.9.0, et une installation neuve qui aurait résolu 6.8.x se
+  serait retrouvée sans lui — avec l'avertissement, mais aussi avec la copie
+  manuelle à refaire. Le plancher fait donc du chemin sans configuration le
+  défaut à l'installation.
+
 ### Corrections
 
 - `extend` écrasait une valeur par défaut avec un `undefined` explicite.
