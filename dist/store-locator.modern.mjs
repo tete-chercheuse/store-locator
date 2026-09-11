@@ -2264,10 +2264,15 @@ const createMap = (container, config, unresolvedImages) => {
     map.addControl(new NavigationControl());
   }
   if (config.locate) {
-    map.addControl(new GeolocateControl({
+    // Les défauts de la librairie, qu'un objet fourni complète ou corrige. Le
+    // cas à connaître est `positionOptions` : MapLibre y impose
+    // `maximumAge: 0`, qui interdit toute position en cache. Sur macOS,
+    // CoreLocation répond alors volontiers `kCLErrorLocationUnknown` plutôt
+    // qu'un relevé, et rien ici ne permettait de l'assouplir.
+    map.addControl(new GeolocateControl(_extends({
       trackUserLocation: true,
       showUserLocation: true
-    }));
+    }, config.locate === true ? {} : config.locate)));
   }
   return map;
 };
