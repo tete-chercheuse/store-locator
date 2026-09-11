@@ -49,15 +49,17 @@ charger à côté.
 
   Le worker est empaqueté en un fichier autonome par
   `scripts/bundle-worker.mjs`, puis désigné par
-  `new URL('./store-locator-worker.cjs', import.meta.url)`. Webpack 5 et Vite 7
-  émettent ce fichier comme asset et réécrivent l'URL — vérifié en construisant
-  réellement les deux, puis en ouvrant le résultat ; sans bundler, il est le
-  voisin du module publié. **Next.js reste à vérifier** : la documentation de
-  MapLibre signale qu'il émet l'asset d'un `new URL` sans son voisin, en mode
-  Turbopack comme en `next build --webpack`. Le worker livré ici n'a aucun
-  voisin, donc le cas devrait passer, mais la mesure manque. Un seul fichier était
+  `new URL('./store-locator-worker.cjs', import.meta.url)`. Un seul fichier était
   indispensable : un bundler n'émet pas le graphe d'un `new URL`, et le worker
   d'origine importe `./maplibre-gl-shared.mjs` par un spécificateur relatif.
+
+  Vérifié en construisant réellement, puis en ouvrant le résultat — Webpack 5,
+  Vite 7, et Next.js 16 dans ses deux modes, Turbopack et
+  `next build --webpack`. Chacun émet l'asset et la carte charge ses tuiles.
+  Next mérite une mention : la documentation de MapLibre l'annonce comme une
+  exception, parce qu'il émet l'asset d'un `new URL` sans son voisin. C'est
+  l'absence de voisin qui fait passer le cas ici. Sans bundler, le fichier est
+  simplement le voisin du module publié.
 
   Format IIFE et extension `.cjs`, parce que MapLibre décide du type de worker
   sur ce seul suffixe : un worker classique est reconnu partout, là où un worker
@@ -69,6 +71,13 @@ charger à côté.
   message précis vaut mieux qu'une carte grise. Les codes de messages, le
   `RequestResponseMessageMap` publié et les 78 clés du registre de sérialisation
   sont restés identiques de 6.8.0 à 6.9.0, mais rien ne le garantit.
+
+- **`map.locate` accepte désormais un `GeolocateControlOptions`**, fusionné
+  par-dessus `{ trackUserLocation: true, showUserLocation: true }`. Le contrôle
+  était verrouillé, donc `positionOptions` inatteignable — or MapLibre y impose
+  `{ enableHighAccuracy: false, maximumAge: 0, timeout: 6000 }`. Le
+  `maximumAge: 0` interdit toute position en cache, et sur macOS CoreLocation
+  répond alors volontiers `kCLErrorLocationUnknown` plutôt qu'un relevé.
 
 ### Corrections
 

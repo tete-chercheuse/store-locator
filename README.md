@@ -100,19 +100,52 @@ autonome, et le désigne par `new URL('./…', import.meta.url)`. Le bundler ém
 ce fichier et réécrit l’URL ; sans bundler, il est simplement le voisin du
 module publié. Rien à configurer.
 
-Vérifié en construisant réellement, puis en ouvrant le résultat : **Webpack 5**
-et **Vite 7** émettent l’asset et la carte se charge. **Next.js n’est pas encore
-vérifié** — la documentation de MapLibre signale que Next, en mode Turbopack
-comme en `next build --webpack`, émet l’asset d’un `new URL` *sans son voisin*.
-Le worker livré ici n’a précisément aucun voisin, donc le cas devrait passer,
-mais la mesure manque. En attendant, `map: { workerUrl: '/maplibre/…' }` reprend
-la recette officielle.
+Vérifié en construisant réellement, puis en ouvrant le résultat : **Webpack 5**,
+**Vite 7**, et **Next.js 16 dans ses deux modes** — Turbopack et
+`next build --webpack`. Chacun émet l’asset, la carte se charge et les tuiles
+arrivent.
+
+C’est notable, car la documentation de MapLibre donne Next pour une exception :
+il émet l’asset d’un `new URL` *sans son voisin*, ce qui condamne le worker
+d’origine — lequel importe `./maplibre-gl-shared.mjs`. Le worker livré ici n’a
+aucun voisin, et c’est précisément ce qui fait passer le cas.
+
+`map: { workerUrl }` reste disponible pour servir les fichiers d’origine
+toi-même.
 
 > ⚠️ Le worker livré provient d’une version donnée de `maplibre-gl`, et le
 > protocole qu’il échange avec le thread principal est interne à MapLibre. Si la
 > version installée n’est pas sur la même mineure, la librairie **ne l’utilise
 > pas** et le dit en console — aligne `maplibre-gl`, ou passe
 > `map: { workerUrl }` pour servir les fichiers d’origine toi-même.
+
+### Géolocalisation : trois pièges hors de la librairie
+
+`map.locate` ajoute le `GeolocateControl` de MapLibre, qui dépend de
+`navigator.geolocation`. Trois causes d'échec n'ont rien à voir avec la carte, et
+se diagnostiquent à leur signature :
+
+| Symptôme | Cause |
+|---|---|
+| bouton **désactivé au chargement**, « Location not available », **aucune erreur console** | permission refusée, ou page servie hors contexte sécurisé |
+| bouton actif, puis « Location not available » au clic, console : `Permissions policy violation: Geolocation access has been blocked…` | en-tête `Permissions-Policy: geolocation=()`. Passe à `geolocation=(self)` |
+| console : `CoreLocation framework reported a kCLErrorLocationUnknown failure` | macOS n'a pas pu obtenir de relevé — Services de localisation désactivés pour le navigateur, ou Wi-Fi coupé, dont dépend sa triangulation |
+
+Le dernier cas est aggravé par les défauts de MapLibre :
+`{ enableHighAccuracy: false, maximumAge: 0, timeout: 6000 }`. Le
+`maximumAge: 0` **interdit toute position en cache**, donc un relevé récent que
+le système possédait déjà. À assouplir par `map.locate` :
+
+```js
+new StoreLocator({
+  stores,
+  map: {
+    locate: {
+      positionOptions: { maximumAge: 60_000, timeout: 15_000, enableHighAccuracy: true },
+    },
+  },
+});
+```
 
 ### ESM uniquement
 
@@ -671,6 +704,8 @@ Résumé des options importantes:
 - `stores` — données des points de vente.
 - `map.style` — style vectoriel, URL ou objet `StyleSpecification`.
 - `map.locate` — ajoute le bouton de géolocalisation (`GeolocateControl`).
+  `true` retient `{ trackUserLocation: true, showUserLocation: true }` ; un
+  objet fusionne par-dessus et ouvre tout `GeolocateControlOptions`.
 - `map.navigation` — ajoute les boutons de zoom (`NavigationControl`). Activé par
   défaut, car MapLibre n’en ajoute aucun de lui-même.
 - `map.injectCss` — injecte la feuille de MapLibre embarquée. `false` rend la
