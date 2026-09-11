@@ -149,6 +149,12 @@ export interface StoreLocatorMapConfig<P extends StoreLocatorProperties = StoreL
   /** Nonce posé sur la balise `<style>` injectée, pour une CSP sans `'unsafe-inline'`. */
   cssNonce: string | null;
   /**
+   * URL du worker de MapLibre, qui court-circuite celui embarqué par la
+   * librairie. À utiliser si `maplibre-gl` n'est pas sur la mineure dont
+   * provient le worker livré, ou pour servir les fichiers d'origine soi-même.
+   */
+  workerUrl: string | null;
+  /**
    * Fournit une image transparente pour toute icône réclamée par le style et
    * absente de son sprite, ce qui est le cas de plusieurs POI d'OpenFreeMap
    * Bright. `false` restitue les avertissements de MapLibre.

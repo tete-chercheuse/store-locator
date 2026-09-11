@@ -16,6 +16,7 @@ const defaultMapOptions: StoreLocatorMapConfig = {
   navigation: true,
   injectCss: true,
   cssNonce: null,
+  workerUrl: null,
   resolveMissingImages: true,
   style: defaultStyle,
   options: {

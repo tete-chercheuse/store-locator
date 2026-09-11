@@ -101,6 +101,10 @@ export const mapLibreMockState = {
   sourceFeatures: [] as Array<Record<string, unknown>>,
   /** Quand `true`, chaque `Map` émet `load` au microtask suivant sa création. */
   autoLoad: true,
+  /** Réglage global de MapLibre, lu et écrit par `getWorkerUrl`/`setWorkerUrl`. */
+  workerUrl: '',
+  /** Version rendue par `getVersion()`, que le garde de compatibilité compare. */
+  version: '6.9.0',
 };
 
 const layerEventKey = (event: string, layerId: string): string => `${event}::${layerId}`;
@@ -371,7 +375,23 @@ export const resetMapLibreMocks = (): void => {
   mapLibreMockState.geolocateControls.length = 0;
   mapLibreMockState.sourceFeatures.length = 0;
   mapLibreMockState.autoLoad = true;
+  mapLibreMockState.workerUrl = '';
+  mapLibreMockState.version = '6.9.0';
 };
+
+/**
+ * `setWorkerUrl` est un réglage **global** de MapLibre, pas propre à une carte.
+ * Le mock le garde donc hors de `MockMapImpl`, et `resetMapLibreMocks` le
+ * remet à zéro : une URL qui survivrait d'un test à l'autre ferait passer le
+ * garde « déjà configuré » et masquerait la logique à couvrir.
+ */
+export const getWorkerUrl = vi.fn(() => mapLibreMockState.workerUrl);
+
+export const setWorkerUrl = vi.fn((url: string) => {
+  mapLibreMockState.workerUrl = url;
+});
+
+export const getVersion = vi.fn(() => mapLibreMockState.version);
 
 export const Map = MockMapImpl;
 export const Marker = MockMarkerImpl;

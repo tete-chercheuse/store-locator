@@ -12,6 +12,7 @@ import type { StoreLocatorMapConfig, StoreLocatorProperties } from '../types';
 import { collapseAttribution } from './attribution';
 import { injectMapLibreCss } from './inject-css';
 import { resolveMissingImages } from './missing-images';
+import { configureWorker } from './worker';
 
 /**
  * Conteneurs portant déjà une carte vivante. Remplace la sonde `_leaflet_id`
@@ -41,6 +42,10 @@ export const createMap = <P extends StoreLocatorProperties>(
   if(config.injectCss) {
     injectMapLibreCss(config.cssNonce ?? undefined);
   }
+
+  // Avant la construction également : MapLibre acquiert son pool de workers dès
+  // qu'il instancie son `Style`, donc `setWorkerUrl` doit être passé avant.
+  configureWorker(config.workerUrl);
 
   const map = new MapLibreMap({
     ...config.options,
